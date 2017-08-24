@@ -20,6 +20,6 @@ public class MaxTest {
 	public void whenFirstSameSecond() {
 		Max maxim = new Max();
 		int result = maxim.max(3, 3);
-		assertThat(result, is(null));
+		assertThat(result, is(3));
 		}
 }
