@@ -27,7 +27,7 @@ public class Triangle {
     return rsl;
 	}
    private boolean exist(double ab, double ac, double bc){
-	   if area <= 0 {
+	   if ((ab+ac) < bc) {
    return false;
 }
 }
