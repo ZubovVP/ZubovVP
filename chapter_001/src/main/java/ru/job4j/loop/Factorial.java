@@ -7,9 +7,8 @@ public class Factorial {
 			if(n>0){
 				for (int x = 1; x<=n; x++){
 					factorial *=x;
-				}
-				else {
-					facrorial = 1;
+				} else {
+					factorial = 1;
 				}
 				return factorial;
 				
