@@ -16,9 +16,9 @@ public class BubbleSort{
 				}
 			}
 		}
-	}
-	//Возращаем массив
+		//Возращаем массив
 	return array [];
+	}
 }
 		
 		

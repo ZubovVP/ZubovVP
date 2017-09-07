@@ -8,8 +8,8 @@ import static org.junit.Assert.assertThat;
 public class TurnTest{
 	@Test
 	public void whenSortArrayTenElements(){
-		//Задаём произвольный массив(нечётный)
-		int [] numbers = {1, 5, 4, 2, 3, 1, 7, 8, 0, 5};
+		//Задаём произвольный массив
+		int [] numbers = {1, 5, 4, 2, 3, 9, 7, 8, 0, 6};
 		//Отправляем заданный массив в метод
 		 int [] result =numbers.sort();
 		 //Указываем ожидаемый результат
