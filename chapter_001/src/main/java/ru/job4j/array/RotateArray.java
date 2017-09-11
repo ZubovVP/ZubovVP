@@ -2,7 +2,7 @@ package ru.job4j.array;
 
 public class RotateArray{
 	public int[][] rotate(int[][] array){
-		//Созда1м массив, у квадратного массива размерность строк совпадает с размерностью столцов
+		//Создадим массив, у квадратного массива размерность строк совпадает с размерностью столцов
 		int [][] arrayNew  = new int [array.length][array.length];
 		//Данный цикл позволяет перебирать столбцы в массиве
 			for(int x = 0; x<array.length; x++ ){

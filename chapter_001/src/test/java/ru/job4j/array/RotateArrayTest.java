@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 
 public class RotateArrayTest{
 	@Test
-	
+
 	public void whenArrayThreeOnThreeElements(){
 		//Задаём произвольный массив
 		int [] [] numbers = {{1,2,3},{4,5,6},{7,8,9}};
@@ -18,7 +18,7 @@ public class RotateArrayTest{
 		 //Сравниваем полученный и ожидаемый результат
 		 assertThat(result, is(expected));
 		 }
-		 
+
 	public void whenArrayTwoOnTwoElements(){
 		//Задаём произвольный массив
 		int [] [] numbers = {{1,2},{3,4}};
