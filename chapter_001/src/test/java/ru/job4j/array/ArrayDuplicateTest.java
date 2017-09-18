@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static java.util.Arrays;
 
 /**
 * Test.
@@ -16,12 +15,10 @@ import static java.util.Arrays;
 
 public class ArrayDuplicatesTest{
 	@Test
-/**
-* Test add.
-*/
 	public void whenRemoveDuplicatesThenArrayWithoutDuplicate(){
-		String[] array = {"Раз", "Три", "Два", "Три", "Раз", "Четыре"};
-		String [] result = array.remove();
+		String[] original = {"Раз", "Три", "Два", "Три", "Раз", "Четыре"};
+		Box duplicate = new Box();
+		String[] result = duplicate.remove(original);
 		String[] expected = {"Раз","Два","Три","Четыре"};
 		assertThat(result, is (expected));
 	}

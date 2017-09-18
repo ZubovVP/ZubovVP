@@ -1,6 +1,8 @@
 package ru.job4j.array;
 
 
+import java.util.Arrays;
+
 /**
  * ArrayDuplecate
  *
@@ -8,7 +10,7 @@ package ru.job4j.array;
  * @version $Id$
  * @since 0.1
  */
- public class ArrayDuplecate{
+ public class ArrayDuplicate{
 	 /**
      * Main.
      * @param array - array.
