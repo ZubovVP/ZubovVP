@@ -1,6 +1,6 @@
 package ru.job4j;
 
-import java.lang
+import java.lang.*;
 
 public class Max {
 	public int max(int first , int second) {
@@ -8,6 +8,6 @@ public class Max {
       }
 	public int max(int first, int second, int third) {
 		int max = first > second ? first : second;
-		return max > third ? max : third 
+		return max > third ? max : third;
 	}
 }

@@ -9,21 +9,21 @@ import java.util.Arrays;
  * @version $Id$
  * @since 0.1
  */
- public class ArrayDuplicate{
+ public class ArrayDuplicate {
 	 /**
      * Main.
      * @param array - array.
      */
-	public String[] remove(String[] array){
+	public String[] remove(String[] array) {
 		int uniqueness = array.length;
-		for(int outside = 0; outside<uniqueness; outside++){
-			for(int inside = 0; inside<uniqueness; inside++ ){
-				if(array[outside].equals(array[inside])){
+		for (int outside = 0; outside < uniqueness; outside ++){
+			for (int inside = outside + 1; inside < uniqueness; inside ++ ){
+				if (array[outside].equals(array[inside])) {
 					String name = array[inside];
-					array[inside] = array[uniqueness-1];
-					array[uniqueness-1] = name;
-					uniqueness--;
-					inside--;
+					array[inside] = array[uniqueness - 1];
+					array[uniqueness - 1] = name;
+					uniqueness --;
+					inside -- ;
 				}
 			}
 		}

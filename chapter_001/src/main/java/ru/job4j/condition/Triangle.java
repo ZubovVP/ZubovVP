@@ -9,7 +9,7 @@ public class Triangle {
 			this.b=b;		
 			this.c=c;
 		}
-		public doouble distance(Point left, Point right){
+		public double distance(Point left, Point right){
 			return Math.sqrt((left.b - left.a)^2 + (right.b + right.a)^2);
 		}
 		public double period(double ab, double ac, double bc){

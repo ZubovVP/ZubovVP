@@ -3,7 +3,7 @@ package ru.job4j.array;
 public class Turn{
 	public int[] back(int[] array){
 		//Зададим условия для массива с чётным количеством переменных
-		if (array %2==0){
+		if (array.length %2==0){
 			for (int x = 0; x<array.length/2; x++){
 				/*Присвоим переменной значения из масива
 				(чтобы потом при обмене значений не терялись переменные)*/
@@ -24,10 +24,10 @@ public class Turn{
 				int w = array[array.length - (y+1)];
 				//Производим замену переменных в массиве
 				array[array.length - (y + 1)] = q;
-				a[y] = w;
+				array[y] = w;
 			}
 			
 		}	//Возращем массив
-			return array[];
+			return array;
 		}
 	}

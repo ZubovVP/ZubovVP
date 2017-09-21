@@ -2,7 +2,7 @@ package ru.job4j.loop;
 
 public class Paint{
 	public String piramid(int h){
-		//Создадим объектную переменную 
+		//Создадим объектную переменную
 		StringBuilder pyramid = new StringBuilder();
 		//Указываем условия для определия высоты пирамиды
 		for(int x=1; x<=h; x++){
@@ -26,5 +26,7 @@ public class Paint{
 			}
 			pyramid.append(System.getProperty("line.separator"));
 		}
+
+		return pyramid.toString();
 	}
 }
