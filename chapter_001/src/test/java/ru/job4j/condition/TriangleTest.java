@@ -5,6 +5,15 @@ import org.junit.Test;
 import static org.hamrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
+
+/**
+ * Test.
+ *
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+
 public void whenAreaSetThreePointsThenTriangleArea() {
     // создаем три объекта класса Point.
     Point a = new Point(0, 0);

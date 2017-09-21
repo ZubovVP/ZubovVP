@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-**
+/**
 * Test.
 *
 * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru)
@@ -18,7 +18,7 @@ public class CheckDuplicateTest{
 	public void whenSecondWordConsistsOfFirstWoord(){
 		String consists = new String();
 		consists.origin = "Привет";
-		consists.sub = "еит";
+		consists.sub = "иве";
 		Boolean result = consists.contains(origin, sub);
 		boolean expected = true;
 		assertThat(result, is (expected));
