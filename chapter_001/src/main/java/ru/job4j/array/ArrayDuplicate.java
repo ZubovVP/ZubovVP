@@ -9,11 +9,14 @@ import java.util.Arrays;
  * @version $Id$
  * @since 0.1
  */
+
  public class ArrayDuplicate {
+
 	 /**
      * Main.
      * @param array - array.
      */
+
 	public String[] remove(String[] array) {
 		int uniqueness = array.length;
 		for (int outside = 0; outside < uniqueness; outside ++){

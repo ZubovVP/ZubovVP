@@ -16,7 +16,9 @@ import static org.junit.Assert.assertThat;
 */
 
 public class ArrayDuplicatesTest{
+
 	@Test
+
 	public void whenRemoveDuplicatesThenArrayWithoutDuplicate(){
 		String[] original = {"Раз", "Три", "Два", "Три", "Раз", "Четыре"};
 		Box duplicate = new Box();
