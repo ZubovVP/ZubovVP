@@ -1,12 +1,19 @@
 package ru.job4j.loop;
 
-import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
+/**
+ * Test.
+ *
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru)
+ * @version $Id$
+ * @since 0.1
+ */
 public class BoardTest {
-    @Test
+    /**
+	* Test add.
+	*/
     public void whenPaintBoardWithWidthThreeAndHeightThreeThenStringWithThreeColsAndThreeRows() {
         Board board = new Board();
         String result = board.paint(3, 3);
@@ -14,8 +21,9 @@ public class BoardTest {
         String expected = String.format("x x%s x %sx x%s", line, line, line);
         assertThat(result, is(expected));
  }
-
-    @Test
+    /**
+	* Test add.
+	*/
     public void whenPaintBoardWithWidthFiveAndHeightFourThenStringWithFiveColsAndFourRows() {
 		//Создаём объект
         Board board2 = new Board();
@@ -24,7 +32,7 @@ public class BoardTest {
 		//Присваеваем переменной line пропуск троки
 		final String line = System.getProperty("line.separator");
 		//Указываем ожидаемый результат
-		String expected = String.format ("x x x%s x x %sx x x%s x x %s x x ", line, line, line, line, line);
+		String expected = String.format("x x x%s x x %sx x x%s x x %s x x ", line, line, line, line, line);
 		//Сравниваем ожидаемый результат с тем что выходит из метода
 		assertThat(result, is(expected));
     }
