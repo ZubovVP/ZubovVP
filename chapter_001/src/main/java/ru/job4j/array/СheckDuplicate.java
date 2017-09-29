@@ -17,17 +17,19 @@ public class CheckDuplicate {
 	boolean check = false;
         char[] arrayOrigin = origin.toCharArray();
         char[] arraySub = sub.toCharArray();
-       outer: for (int outsaid = 0; outsaid < arraySub.length; outsaid++) {
+       for (int outsaid = 0; outsaid < arraySub.length; outsaid++) {
            for (int inside = 0; inside < arrayOrigin.length; inside++) {
                if (arraySub[outsaid] == arrayOrigin[inside]) {
                    check = true;
-                   continue outer;
+				   break;
                } else {
                    check = false;
-				   break outer;
                }
             }
-			return check;
+			if (check == false) {
+				break;
+			}
 		}
+		return check;
 	}
  }
