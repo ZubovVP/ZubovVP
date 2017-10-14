@@ -5,34 +5,43 @@ package ru.job4j.specialty;
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
  * @version $Id$
  * @since 0.1
- */
+  */
 public class Profession {
 	/**
      * Добавления переменнной age.
      */
-	private int age;
+	public int age;
 	/**
-     * Добавления переменнной profileEducation.
+     * Добавления переменнной name.
      */
-	private boolean profileEducation;
+	public String name;
 	/**
-     * Добавления переменнной pasport.
+     * Добавления переменнной skill.
      */
-	private boolean pasport;
+	 public String skill;
 	/**
-     * Добавления переменнной practicalSkils.
+     * Конструктор. 
      */
-	private boolean practicalSkils;
+	public Profession(){
+		
+	}
 	/**
      * Конструктор.
+	 * @param name - имя объекта
      * @param age - возраст объекта
-	 * @param profileEducation - образование по профилю объекта
-	 * @param pasport - наличие паспорта у объекта
+	 * @param skill - навык
      */
-	public Profession(int age, boolean profileEducation, boolean pasport) {
+	 public Profession(String name, int age, String skill) {
+		this.name = name;
 		this.age = age;
-		this.profileEducation = profileEducation;
-		this.pasport = pasport;
+		this.skill = skill;
+	}
+	/**
+     * Конструктор.
+	 * @param name - имя объекта
+     */
+	public Profession(String name) {
+		this.name = name;
 	}
 	/**
      * Геттер.
@@ -43,30 +52,16 @@ public class Profession {
 	}
 	/**
      * Геттер.
-	 * @return profileEducation - позволяет использовать переменную profileEducation
+	 * @return name - позволяет использовать переменную name
      */
-	public boolean getProfileEducation() {
-		return this.profileEducation;
+	public String getName() {
+		return this.name;
 	}
 	/**
      * Геттер.
-	 * @return pasport - позволяет использовать переменную pasport
+	 * @return skill - позволяет использовать переменную skill
      */
-	public boolean getPasport() {
-		return this.pasport;
-	}
-	/**
-     * Геттер.
-	 * @return practicalSkils - позволяет использовать переменную practicalSkils
-     */
-	public boolean getPracticalSkils() {
-		return this.practicalSkils;
-	}
-	/**
-     * Метод позволяет проводит соответствия объекта с требованиями для устройства на работу.
-	 * @return  - отправляется результат о соответствия объекта с требованиями.
-     */
-	public boolean requirementsForWork() {
-	return (age >= 18 && pasport == true) ? true : false;
+	public String getSkill() {
+		return this.skill;
 	}
 }

@@ -8,10 +8,10 @@ package ru.job4j.specialty;
  */
 public class Teacher extends Profession {
 	/**
-     * Метод наследует парметры класса Profession и позволяет проводить сравнение парметров объекта с парметрами методов.
-	 * @return treatmentOfPeople - отправляет результат, может ли данный объект лечить людей.
+     * Метод выводит строку в которой описывается действие между двумя объектами.
+	 * @return answer - отправляет результат.
      */
-	public boolean treatmentOfPeople() {
-		return (age >= 18 && profileEducation == true) ? true : false;
-	}
+		public String teach (Man man){
+			return String action = thea.getName() + " " + thea.getSkill() + " " + man.getName()  + "a";
+		}
 }
