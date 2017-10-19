@@ -1,8 +1,8 @@
 package ru.job4j.specialty;
 import org.junit.Test;
-import org.junit.Test.
 
 import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static junit.framework.TestCase.assertEquals;
 
 /**
 * Test.
@@ -11,16 +11,16 @@ import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 * @version $Id$
 * @since 0.1
 */
-public class TheacherTest {
+public class TeacherTest {
 	/**
 	* Test add.
 	*/
 	@Test
 	public void whenMakeObjectTeacherAndMakeObjectHuman() {
-		Profession thea = new Theacher("Анастасия", 22, "учит");
-		Profession hum = new Theacher("Александр");
-		String result = thea.teach(Profession hum);
+		Teacher thea = new Teacher("Анастасия", 22, "учит");
+		Profession man = new Profession("Александр");
+		String result = thea.teach(man);
 		String expected = "Анастасия учит Александра";
-		assertThat(result, is(expected));
+		assertEquals(result, is(expected));
 	}
 }

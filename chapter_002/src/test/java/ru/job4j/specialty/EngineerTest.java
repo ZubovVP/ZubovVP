@@ -2,6 +2,7 @@ package ru.job4j.specialty;
 import org.junit.Test;
 
 import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static junit.framework.TestCase.assertEquals;
 
 /**
 * Test.
@@ -16,10 +17,10 @@ public class EngineerTest {
 	*/
 	@Test
 	public void whenMakeObjectEngineerAndMakeObjectHuman() {
-		Profession eng = new Engineer("Виталий", 40, "расчёт");
-		Profession hum = new Human("Михаил");
-		String result = eng.calculate(Human hum);
+		Engineer eng = new Engineer("Виталий", 40, "расчёт");
+		Profession man = new Profession("Михаил");
+		String result = eng.calculate(man);
 		String expected = "Виталий делает расчёт для Михаила";
-		assertThat(result, is(expected));
+		assertEquals(result, is(expected));
 	}
 }

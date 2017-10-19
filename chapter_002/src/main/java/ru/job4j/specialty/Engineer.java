@@ -7,7 +7,22 @@ package ru.job4j.specialty;
  * @since 0.1
  */
 public class Engineer extends Profession {
-		public String calculate (Man man){
-			return String answer = eng.getName() + " делает " + eng.getSkill() + " для " + man.getName() + "a");
+	/**
+	 * Конструктор.
+	 * @param name - имя объекта
+	 * @param age - возраст объекта
+	 * @param skill - навык
+	 */
+	public Engineer(String name, int age, String skill){
+		super(name, age, skill);
+	}
+	/**
+	 * Метод который отправляет строку с действием.
+	 * @param  man - объект
+	 * @return answer - строка с действием
+	 */
+		public String calculate (Profession man){
+			String answer = this.name + " делает " + this.skill + " для " + man.getName() + "a";
+			return answer;
 		}
 }

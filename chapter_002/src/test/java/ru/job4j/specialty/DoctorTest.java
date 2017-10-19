@@ -2,6 +2,7 @@ package ru.job4j.specialty;
 import org.junit.Test;
 
 import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static junit.framework.TestCase.assertEquals;
 
 /**
 * Test.
@@ -17,9 +18,10 @@ public class DoctorTest extends Profession {
 	@Test
 	public void whenMakeObjectDoctorAndMakeObjectPacient() {
 		Doctor doc = new Doctor("Василий", 25, "лечит");
-		Doctor pacient = new Doctor("Игнат");
-		String result = doc.heal(Doctor pacient);
-		String expected = "Василий лечит Игната";
-		assertThat(result, is(expected));
+		Profession pacient = new Profession("Игнат");
+		String result = doc.heal(pacient);
+		String expected = "Василий лечит Игнатa";
+		assertEquals(result, expected);
+
 	}
 }

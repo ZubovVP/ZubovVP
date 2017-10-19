@@ -8,10 +8,20 @@ package ru.job4j.specialty;
  */
 public class Teacher extends Profession {
 	/**
-     * Метод выводит строку в которой описывается действие между двумя объектами.
+	 * Конструктор.
+	 * @param name - имя объекта
+	 * @param age - возраст объекта
+	 * @param skill - навык
+	 */
+	public Teacher(String name, int age, String skill){
+		super(name, age, skill);
+	}
+	/**
+	 * Метод выводит строку в которой описывается действие между двумя объектами.
 	 * @return answer - отправляет результат.
-     */
-		public String teach (Man man){
-			return String action = thea.getName() + " " + thea.getSkill() + " " + man.getName()  + "a";
+	 */
+		public String teach (Profession man){
+			String answer = this.name + " " + this.skill + " " + man.getName()  + "a";
+			return answer;
 		}
 }
