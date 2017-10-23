@@ -21,6 +21,6 @@ public class EngineerTest {
 		Profession man = new Profession("Михаил");
 		String result = eng.calculate(man);
 		String expected = "Виталий делает расчёт для Михаила";
-		assertEquals(result, is(expected));
+		assertEquals(result, expected);
 	}
 }

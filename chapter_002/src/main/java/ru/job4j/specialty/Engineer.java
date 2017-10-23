@@ -22,7 +22,7 @@ public class Engineer extends Profession {
 	 * @return answer - строка с действием
 	 */
 		public String calculate (Profession man){
-			String answer = this.name + " делает " + this.skill + " для " + man.getName() + "a";
+			String answer = this.name + " делает " + this.skill + " для " + man.getName() + "а";
 			return answer;
 		}
 }

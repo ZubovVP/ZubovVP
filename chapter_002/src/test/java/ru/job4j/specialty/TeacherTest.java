@@ -21,6 +21,6 @@ public class TeacherTest {
 		Profession man = new Profession("Александр");
 		String result = thea.teach(man);
 		String expected = "Анастасия учит Александра";
-		assertEquals(result, is(expected));
+		assertEquals(result, expected);
 	}
 }

@@ -21,7 +21,7 @@ public class Teacher extends Profession {
 	 * @return answer - отправляет результат.
 	 */
 		public String teach (Profession man){
-			String answer = this.name + " " + this.skill + " " + man.getName()  + "a";
+			String answer = this.name + " " + this.skill + " " + man.getName()  + "а";
 			return answer;
 		}
 }
