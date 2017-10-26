@@ -60,7 +60,7 @@ public class TrackerTest {
 		//изменяем объект в массиве по id
 		tracker.update(itemTwo);
 		//Проверяем что данный объект сооветствует ожиданию
-		assertThat(tracker.getAll()[0], is(itemTwo));
+		assertEquals(tracker.getAll()[0], itemTwo);
 	}
 	@Test
 	public void WhenWeDeleteItem() {
