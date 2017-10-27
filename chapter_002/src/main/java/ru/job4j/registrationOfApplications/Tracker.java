@@ -24,21 +24,22 @@ public class Tracker {
 		return result;
 	}
 	protected void update(Item item) {
-		for(Item itemOne : items){
-			if(itemOne !=null && itemOne.getId().equals(item.getId())){
-				itemOne = item;
+		for(int i = 0; i < this.items.length; i++) {
+			Item it = this.items[i];
+			if(it != null && it.getId().equals(item.getId())) {
+				this.items[i] = item;
 			}
 		}
 	}
 	protected void delete(String id) {
-		for (Item item : items) {
-			if (item != null && item.getId().equals(id)){
-				 for(int x = this.position; x < items.length-1; x++ ){
-				 	items[x] = items[x+1];
+		for (int i = 0; i < this.items.length; i++) {
+			if (this.items [i] != null && this.items[i].getId().equals(id)){
+				 for(  ; i < this.position-1; i++ ){
+				 	this.items[i] = this.items[i+1];
 				 }
 				 break;
-
 			}
+			this.position--;
 		}
 	}
 	protected Item[] getAll() {

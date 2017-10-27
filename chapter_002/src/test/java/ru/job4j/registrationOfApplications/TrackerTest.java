@@ -77,6 +77,6 @@ public class TrackerTest {
 		//Удаляем объект itemOne по id
 		tracker.delete(itemOne.getId());
 		//проверяем что в итоге остаётся в массиве items после удаления
-		assertEquals(tracker.getAll()[0], is(itemTwo));
+		assertEquals(tracker.getAll()[0], itemTwo);
 	}
 }
