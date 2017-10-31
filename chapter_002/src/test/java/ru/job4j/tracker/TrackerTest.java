@@ -1,4 +1,4 @@
-package ru.job4j.registrationOfApplications;
+package ru.job4j.tracker;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -18,8 +18,7 @@ public class TrackerTest {
 	 * Test add.
 	 */
 	@Test
-	public void whenAddNewItemThenTrackerHasSameItem()
-	{
+	public void whenAddNewItemThenTrackerHasSameItem() {
 		//Создём объект tracker
 		Tracker tracker = new Tracker();
 		//Cоздаём объект itemOne и инициализируем его поля
@@ -30,7 +29,7 @@ public class TrackerTest {
 		assertThat(tracker.getAll()[0], is(itemOne));
 	}
 	@Test
-	public void whenCheckIdItemOnewithIdItemTwo(){
+	public void whenCheckIdItemOnewithIdItemTwo() {
 		//Создём объект tracker
 		Tracker tracker = new Tracker();
 		//Cоздаём объект itemOne и инициализируем его поля
@@ -42,11 +41,11 @@ public class TrackerTest {
 		// добаляем объект itemTwo в массив items
 		tracker.add(itemTwo);
 		//Проверяем что у каждого объекта присвоен свой id
-		assertNotEquals(item.getId(),itemTwo.getId());
+		assertNotEquals(item.getId(), itemTwo.getId());
 }
 
 	@Test
-	public void WhenWeUpdateItemOneOnItemTwo() {
+	public void whenUpdateItemOneOnItemTwo() {
 		//Создём объект tracker
 		Tracker tracker = new Tracker();
 		//Cоздаём объект itemOne и инициализируем его поля
@@ -63,7 +62,7 @@ public class TrackerTest {
 		assertEquals(tracker.getAll()[0], itemTwo);
 	}
 	@Test
-	public void WhenWeDeleteItem() {
+	public void whenWeDeleteItem() {
 		//Создём объект tracker
 		Tracker tracker = new Tracker();
 		//Cоздаём объект itemOne и инициализируем его поля

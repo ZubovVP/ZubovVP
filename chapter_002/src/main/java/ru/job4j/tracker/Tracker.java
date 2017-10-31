@@ -1,4 +1,4 @@
-package ru.job4j.registrationOfApplications;
+package ru.job4j.tracker;
 
 import java.util.*;
 
@@ -23,19 +23,29 @@ public class Tracker {
 		}
 		return result;
 	}
+	protected Item findByName(String name) {
+		Item result = null;
+		for (Item item : items) {
+			if (item != null && item.getName().equals(name)) {
+				result = item;
+				break;
+			}
+		}
+		return result;
+	}
 	protected void update(Item item) {
-		for(int i = 0; i < this.items.length; i++) {
+		for (int i = 0; i < this.items.length; i++) {
 			Item it = this.items[i];
-			if(it != null && it.getId().equals(item.getId())) {
+			if (it != null && it.getId().equals(item.getId())) {
 				this.items[i] = item;
 			}
 		}
 	}
 	protected void delete(String id) {
 		for (int i = 0; i < this.items.length; i++) {
-			if (this.items [i] != null && this.items[i].getId().equals(id)){
-				 for(  ; i < this.position-1; i++ ){
-				 	this.items[i] = this.items[i+1];
+			if (this.items [i] != null && this.items[i].getId().equals(id)) {
+				 for (  ; i < this.position - 1; i++) {
+				 	this.items[i] = this.items[i + 1];
 				 }
 				 break;
 			}
