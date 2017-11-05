@@ -1,11 +1,13 @@
-package ru.job4j.tracker;
+package ru.job4j.start;
+
+import ru.job4j.start.Tracker;
+import ru.job4j.models.*;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
-
 /**
  * Test.
  *

@@ -1,4 +1,6 @@
-package ru.job4j.tracker;
+package ru.job4j.start;
+
+import ru.job4j.models.*;
 
 public class StartUI {
 
@@ -19,31 +21,33 @@ public class StartUI {
 		Tracker tracker = new Tracker();
 
 		while(1 > 0) {
-			int number = input.askInt("0. Add new Item" + System.getProperty("line.separator") + "1. Show all items" + System.getProperty("line.separator") + "2. Edit item" + System.getProperty("line.separator") + "3. Delete item" + System.getProperty("line.separator") + "4. Find item by Id" + System.getProperty("line.separator") + "5. Find items by name" + System.getProperty("line.separator") + "6. Exit Program" + System.getProperty("line.separator") + "Please, write number");
+			int number = input.askInt("0. Add new Item" + System.getProperty("line.separator") + "1. Show all items" + System.getProperty("line.separator") + "2. Edit item" + System.getProperty("line.separator") + "3. Delete item" + System.getProperty("line.separator") + "4. Find item by Id" + System.getProperty("line.separator") + "5. Find items by name" + System.getProperty("line.separator") + "6. Exit Program" + System.getProperty("line.separator") + "Please, write number : ");
 			if (number == addNewItem ) {
-				name = input.askString("Please, write name");
-				description = input.askString("Please, write description");
+				name = input.askString("Please, write name :");
+				description = input.askString("Please, write description :");
 				time = System.currentTimeMillis();
-				tracker.add(new Item(name , description, time));
-				System.out.println("Item succsessful added!");
+					tracker.add(new Item(name, description, time));
+					System.out.println("Item succsessful added!");
 			} else if (number == showAllItems) {
 				System.out.println("Name, Description, Id");
 				for(int it = 0; it <tracker.getAll().length && tracker.getAll()[it] != null; it++ ){
 					System.out.println(tracker.getAll()[it].getName() + ", " + tracker.getAll()[it].getDescription() + ", " + tracker.getAll()[it].getId() + System.getProperty("line.separator"));
 				}
 			} else if(number == editItem){
-				name = input.askString("Please, write new name");
-				description = input.askString("Please, write new description");
+				name = input.askString("Please, write new name :");
+				if(name != null) {
+					description = input.askString("Please, write new description :");
+				}
 				time = System.currentTimeMillis();
 				tracker.update(new Item(name, description, time));
 				System.out.println("Item succsessful edit!");
 			} else if(number == deleteItem){
-				tracker.delete(input.askString("Please, write Id"));
+				tracker.delete(input.askString("Please, write Id : "));
 				System.out.println("Item succsessful delete!");
 			} else if(number == findItemById){
-				System.out.println(tracker.findById(input.askString("Please, write Id")));
+				System.out.println(tracker.findById(input.askString("Please, write Id : ")));
 			} else if(number == findItemByName){
-				System.out.println(tracker.findById(input.askString("Please, write name")));
+				System.out.println(tracker.findById(input.askString("Please, write name : ")));
 			} else if(number == exitProgram){
 				break;
 			}

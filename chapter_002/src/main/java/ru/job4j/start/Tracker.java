@@ -1,5 +1,6 @@
-package ru.job4j.tracker;
+package ru.job4j.start;
 
+import ru.job4j.models.*;
 import java.util.*;
 
 public class Tracker {
@@ -8,7 +9,7 @@ public class Tracker {
 	private int position = 0;
 	private static final Random RN = new Random();
 
-	protected Item add(Item item) {
+	public Item add(Item item) {
 		item.setId(this.generateId());
 		this.items[position++] = item;
 		return item;
@@ -33,7 +34,7 @@ public class Tracker {
 		}
 		return result;
 	}
-	protected void update(Item item) {
+	public void update(Item item) {
 		for (int i = 0; i < this.items.length; i++) {
 			Item it = this.items[i];
 			if (it != null && it.getId().equals(item.getId())) {
@@ -41,7 +42,7 @@ public class Tracker {
 			}
 		}
 	}
-	protected void delete(String id) {
+	public void delete(String id) {
 		for (int i = 0; i < this.items.length; i++) {
 			if (this.items [i] != null && this.items[i].getId().equals(id)) {
 				 for (  ; i < this.position - 1; i++) {
@@ -52,7 +53,7 @@ public class Tracker {
 			this.position--;
 		}
 	}
-	protected Item[] getAll() {
+	public Item[] getAll() {
 		Item[] result = new Item[position];
 		for (int index = 0; index != this.position; index++) {
 			result[index] = this.items[index];

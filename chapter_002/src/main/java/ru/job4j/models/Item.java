@@ -1,4 +1,5 @@
-package ru.job4j.tracker;
+package ru.job4j.models;
+
 public class Item {
 	private String id;
 	public String name;
