@@ -1,5 +1,6 @@
 package ru.job4j.start;
 
-public interface InputString {
+public interface Input {
+	int askInt(String question);
 	String askString(String question);
 }
