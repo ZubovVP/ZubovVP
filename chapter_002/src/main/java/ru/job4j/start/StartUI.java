@@ -3,42 +3,81 @@ package ru.job4j.start;
 import ru.job4j.models.*;
 
 public class StartUI {
-
-	private static final int AddNewItem = 0;
-	private static final int ShowAllItems = 1;
-	private static final int EditItem = 2;
-	private static final int DeleteItem = 3;
-	private static final int FindItemById = 4;
-	private static final int FindItemByName = 5;
-	private static final int ExitProgram = 6;
-
+	private static String ADD_NEW_ITEM = "0";
+	private static String SHOW_ALL_ITEMS = "1";
+	private static String EDIT_ITEM = "2";
+	private static String DELETE_ITEM = "3";
+	private static String FIND_ITEM_BY_ID = "4";
+	private static String FIND_ITEM_BY_NAME = "5";
+	private static String EXIT_PROGRAM = "6";
 	public static void main (String[] args) {
-		ConsoleInput input = new ConsoleInput();
+	ConsoleInput input = new ConsoleInput();
 		Tracker tracker = new Tracker();
+		String name;
+		String description;
+		String id;
+		Item it = new Item();
 
-		while(1 > 0) {
-			int number = input.askInt("0. Add new Item" + System.getProperty("line.separator") + "1. Show all items" + System.getProperty("line.separator") + "2. Edit item" + System.getProperty("line.separator") + "3. Delete item" + System.getProperty("line.separator") + "4. Find item by Id" + System.getProperty("line.separator") + "5. Find items by name" + System.getProperty("line.separator") + "6. Exit Program" + System.getProperty("line.separator") + "Please, write number : ");
-			if (number == AddNewItem ) {
-					tracker.add(new Item(input.askString("Please, write name :"), input.askString("Please, write description :"), System.currentTimeMillis()));
-					System.out.println("Item succsessful added!" + System.getProperty("line.separator"));
-			} else if (number == ShowAllItems) {
-				System.out.println("Name, Description, Id");
-				for(int it = 0; it <tracker.getAll().length && tracker.getAll()[it] != null; it++ ){
-					System.out.println(tracker.getAll()[it].getName() + ", " + tracker.getAll()[it].getDescription() + ", " + tracker.getAll()[it].getId() + System.getProperty("line.separator"));
+		while(1>0){
+			System.getProperty("line.separator");
+			System.out.println("0.Add new item");
+			System.out.println("1.Show all items");
+			System.out.println("2.Edit item");
+			System.out.println("3.Delete item");
+			System.out.println("4.Find item by Id");
+			System.out.println("5.Find item by name");
+			System.out.println("6.Exit program");
+			String number = input.ask("Please, write number : ");
+			if(number.equals(ADD_NEW_ITEM)){
+				name = input.ask("Please, enter the task's name : ");
+				description = input.ask("Please, enter the task's description : ");
+				tracker.add(new Item (name, description, System.currentTimeMillis()));
+				System.out.println("Item sucsessful added! " + System.getProperty("line.separator"));
+				continue;
+			} else if(number.equals(SHOW_ALL_ITEMS)){
+				for(Item item : tracker.getAll()){
+					System.out.println("Name : " + item.getName() + "; ");
+					System.out.println("Descreption : " + item.getDescription() + "; ");
+					System.out.println("Id :" + item.getId() + " ;");
+					System.out.println("Create :" + item.getCreate() + "." + System.getProperty("line.separator"));
+					continue;
 				}
-			} else if(number == EditItem){
-				tracker.update(new Item(input.askString("Please, write new name :"), input.askString("Please, write new description :"), System.currentTimeMillis()));
-				System.out.println("Item succsessful edit!");
-			} else if(number == DeleteItem){
-				tracker.delete(input.askString("Please, write Id : "));
-				System.out.println("Item succsessful delete!");
-			} else if(number == FindItemById){
-				System.out.println(tracker.findById(input.askString("Please, write Id : ")));
-			} else if(number == FindItemByName){
-				System.out.println(tracker.findById(input.askString("Please, write name : ")));
-			} else if(number == ExitProgram){
+			} else if (number.equals(EDIT_ITEM)){
+					id = input.ask("Please, enter the task's id : ");
+					name = input.ask("Please, enter new name : ");
+					description = input.ask("Please, enter new description : ");
+					it = tracker.findById(id);
+					it.name = name;
+					it.description = description;
+				System.out.println("Item edited ! " + System.getProperty("line.separator"));
+				continue;
+				} else if (number.equals(DELETE_ITEM)){
+				id = input.ask("Please, enter the task's id : ");
+				tracker.delete(id);
+				System.out.println("Item deleted ! " + System.getProperty("line.separator"));
+				continue;
+			} else if(number.equals(FIND_ITEM_BY_ID)){
+				id = input.ask("Please, enter the task's id: ");
+				it = tracker.findById(id);
+				System.out.println("Name : " + it.getName() + ", ");
+				System.out.print("Descreption : " + it.getDescription() + ", ");
+				System.out.print("Id : " + it.getId());
+				System.out.print("Create : " + it.getCreate() + System.getProperty("line.separator"));
+				continue;
+			} else if (number.equals(FIND_ITEM_BY_NAME)){
+				name = input.ask("Please, enter the task's name : ");
+				it = tracker.findByName(name);
+				System.out.println("Name : " + it.getName() + ", ");
+				System.out.print("Descreption : " + it.getDescription() + ", ");
+				System.out.print("Id : " + it.getId());
+				System.out.print("Create : " + it.getCreate() + System.getProperty("line.separator"));
+				continue;
+			} else if (number.equals(EXIT_PROGRAM)){
 				break;
+			} else{
+				System.out.println("Please write currect number" + System.getProperty("line.separator"));
+				continue;
 			}
 		}
+		}
 	}
-}
