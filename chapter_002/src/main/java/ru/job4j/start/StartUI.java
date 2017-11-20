@@ -10,13 +10,23 @@ public class StartUI {
 	private static String FIND_ITEM_BY_ID = "4";
 	private static String FIND_ITEM_BY_NAME = "5";
 	private static String EXIT_PROGRAM = "6";
-	public static void main (String[] args) {
-	ConsoleInput input = new ConsoleInput();
-		Tracker tracker = new Tracker();
+	private Input input;
+	private Tracker tracker = new Tracker();
+
+	public StartUI(Input input) {
+		this.input = input;
+	}
+
+	public StartUI(Input input, Tracker tracker) {
+		this.input = input;
+		this.tracker = tracker;
+	}
+
+	public void init(){
+		Item it = new Item();
 		String name;
 		String description;
 		String id;
-		Item it = new Item();
 
 		while(1>0){
 			String number = input.ask(System.getProperty("line.separator") + "0. Add new Item" + System.getProperty("line.separator") + "1. Show all items" + System.getProperty("line.separator") + "2. Edit item" + System.getProperty("line.separator") + "3. Delete item" + System.getProperty("line.separator") + "4. Find item by Id" + System.getProperty("line.separator") + "5. Find items by name" + System.getProperty("line.separator") + "6. Exit Program" + System.getProperty("line.separator")+ "Please, write number : ");
@@ -62,5 +72,11 @@ public class StartUI {
 				continue;
 			}
 		}
+		
+	}
+	
+	public static void main (String[] args) {
+		Input input = new ConsoleInput();
+		new StartUI(input).init();
 		}
 	}
