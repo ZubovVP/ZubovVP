@@ -13,16 +13,16 @@ public class StubInputTest {
          Input input = new StubInput(new String[]{"0", "test name", "desc" , "0", "test name2", "desc2", "6"});//Создаём последовательность действий
          new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
          assertThat(tracker.getAll()[1].getName(), is("test name2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        assertThat(tracker.getAll()[1].getDescription(), is("desc2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
+         assertThat(tracker.getAll()[1].getDescription(), is("desc2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
     }
     @Test
     public void whenUserEditItem(){
         Tracker tracker = new Tracker(); //Создаём Трекер
         Item item = tracker.add(new Item());//Напрямую добавляем заявку
-        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "0", "TestName2", "TestDesc2","0", "TestName3", "TestDesc3", "2", tracker.getAll()[1].getId(), "test name4", "desc4", "6"});//Создаём последовательность действий
+        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "0", "TestName2", "TestDesc2","0", "TestName3", "TestDesc3", "2", tracker.getAll()[2].getId(), "test name4", "desc4", "6"});//Создаём последовательность действий
         new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
-        assertThat(tracker.getAll()[1].getName(), is("test name4"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        assertThat(tracker.getAll()[1].getDescription(), is("desc4"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
+        assertThat(tracker.getAll()[2].getName(), is("test name4"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
+        assertThat(tracker.getAll()[2].getDescription(), is("desc4"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
         //Если я данную операцию проделаю с нулевым элементом массива, то тест пройдёт, а с первым элементом не продучается, ошибка - java.lang.ArrayIndexOutOfBoundsException: 1, хотя я выхожу из цикла StartUI
     }
     @Test

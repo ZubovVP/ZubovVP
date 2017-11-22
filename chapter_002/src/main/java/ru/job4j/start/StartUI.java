@@ -3,23 +3,23 @@ package ru.job4j.start;
 import ru.job4j.models.*;
 
 public class StartUI {
-	private static String ADD_NEW_ITEM = "0";
-	private static String SHOW_ALL_ITEMS = "1";
-	private static String EDIT_ITEM = "2";
-	private static String DELETE_ITEM = "3";
-	private static String FIND_ITEM_BY_ID = "4";
-	private static String FIND_ITEM_BY_NAME = "5";
-	private static String EXIT_PROGRAM = "6";
+	private static final String ADD_NEW_ITEM = "0";
+	private static final String SHOW_ALL_ITEMS = "1";
+	private static final String EDIT_ITEM = "2";
+	private static final String DELETE_ITEM = "3";
+	private static final String FIND_ITEM_BY_ID = "4";
+	private static final String FIND_ITEM_BY_NAME = "5";
+	private static final String EXIT_PROGRAM = "6";
 	private Input input;
-	private Tracker tracker = new Tracker();
-
-	public StartUI(Input input) {
-		this.input = input;
-	}
+	private static Tracker tracker = new Tracker();
 
 	public StartUI(Input input, Tracker tracker) {
 		this.input = input;
 		this.tracker = tracker;
+	}
+	public static void main (String[] args) {
+		Input input = new ConsoleInput();
+		new StartUI(input, tracker).init();
 	}
 
 	public void init(){
@@ -75,8 +75,5 @@ public class StartUI {
 		
 	}
 	
-	public static void main (String[] args) {
-		Input input = new ConsoleInput();
-		new StartUI(input).init();
-		}
+
 	}

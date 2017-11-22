@@ -35,10 +35,10 @@ public class Tracker {
 		return result;
 	}
 	public void update(Item item) {
-		for (int i = 0; i < this.items.length; i++) {
-			Item it = this.items[i];
-			if (it != null && it.getId().equals(item.getId())) {
-				this.items[i] = item;
+			for(int i = 0; i < this.items.length; i++) {
+				Item it = this.items[i];
+				if(it != null && it.getId().equals(item.getId())) {
+					this.items[i] = item;
 			}
 		}
 	}
