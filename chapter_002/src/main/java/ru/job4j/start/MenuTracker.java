@@ -44,19 +44,28 @@ public class MenuTracker {
 	private String name;
 	private String description;
 	private String id;
+	private int[] ranges;
+	private int x = 0;
 
 	public MenuTracker(Input input, Tracker tracker) {
 		this.input = input;
 		this.tracker = tracker;
 	}
 
-	public void fillActions() {
+	public int[] fillActions() {
 		this.actions[0] = this.new AddItem();
 		this.actions[1] = new MenuTracker.ShowItems();
 		this.actions[2] = new EditItem();
 		this.actions[3] = this.new DeleteItem();
 		this.actions[4] = new FindItemById();
 		this.actions[5] = new FindItemByName();
+		this.ranges = new int[actions.length];
+		while (x < actions.length) {
+			this.ranges[x] = x;
+			x++;
+		}
+
+		return ranges;
 	}
 
 	public void show() {
