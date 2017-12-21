@@ -12,10 +12,8 @@ class EditItem extends BaseAction {
 		String id = input.ask("Please, enter the task's id : ");
 		String name = input.ask("Please, enter new name : ");
 		String description = input.ask("Please, enter new description : ");
-		Item it = new Item();
-		it = tracker.findById(id);
-		it.name = name;
-		it.description = description;
+		tracker.findById(id).setName(name);
+		tracker.findById(id).setDescription(description);
 		System.out.println("Item edited ! " + System.getProperty("line.separator"));
 	}
 }
@@ -28,9 +26,7 @@ class EditItem extends BaseAction {
 		@Override
 		public void execute(Input input, Tracker tracker) {
 			String id = input.ask("Please, enter the task's id: ");
-			Item it = new Item();
-			it = tracker.findById(id);
-			System.out.println(System.getProperty("line.separator") + "Name : " + it.getName() + System.getProperty("line.separator") + "Descreption : " + it.getDescription() + "; " + System.getProperty("line.separator") + "Id : " + it.getId() + "; " + System.getProperty("line.separator") + "Create : " + it.getCreate() + ". ");
+			System.out.println(System.getProperty("line.separator") + "Name : " + tracker.findById(id).getName() + System.getProperty("line.separator") + "Descreption : " + tracker.findById(id).getDescription() + "; " + System.getProperty("line.separator") + "Id : " + tracker.findById(id).getId() + "; " + System.getProperty("line.separator") + "Create : " + tracker.findById(id).getCreate() + ". ");
 		}
 	}
 
@@ -127,9 +123,7 @@ public class MenuTracker {
 				@Override
 				public void execute(Input input, Tracker tracker) {
 					String name = input.ask("Please, enter the task's name : ");
-					Item it = new Item();
-					it = tracker.findByName(name);
-					System.out.println(System.getProperty("line.separator") + "Name : " + it.getName() + System.getProperty("line.separator") + "Descreption : " + it.getDescription() + "; " + System.getProperty("line.separator") + "Id : " + it.getId() + "; " + System.getProperty("line.separator") + "Create : " + it.getCreate() + ". ");
+					System.out.println(System.getProperty("line.separator") + "Name : " + tracker.findByName(name).getName() + System.getProperty("line.separator") + "Descreption : " + tracker.findByName(name).getDescription() + "; " + System.getProperty("line.separator") + "Id : " + tracker.findByName(name).getId() + "; " + System.getProperty("line.separator") + "Create : " + tracker.findByName(name).getCreate() + ". ");
 				}
 			}
 }

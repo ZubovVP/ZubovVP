@@ -3,8 +3,8 @@ package ru.job4j.models;
 public class Item {
 	private String id;
 	public String name;
-	public String description;
-	public long create;
+	private String description;
+	private long create;
 	public Item() {
 	}
 
@@ -27,5 +27,11 @@ public class Item {
 	}
 	public void setId(String id) {
 		this.id = id;  
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
