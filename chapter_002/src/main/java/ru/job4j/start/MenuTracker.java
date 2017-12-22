@@ -26,7 +26,7 @@ class EditItem extends BaseAction {
 		@Override
 		public void execute(Input input, Tracker tracker) {
 			String id = input.ask("Please, enter the task's id: ");
-			System.out.println(System.getProperty("line.separator") + "Name : " + tracker.findById(id).getName() + System.getProperty("line.separator") + "Descreption : " + tracker.findById(id).getDescription() + "; " + System.getProperty("line.separator") + "Id : " + tracker.findById(id).getId() + "; " + System.getProperty("line.separator") + "Create : " + tracker.findById(id).getCreate() + ". ");
+			System.out.printf("%nName: %s;%nDescription: %s;%nId: %s;%nCreate: %s.%n ", tracker.findById(id).getName(), tracker.findById(id).getDescription(), tracker.findById(id).getId(), tracker.findById(id).getCreate());
 		}
 	}
 
@@ -110,7 +110,7 @@ public class MenuTracker {
 			@Override
 			public void execute(Input input, Tracker tracker) {
 				for (Item item : tracker.getAll()) {
-					System.out.println(System.getProperty("line.separator") + "Name : " + item.getName() + "; " + System.getProperty("line.separator") + "Descreption : " + item.getDescription() + "; " + System.getProperty("line.separator") + "Id :" + item.getId() + " ;" + System.getProperty("line.separator") + "Create :" + item.getCreate() + "." + System.getProperty("line.separator"));
+					System.out.printf("%nName: %s;%nDescription: %s;%nId: %s;%nCreate: %s.%n ", item.getName(), item.getDescription(), item.getId(), item.getCreate());
 				}
 			}
 			}
@@ -123,7 +123,8 @@ public class MenuTracker {
 				@Override
 				public void execute(Input input, Tracker tracker) {
 					String name = input.ask("Please, enter the task's name : ");
-					System.out.println(System.getProperty("line.separator") + "Name : " + tracker.findByName(name).getName() + System.getProperty("line.separator") + "Descreption : " + tracker.findByName(name).getDescription() + "; " + System.getProperty("line.separator") + "Id : " + tracker.findByName(name).getId() + "; " + System.getProperty("line.separator") + "Create : " + tracker.findByName(name).getCreate() + ". ");
+					System.out.printf("%nName: %s;%nDescription: %s;%nId: %s;%nCreate: %s.%n ", tracker.findByName(name).getName(), tracker.findByName(name).getDescription(), tracker.findByName(name).getId(), tracker.findByName(name).getCreate());
+
 				}
 			}
 }
