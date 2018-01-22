@@ -44,7 +44,8 @@ public class Triangle {
 	 * @return distance - вывод расстояние между точками
      */
 		public double distance(Point left, Point right) {
-			return Math.sqrt((left.b - left.a) ^ 2 + (right.b + right.a) ^ 2);
+
+			return Math.sqrt((left.getX() - right.getX()) ^ 2 + (left.getY() + right.getY()) ^ 2);
 		}
 	/**
      * Метод позволяет вычислить расстояние между точками.

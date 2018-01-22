@@ -1,6 +1,8 @@
 package ru.job4j.loop;
 
-import static org.hamrest.core.Is.is;
+import org.junit.Test;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 /**
  * Test.
@@ -10,9 +12,7 @@ import static org.junit.Assert.assertThat;
  * @since 0.1
  */
 public class FactorialTest {
-	/**
-	* Test add.
-	*/
+	@Test
 	public void whenNumberFive() {
 		/**
 		* Test add.
@@ -20,17 +20,11 @@ public class FactorialTest {
 		//Создадим объект.
 		Factorial factorialFirst = new Factorial();
 		// Отправим перменную на проверку и при прохождении проверки вычисляем факториал.
-		int result = factorialFirst.exist(5);
+		int result = factorialFirst.calc(5);
 		//Проверяем результат и ожидаемое значение.
-		assertThat(result, is(120));
+		assertThat(result, is (120));
 	}
-/**
- * Test.
- *
- * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru)
- * @version $Id$
- * @since 0.1
- */
+	@Test
 	public void whenNumberZero() {
 		/**
 		* Test add.
@@ -38,7 +32,7 @@ public class FactorialTest {
 		//Создадим объект и внесём.
 		Factorial factorialSecond = new Factorial();
 		// Отправим перменную на проверку и при прохождении проверки вычисляем факториал.
-		int result = factorialSecond.exist(0);
+		int result = factorialSecond.calc(0);
 		//Проверяем результат и ожидаемое значение.
 		assertThat(result, is(1));
 	}

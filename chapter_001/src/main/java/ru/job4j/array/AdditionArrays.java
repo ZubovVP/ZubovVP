@@ -27,5 +27,6 @@ public class AdditionArrays {
                 sum[inside * 2 + 1] = first[inside];
             }
         }
+        return sum;
     }
 }

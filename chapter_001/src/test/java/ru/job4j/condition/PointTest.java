@@ -1,6 +1,8 @@
 package ru.job4j.condition;
 
-import static org.hamrest.core.Is.is;
+import org.junit.Test;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 /**
 * Test.
@@ -13,6 +15,7 @@ public class PointTest {
     /**
 	* Test add.
 	*/
+    @Test
     public void whenPointOnLineThenTrue() {
         //create of new point.
         Point a = new Point(1, 1);

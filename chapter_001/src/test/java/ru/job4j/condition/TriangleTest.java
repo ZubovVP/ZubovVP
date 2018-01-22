@@ -1,5 +1,7 @@
 package ru.job4j.condition;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 /**
@@ -9,10 +11,11 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
  * @version $Id$
  * @since 0.1
  */
-public class BubbleSortTest {
+class TriangleTest {
 	/**
 	* Test add.
 	*/
+    @Test
     public void whenAreaSetThreePointsThenTriangleArea() {
         // создаем три объекта класса Point.
         Point a = new Point(0, 0);

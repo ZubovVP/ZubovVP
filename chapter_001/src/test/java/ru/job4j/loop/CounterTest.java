@@ -1,6 +1,9 @@
 package ru.job4j.loop;
 
-import static org.hamrest.core.Is.is;
+import org.junit.Test;
+import ru.job4j.Counter;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 /**
  * Test.
@@ -13,8 +16,9 @@ public class CounterTest {
 	/**
 	* Test add.
 	*/
+	@Test
 	public void whenStartTwoFinishTen() {
-		Sum summa = new Sum();
+		Counter summa = new Counter();
 		int result = summa.add(2, 10);
 		assertThat(result, is(30));
 	}

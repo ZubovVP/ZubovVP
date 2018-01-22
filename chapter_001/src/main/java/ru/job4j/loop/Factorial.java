@@ -3,7 +3,7 @@ package ru.job4j.loop;
  * Factorial.
  *
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
- * @version $Id$
+ * @version $Id$`
  * @since 0.1
  */
 public class Factorial {
@@ -13,17 +13,15 @@ public class Factorial {
 	 * @return calc - результат факториала
      */
 	public int calc(int n) {
-		int factorial = 0;
+		int factorial = 1;
 		if (this.exist(n)) {
 			if (n > 0) {
 				for (int x = 1; x <= n; x++) {
 					factorial *= x;
 				}
-			} else {
-				factorial = 1;
 			}
-			return factorial;
 		}
+		return factorial;
 }
  /**
      * Проверка вводимого числа.

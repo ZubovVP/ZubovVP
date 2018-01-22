@@ -6,7 +6,7 @@ package ru.job4j.array;
  * @version $Id$
  * @since 0.1
  */
-public class CheckDuplicate {
+class CheckDuplicate {
 	/**
     * Метод позволяет определять что одно слово находиться в другом.
     * @param origin - первой слово с которомы будет проводится проверка

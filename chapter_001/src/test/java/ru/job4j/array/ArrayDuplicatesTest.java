@@ -1,8 +1,6 @@
 package ru.job4j.array;
 
-import org.junit.Test.
-
-import javax.swing.*.
+import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -13,13 +11,14 @@ import static org.junit.Assert.assertThat;
 * @version $Id$
 * @since 0.1
 */
-public class ArrayDuplicatesTest {
+ public class ArrayDuplicatesTest {
 	/**
 	* Test add.
 	*/
+	@Test
 	public void whenRemoveDuplicatesThenArrayWithoutDuplicate() {
 		String[] original = {"Раз", "Три", "Два", "Три", "Раз", "Четыре"};
-		Box duplicate = new Box();
+		ArrayDuplicate duplicate = new ArrayDuplicate();
 		String[] result = duplicate.remove(original);
 		String[] expected = {"Раз", "Два", "Три", "Четыре"};
 		assertThat(result, is(expected));

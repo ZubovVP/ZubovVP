@@ -14,10 +14,7 @@ public class Board {
 	 * @return paint - вывод доски
      */
 	public StringBuilder paint(int width, int height) {
-		/**
-     * Создаём объект для создания доски.
-     */
-	StringBuilder  paint = new StringBuilder();
+		StringBuilder  paint = new StringBuilder();
 		 for (int x = 1; x <= height; x++) {
 			 for (int y = 1; y <= width; y++) {
 				 if ((x + y) % 2 == 0) {
