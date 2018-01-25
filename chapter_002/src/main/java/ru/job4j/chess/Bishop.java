@@ -78,5 +78,6 @@ class Bishop extends Figure {
             }
         }
     }
+
 }
 

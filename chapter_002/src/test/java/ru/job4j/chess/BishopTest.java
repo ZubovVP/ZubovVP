@@ -15,31 +15,37 @@ import static org.junit.Assert.*;
 public class BishopTest {
     private Bishop testBishop = new Bishop(new Cell(0,0));
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BishopTest that = (BishopTest) o;
+
+        return testBishop != null ? testBishop.equals(that.testBishop) : that.testBishop == null;
+    }
+
     @Test
     public void wayTest() throws ImposibleMoveException {
         Cell [] result;
         Cell source = new Cell(4,4);
         Cell dest = new Cell(5,5);
             result = testBishop.way(source, dest);
-            // Данным циклом можно увидеть что метод работает правильно, но в связи что у сравниваемых объектов разные
-            // хэш коды, поэтому тест не проходит
-            /*for(int x = 0; x < result.length; x++){
-                System.out.println("индекс массива = " + x);
-                System.out.println("X = " + result[x].getX());
-                System.out.println("Y = " + result[x].getY());
-                System.out.println("Длинна массива " + result.length);
-            }*/
-            //Можно сравнить два объекта если создать метод getPosition,
-        // но как я понял из задания что этого делать не нужно или же данный метод можно реализовать в Bishop
-       Cell [] expected = {new Cell(4,4), new Cell(5,5)};
-        assertThat(result, is(expected));
+
+       Cell [] expected = {source, dest};
+        assertTrue(expected[0].getX() == result[0].getX());
+        assertTrue(expected[0].getY() == result[0].getY());
+        assertTrue(expected[1].getX() == result[1].getX());
+        assertTrue(expected[1].getY() == result[1].getY());
     }
+
     @Test
     public void copyTest() throws ImposibleCreateFigure{
-        Board testBoard = new Board();
         Cell celTest = new Cell(6,6);
-        testBishop.copy(celTest);
-        Bishop expected = new Bishop(new Cell(6,6));
-        assertEquals(testBoard, is(expected) );
+        Cell result = testBishop.getPosition(testBishop.copy(celTest));
+        Cell expected = testBishop.getPosition(new Bishop(new Cell(6,6)));
+        assertEquals(expected, result);
     }
+
 }
