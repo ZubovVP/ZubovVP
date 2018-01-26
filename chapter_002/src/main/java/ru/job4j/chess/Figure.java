@@ -29,7 +29,12 @@ package ru.job4j.chess;
      * @return Figure - созданный объект с заданами координатами
      */
     abstract Figure copy(Cell dest) throws ImposibleCreateFigure;
-
+  /**
+   * Метод позволяет передать значение position у объекта
+   *
+   * @param figure - объект с координатами создания фигуры на доске
+   * @return Cell - position
+   */
     Cell getPosition(Figure figure) {
         return position;
     }
