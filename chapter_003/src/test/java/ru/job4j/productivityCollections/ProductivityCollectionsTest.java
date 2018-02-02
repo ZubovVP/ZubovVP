@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
-import static org.junit.Assert.*;
-
 public class ProductivityCollectionsTest {
     @Test
     public void addTestArrayList() throws Exception {
