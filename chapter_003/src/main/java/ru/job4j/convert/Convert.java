@@ -1,6 +1,7 @@
 package ru.job4j.convert;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
  class Convert {
@@ -49,4 +50,21 @@ import java.util.List;
             }
             return array;
         }
+
+     /**
+      * Convert
+      *
+      * @param list - the collection
+      * @return List<Integer> - the collection.
+      */
+      List<Integer> convert (List<int[]> list){
+         ArrayList<Integer> test = new ArrayList<>();
+          Iterator<int[]> it = list.iterator();
+         while (it.hasNext()){
+                for(int b : it.next()){
+                    test.add(b);
+                }
+         }
+         return test;
+     }
     }
