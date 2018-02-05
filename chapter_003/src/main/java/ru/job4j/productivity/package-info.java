@@ -5,4 +5,4 @@
 * @version $Id$
 * @since 01.02.2018
 */
-package ru.job4j.productivityCollections;
+package ru.job4j.productivity;

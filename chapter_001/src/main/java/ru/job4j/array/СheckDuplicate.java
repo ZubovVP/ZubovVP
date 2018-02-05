@@ -26,7 +26,7 @@ class CheckDuplicate {
                    check = false;
                }
             }
-			if (check == false) {
+			if (!check) {
 				break;
 			}
 		}

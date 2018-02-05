@@ -13,7 +13,6 @@
 <file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\Turn.java">
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\СheckDuplicate.java">
-<error line="29" column="35" severity="error" message="Expression can be simplified." source="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck"/>
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\Calculate.java">
 </file>
@@ -45,17 +44,17 @@
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\AdditionArraysTest.java">
 </file>
-<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\ArrayDuplicateTest.java">
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\ArrayDuplicatesTest.java">
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\BubbleSortTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\CheckDuplicateTest.java">
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\package-info.java">
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\RotateArrayTest.java">
 </file>
-<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\Turn.Test.java">
-</file>
-<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\СheckDuplicateTest.java">
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\TurnTest.java">
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\CalculateTest.java">
 </file>

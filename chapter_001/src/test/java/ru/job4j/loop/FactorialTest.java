@@ -22,7 +22,7 @@ public class FactorialTest {
 		// Отправим перменную на проверку и при прохождении проверки вычисляем факториал.
 		int result = factorialFirst.calc(5);
 		//Проверяем результат и ожидаемое значение.
-		assertThat(result, is (120));
+		assertThat(result, is(120));
 	}
 	@Test
 	public void whenNumberZero() {

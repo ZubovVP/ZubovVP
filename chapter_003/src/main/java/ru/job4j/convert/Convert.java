@@ -1,9 +1,9 @@
-package ru.job4j.convertList;
+package ru.job4j.convert;
 
 import java.util.ArrayList;
 import java.util.List;
 
- class ConvertList {
+ class Convert {
 
      /**
       * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
@@ -19,8 +19,8 @@ import java.util.List;
       * @return List - the collection.
       */
     List<Integer> toList(int[][] array) {
-        for(int[] number : array){
-            for(int  numberOne : number){
+        for (int[] number : array) {
+            for (int  numberOne : number) {
                 list.add(numberOne);
             }
         }
@@ -37,7 +37,7 @@ import java.util.List;
      int[][] toArray(List<Integer> list, int rows) {
         int positinon = 0;
         int position2 = 0;
-        int x = (int) Math.ceil((double) list.size() / rows) ;
+        int x = (int) Math.ceil((double) list.size() / rows);
         int[][] array = new int[x][rows];
             for (int first : list) {
                 array[positinon][position2] = first;
