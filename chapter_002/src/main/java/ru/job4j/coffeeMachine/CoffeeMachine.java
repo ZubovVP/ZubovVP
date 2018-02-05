@@ -10,7 +10,6 @@ import java.util.Arrays;
  */
 public class CoffeeMachine {
     private final int[] coin = {1, 2, 5, 10};
-    private int position = 0;
     /**
      * Метод позволяет позволяет расчитать сдачу при покупке товара с определённой ценой.
      * @param value - номинал внесённой купюры
@@ -18,11 +17,12 @@ public class CoffeeMachine {
      * @return Cell[] - массив для выдачи сдачи.
      */
      int[] changes(int value, int price) throws ImposibleGetCoffee {
-        int debt = value - price;
-        if(debt<0){
+         int position = 0;
+         int debt = value - price;
+         if(debt<0){
             throw new ImposibleGetCoffee("Please, give more money");
-        }
-        int[] changes = new int[100];
+         }
+         int[] changes = new int[100];
         for(int x = coin.length-1; x >= 0; x--) {
             while ((debt / coin[x]) >= 1) {
                 debt -= coin[x];
