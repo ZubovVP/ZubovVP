@@ -57,11 +57,11 @@ import java.util.List;
       * @param list - the collection
       * @return List<Integer> - the collection.
       */
-      List<Integer> convert (List<int[]> list){
+      List<Integer> convert(List<int[]> list) {
          ArrayList<Integer> test = new ArrayList<>();
           Iterator<int[]> it = list.iterator();
-         while (it.hasNext()){
-                for(int b : it.next()){
+         while (it.hasNext()) {
+                for (int b : it.next()) {
                     test.add(b);
                 }
          }

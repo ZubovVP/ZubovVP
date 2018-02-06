@@ -58,7 +58,7 @@ public class ConvertTest {
             ArrayList<int[]> list = new ArrayList<>();
             int[] one = new int[]{1, 2, 3, 4};
             int[] two = new int[]{1, 2};
-            int[] three = new int[]{1, 2, 3, 4, 6,};
+            int[] three = new int[]{1, 2, 3, 4, 6, };
             list.addAll(Arrays.asList(one, two, three));
             List<Integer> result = convertList.convert(list);
             List<Integer> expected = new ArrayList<>();
