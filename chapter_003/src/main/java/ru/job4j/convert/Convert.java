@@ -3,15 +3,12 @@ package ru.job4j.convert;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
- class Convert {
-
-     /**
-      * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
-      * @version $Id$
-      * @since 05.02.2018
-      */
-    ArrayList<Integer> list = new ArrayList<>();
+/**
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
+ * @version $Id$
+ * @since 05.02.2018
+ */
+ public class Convert {
 
      /**
       * Convert an array into a collection
@@ -19,7 +16,8 @@ import java.util.List;
       * @param array - the array
       * @return List - the collection.
       */
-    List<Integer> toList(int[][] array) {
+    public List<Integer> toList(int[][] array) {
+        ArrayList<Integer> list = new ArrayList<>();
         for (int[] number : array) {
             for (int  numberOne : number) {
                 list.add(numberOne);
@@ -35,7 +33,7 @@ import java.util.List;
       * @param rows - rows
       * @return int [][] - the array.
       */
-     int[][] toArray(List<Integer> list, int rows) {
+     public int[][] toArray(List<Integer> list, int rows) {
         int positinon = 0;
         int position2 = 0;
         int x = (int) Math.ceil((double) list.size() / rows);
@@ -58,13 +56,12 @@ import java.util.List;
       * @return List<Integer> - the collection.
       */
       List<Integer> convert(List<int[]> list) {
-         ArrayList<Integer> test = new ArrayList<>();
-          Iterator<int[]> it = list.iterator();
-         while (it.hasNext()) {
-                for (int b : it.next()) {
-                    test.add(b);
-                }
-         }
-         return test;
+         ArrayList<Integer> result = new ArrayList<>();
+          for (int[] array : list) {
+              for (int number : array) {
+                  result.add(number);
+              }
+          }
+          return result;
      }
-    }
+}
