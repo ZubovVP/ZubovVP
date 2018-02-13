@@ -9,49 +9,49 @@ import static org.hamcrest.core.Is.is;
 public class StubInputTest {
     @Test
     public void whenUserAddItem() {
-        Tracker tracker = new Tracker(); //Создаём Трекер
-         Input input = new StubInput(new String[]{"0", "test name", "desc" , "0", "test name2", "desc2", "6"});//Создаём последовательность действий
-         new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
-         assertThat(tracker.getAll()[1].getName(), is("test name2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-         assertThat(tracker.getAll()[1].getDescription(), is("desc2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
+        Tracker tracker = new Tracker();
+         Input input = new StubInput(new String[]{"0", "test name", "desc" , "no", "0", "test name2", "desc2", "Yes"});
+         new StartUI(input, tracker).init();
+         assertThat(tracker.getAll()[1].getName(), is("test name2"));
+         assertThat(tracker.getAll()[1].getDescription(), is("desc2"));
     }
+
     @Test
     public void whenUserEditItem(){
-        Tracker tracker = new Tracker(); //Создаём Трекер
-        Item item = tracker.add(new Item());//Напрямую добавляем заявку
-        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "0", "TestName2", "TestDesc2","0", "TestName3", "TestDesc3", "2", tracker.getAll()[2].getId(), "test name4", "desc4", "6"});//Создаём последовательность действий
-        new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
-        assertThat(tracker.getAll()[2].getName(), is("test name4"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        assertThat(tracker.getAll()[2].getDescription(), is("desc4"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        //Если я данную операцию проделаю с нулевым элементом массива, то тест пройдёт, а с первым элементом не продучается, ошибка - java.lang.ArrayIndexOutOfBoundsException: 1, хотя я выхожу из цикла StartUI
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item());
+        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "no", "0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "2", tracker.getAll()[0].getId(), "test name4", "desc4", "Yes"});//Создаём последовательность действий
+        new StartUI(input, tracker).init();
+        assertThat(tracker.getAll()[0].getName(), is("test name4"));
+        assertThat(tracker.getAll()[0].getDescription(), is("desc4"));
     }
+
     @Test
     public void whemUserDeleteItem(){
-        Tracker tracker = new Tracker(); //Создаём Трекер
-        Item item = tracker.add(new Item());//Напрямую добавляем заявку
-        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "0", "TestName2", "TestDesc2", "0", "TestName3", "TestDesc3", "3",  tracker.getAll()[1].getId(), "6"});//Создаём последовательность действий
-        new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
-        assertThat(tracker.getAll()[1].getName(), is("TestName2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        assertThat(tracker.getAll()[1].getDescription(), is("TestDesc2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        //Если я данную операцию проделаю с нулевым элементом массива, то тест показывает что актуальная - Actual   :TestName1, хотя я его удалил и сдвинул массив а с первым элементом не продучается, ошибка - java.lang.ArrayIndexOutOfBoundsException: 1, хотя я выхожу из цикла StartUI
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item());
+        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "no", "0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3",  tracker.getAll()[0].getId(), "Yes"});
+        new StartUI(input, tracker).init();
+        assertThat(tracker.getAll()[1].getName(), is("TestName3"));
+        assertThat(tracker.getAll()[1].getDescription(), is("TestDesc3"));
     }
+
     @Test
     public void whenUserFindItemById(){
-        Tracker tracker = new Tracker(); //Создаём Трекер
-        Item item = tracker.add(new Item());//Напрямую добавляем заявку
-        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "0", "TestName2", "TestDesc2", "4",  tracker.getAll()[1].getId(), "6"});//Создаём последовательность действий
-        new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
-        assertThat(tracker.getAll()[1].getName(), is("TestName2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        assertThat(tracker.getAll()[1].getDescription(), is("TestDesc2"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        // Если я данную операцию проделаю с нулевым элементом массива, то тест показывает что актуальная - Actual   :null, но там явно не null, при 1, ошибка - java.lang.ArrayIndexOutOfBoundsException: 1, хотя я выхожу из цикла StartUI
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item());
+        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "no", "0", "TestName2", "TestDesc2", "no", "4",  tracker.getAll()[1].getId(), "Yes"});
+        new StartUI(input, tracker).init();
+        assertThat(tracker.getAll()[1].getName(), is("TestName2"));
+        assertThat(tracker.getAll()[1].getDescription(), is("TestDesc2"));
     }
+
     @Test
     public void whenUserFindItemByName(){
-        Tracker tracker = new Tracker(); //Создаём Трекер
-        Item item = tracker.add(new Item());//Напрямую добавляем заявку
-        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "0", "TestName2", "TestDesc2", "0", "TestName3", "TestDesc3", "5",  tracker.getAll()[0].getName(), "6"});//Создаём последовательность действий
-        new StartUI(input, tracker).init();//Создаём StubInput и вызываем метод init()
-        assertThat(tracker.getAll()[1].getDescription(), is("TestDesc1"));//проверяем что 1ый элемент массива в трекере содержит соответствущие данные
-        // Если я данную операцию проделаю с нулевым элементом массива, то тест показывает чjava.lang.NullPointerException, при 1, ошибка - java.lang.NullPointerException
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item());
+        Input input = new StubInput(new String[]{"0", "TestName1", "TestDesc1", "no", "0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "5",  tracker.getAll()[1].getName(), "Yes"});
+        new StartUI(input, tracker).init();
+        assertThat(tracker.getAll()[1].getDescription(), is("TestDesc2"));
     }
 }

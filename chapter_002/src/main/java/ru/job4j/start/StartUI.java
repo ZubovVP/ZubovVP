@@ -1,15 +1,17 @@
 package ru.job4j.start;
 
 public class StartUI {
+	Tracker tracker = new Tracker();
 	private Input input;
-	private static Tracker tracker = new Tracker();
 	private int[] ranges;
 
 	public StartUI(Input input, Tracker tracker) {
+
 		this.input = input;
 		this.tracker = tracker;
 	}
 	public static void main (String[] args) {
+		Tracker tracker = new Tracker();
 		Input input = new ValidateInput();
 		new StartUI(input, tracker).init();
 	}
