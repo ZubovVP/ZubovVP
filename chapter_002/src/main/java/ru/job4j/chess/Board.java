@@ -18,7 +18,7 @@ class Board {
      */
     boolean create(Cell dest) {
          boolean result = false;
-           if (this.figures[dest.getX()][dest.getY()] == null){
+           if (this.figures[dest.getX()][dest.getY()] == null) {
                result = true;
            }
            return result;
@@ -59,7 +59,7 @@ class Board {
         figures[source.getX()][source.getY()] = figure;
     }
     //Данный метод понадобился только для тестирования программного кода
-    Figure[][] getBoard(){
+    Figure[][] getBoard() {
         return figures;
     }
 }

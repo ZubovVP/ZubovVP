@@ -7,7 +7,13 @@ import java.util.Arrays;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
+/**
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
+ * @version $Id$
+ * @since 0.1
+ */
 public class ListCompareTest {
+
         @Test
         public void whenLeftAndRightEqualsThenZero() {
             ListCompare compare = new ListCompare();

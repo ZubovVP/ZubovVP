@@ -17,15 +17,15 @@ public class ListCompare implements Comparator<List<Integer>> {
      */
     @Override
     public int compare(List<Integer> left, List<Integer> right) {
-        if(left == right){
+        if (left == right) {
             return 0;
-        }else if(left == null || right == null){
-            return left ==null ? -1 : 1;
-        }else if( left.size() != right.size()){
+        } else if (left == null || right == null) {
+            return left == null ? -1 : 1;
+        } else if (left.size() != right.size()) {
             return left.size() > right.size() ? 1 : -1;
         } else {
-            for(int step = 0; step < left.size(); step++){
-                 if(left.get(step) != right.get(step)){
+            for (int step = 0; step < left.size(); step++) {
+                 if (left.get(step) != right.get(step)) {
                     return left.get(step) > right.get(step) ? 1 : -1;
                 }
             }

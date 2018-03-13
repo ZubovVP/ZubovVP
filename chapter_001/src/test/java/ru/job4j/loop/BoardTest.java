@@ -19,9 +19,10 @@ public class BoardTest {
     @Test
     public void whenPaintBoardWithWidthThreeAndHeightThreeThenStringWithThreeColsAndThreeRows() {
         Board board = new Board();
-        StringBuilder result = board.paint(3, 3);
+        String result = board.paint(3, 3);
+
         final String line = System.getProperty("line.separator");
-        String expected = String.format("x x%s x %sx x", line, line);
+        String expected = "X X\n X \nX X\n";
         assertThat(result, is(expected));
  }
     /**
@@ -32,11 +33,11 @@ public class BoardTest {
 		//Создаём объект
         Board board2 = new Board();
 		//Отправляем переменные 5 и 4 в метод и инициализируем переменную result переменной которую получаем из метода
-		StringBuilder result = board2.paint(5, 4);
+		String result = board2.paint(5, 4);
 		//Присваеваем переменной line пропуск троки
 		final String line = System.getProperty("line.separator");
 		//Указываем ожидаемый результат
-		String expected = String.format("x x x%s x x %sx x x%s x x %s x x ", line, line, line, line, line);
+		String expected = "X X X\n X X \nX X X\n X X \n";
 		//Сравниваем ожидаемый результат с тем что выходит из метода
 		assertThat(result, is(expected));
     }

@@ -13,7 +13,7 @@ public class Doctor extends Profession {
 	 * @param age - возраст объекта
 	 * @param skill - навык
 	 */
-	public Doctor(String name, int age, String skill){
+	public Doctor(String name, int age, String skill) {
 		super(name, age, skill);
 	}
 	/**
@@ -21,7 +21,7 @@ public class Doctor extends Profession {
 	 * @param  man - объект
 	 * @return answer - строка с действием
 	 */
-		public String heal (Profession man){
+		public String heal(Profession man) {
 			String answer = this.name + " " + this.skill + " " + man.getName() + "a";
 			return answer;
 		}

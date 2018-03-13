@@ -5,7 +5,7 @@ package ru.job4j.strategy;
  * @since 0.1
  */
 public class Paint {
-	public void draw(Shape shape){
+	public void draw(Shape shape) {
 		System.out.println(shape.pic());
 	}
 }

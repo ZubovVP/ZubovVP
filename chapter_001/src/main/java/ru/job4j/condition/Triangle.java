@@ -44,8 +44,7 @@ public class Triangle {
 	 * @return distance - вывод расстояние между точками
      */
 		public double distance(Point left, Point right) {
-
-			return Math.sqrt((left.getX() - right.getX()) ^ 2 + (left.getY() + right.getY()) ^ 2);
+			return Math.sqrt(((left.getX() - right.getX()) ^ 2) + ((left.getY() + right.getY()) ^ 2));
 		}
 	/**
      * Метод позволяет вычислить расстояние между точками.
@@ -63,11 +62,11 @@ public class Triangle {
      */
 		public double area() {
     double rsl = -1;
-    double ab = this.distance(this.a, this.b);
-    double ac = this.distance(this.a, this.c);
-    double bc = this.distance(this.b, this.c);
+    double ab = this.distance(this.b, this.a);
+    double ac = this.distance(this.c, this.a);
+    double bc = this.distance(this.c, this.b);
     double p = this.period(ab, ac, bc);
-    if (this.exist(ab, ac, bc)) {
+			if (this.exist(ab, ac, bc)) {
         rsl = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
     }
     return rsl;

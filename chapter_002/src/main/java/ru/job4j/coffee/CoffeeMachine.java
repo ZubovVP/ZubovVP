@@ -1,4 +1,4 @@
-package ru.job4j.coffeeMachine;
+package ru.job4j.coffee;
 
 import java.util.Arrays;
 /**
@@ -19,16 +19,16 @@ public class CoffeeMachine {
      int[] changes(int value, int price) throws ImposibleGetCoffee {
          int position = 0;
          int debt = value - price;
-         if(debt<0){
+         if (debt < 0) {
             throw new ImposibleGetCoffee("Please, give more money");
          }
          int[] changes = new int[100];
-        for(int x = coin.length-1; x >= 0; x--) {
+        for (int x = coin.length - 1; x >= 0; x--) {
             while ((debt / coin[x]) >= 1) {
                 debt -= coin[x];
                 changes[position++] = coin[x];
             }
         }
-        return Arrays.copyOf(changes,position);
+        return Arrays.copyOf(changes, position);
     }
 }

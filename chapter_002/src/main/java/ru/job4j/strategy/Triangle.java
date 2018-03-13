@@ -4,7 +4,7 @@ package ru.job4j.strategy;
  * @version $Id$
  * @since 0.1
  */
-public class Triangle implements Shape{
+public class Triangle implements Shape {
 
 	public String pic() {
 		StringBuilder pic = new StringBuilder();

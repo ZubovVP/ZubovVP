@@ -13,7 +13,7 @@ public class Engineer extends Profession {
 	 * @param age - возраст объекта
 	 * @param skill - навык
 	 */
-	public Engineer(String name, int age, String skill){
+	public Engineer(String name, int age, String skill) {
 		super(name, age, skill);
 	}
 	/**
@@ -21,7 +21,7 @@ public class Engineer extends Profession {
 	 * @param  man - объект
 	 * @return answer - строка с действием
 	 */
-		public String calculate (Profession man){
+		public String calculate(Profession man) {
 			String answer = this.name + " делает " + this.skill + " для " + man.getName() + "а";
 			return answer;
 		}

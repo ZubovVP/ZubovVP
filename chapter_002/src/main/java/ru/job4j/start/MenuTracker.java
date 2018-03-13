@@ -2,130 +2,176 @@ package ru.job4j.start;
 
 import ru.job4j.models.Item;
 
-class EditItem extends BaseAction {
-	public EditItem(int key, String name) {
-		super(key, name);
-	}
+/**
+ * @author Vitaly Zubov (zubovvp@yandex.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+class  DeleteItem extends BaseAction {
 
-	@Override
-	public void execute(Input input, Tracker tracker) {
-		String id = input.ask("Please, enter the task's id : ");
-		String name = input.ask("Please, enter new name : ");
-		String description = input.ask("Please, enter new description : ");
-		tracker.findById(id).setName(name);
-		tracker.findById(id).setDescription(description);
-		System.out.println("Item edited ! " + System.getProperty("line.separator"));
-	}
+    public DeleteItem(int key, String name) {
+        super(key, name);
+    }
+
+    @Override
+    public void execute(Input input, Tracker tracker) {
+        String id = input.ask("Please, write the id :");
+        tracker.delete(id);
+        System.out.println("Item deleted !");
+    }
 }
 
-	class FindItemById extends BaseAction {
-		public FindItemById(int key, String name) {
-			super(key, name);
-		}
+/**
+ * @author Vitaly Zubov (zubovvp@yandex.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+class  EditItem extends BaseAction {
 
-		@Override
-		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please, enter the task's id: ");
-			System.out.printf("%nName: %s;%nDescription: %s;%nId: %s;%nCreate: %s.%n ", tracker.findById(id).getName(), tracker.findById(id).getDescription(), tracker.findById(id).getId(), tracker.findById(id).getCreate());
-		}
-	}
+    public EditItem(int key, String name) {
+        super(key, name);
+    }
 
+    @Override
+    public void execute(Input input, Tracker tracker) {
+        String id = input.ask("Please, write the id :");
+        String name = input.ask("Please, write the new task's name :");
+        String description = input.ask("Please, write the new task's description");
+        tracker.findById(id).name = name;
+        tracker.findById(id).description = description;
+        System.out.println("Item edited !");
+    }
+}
+
+/**
+ * @author Vitaly Zubov (zubovvp@yandex.ru)
+ * @version $Id$
+ * @since 0.1
+ */
 public class MenuTracker {
-	private Input input;
-	private Tracker tracker;
-	private UserAction[] actions = new UserAction[7];
-	private int position = 0;
-	private String name;
-	private String description;
-	private String id;
-	private int[] ranges;
-	private int numberOfActions = 0;
+    private Input input;
+    private Tracker tracker;
+    private String name;
+    private String description;
+    private String id;
+    private UserAction[] actions = new UserAction[7];
+    private int position = 0;
 
-	public MenuTracker(Input input, Tracker tracker) {
-		this.input = input;
-		this.tracker = tracker;
-	}
+    public MenuTracker(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+    }
 
-	public int[] fillActions() {
-		this.actions[position++] = this.new AddItem(0, "AddItem" );
-		this.actions[position++] = new MenuTracker.ShowItems(1, "ShowItems");
-		this.actions[position++] = new EditItem(2, "EditItem");
-		this.actions[position++] = this.new DeleteItem(3, "DeleteItem");
-		this.actions[position++] = new FindItemById(4,"FindItemById" );
-		this.actions[position++] = new FindItemByName(5,"FindItemByName" );
-		this.ranges = new int[actions.length];
-		while (numberOfActions < actions.length) {
-			this.ranges[numberOfActions] = numberOfActions;
-			numberOfActions++;
-		}
-		return ranges;
-	}
+    public void select(int key) {
+        this.actions[key].execute(this.input, this.tracker);
+    }
 
-	public void addAction(UserAction action) {
-		this.actions[position++] = action;
-	}
+    public int[] fillActions() {
+        this.actions[position++] = this.new AddItem(0, "Add the new Item. ");
+        this.actions[position++] = new MenuTracker.ShowItems(1, "Show all Items. ");
+        this.actions[position++] = new EditItem(2, "Edit item. ");
+        this.actions[position++] = new DeleteItem(3, "Delete item. ");
+        this.actions[position++] = this.new FindById(4, "Find by id. ");
+        this.actions[position++] = new MenuTracker.FindItemByName(5, "Find item by name. ");
+        int[] ranges = new int[actions.length];
+        return  ranges;
+    }
+    public void addAction(UserAction action) {
+        this.actions[position++] = action;
+    }
 
-	public void show() {
-		for (UserAction action : this.actions) {
-			if (action != null)
-				System.out.println(action.info());
-		}
-	}
+    public void show() {
+        for (UserAction action : this.actions) {
+            System.out.println(action.info());
+        }
+    }
 
-	public void select(int key) {
-		this.actions[key].execute(this.input, this.tracker);
-	}
+    /**
+     * @author Vitaly Zubov (zubovvp@yandex.ru)
+     * @version $Id$
+     * @since 0.1
+     */
+    private class AddItem extends BaseAction {
 
-	private class AddItem extends BaseAction {
-		public AddItem(int key, String name) {
-			super(key, name);
-		}
+        public AddItem(int key, String name) {
+            super(key, name);
+        }
 
-		@Override
-		public void execute(Input input, Tracker tracker) {
-			name = input.ask("Please, enter the task's name : ");
-			description = input.ask("Please, enter the task's description : ");
-			tracker.add(new Item(name, description, System.currentTimeMillis()));
-		}
-	}
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            name = input.ask("Please, write the task's name :");
+            description = input.ask("Please, write the task's description");
+            tracker.add(new Item(name, description, System.currentTimeMillis()));
+            System.out.println("Item added!");
+        }
+    }
 
-	private class DeleteItem extends BaseAction {
-		public DeleteItem(int key, String name) {
-			super(key, name);
-		}
+    /**
+     * @author Vitaly Zubov (zubovvp@yandex.ru)
+     * @version $Id$
+     * @since 0.1
+     */
+    private class FindById extends BaseAction {
 
-		@Override
-		public void execute(Input input, Tracker tracker) {
-			id = input.ask("Please, enter the task's id : ");
-			tracker.delete(id);
-			System.out.println("Item deleted ! " + System.getProperty("line.separator"));
-		}
-	}
+        public FindById(int key, String name) {
+            super(key, name);
+        }
 
-		private static class ShowItems extends BaseAction {
-			public ShowItems(int key, String name) {
-				super(key, name);
-			}
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            id = input.ask("Please, write the id :");
+            Item it = tracker.findById(id);
+            System.out.print(System.getProperty("line.separator") + " Name : " + it.getName() + ";"
+                    + System.getProperty("line.separator") + "Description :" + it.getDescription() + ";"
+                    + System.getProperty("line.separator") + "Id :" + it.getId() + ";"
+                    + System.getProperty("line.separator") + "Create :" + it.getCreate() + ";"
+                    + System.getProperty("line.separator"));
+        }
+    }
 
-			@Override
-			public void execute(Input input, Tracker tracker) {
-				for (Item item : tracker.getAll()) {
-					System.out.printf("%nName: %s;%nDescription: %s;%nId: %s;%nCreate: %s.%n ", item.getName(), item.getDescription(), item.getId(), item.getCreate());
-				}
-			}
-			}
+    /**
+     * @author Vitaly Zubov (zubovvp@yandex.ru)
+     * @version $Id$
+     * @since 0.1
+     */
+    private static class ShowItems extends BaseAction {
 
-			private static class FindItemByName extends BaseAction {
-				public FindItemByName(int key, String name) {
-					super(key, name);
-				}
+        public ShowItems(int key, String name) {
+            super(key, name);
+        }
 
-				@Override
-				public void execute(Input input, Tracker tracker) {
-					String name = input.ask("Please, enter the task's name : ");
-					System.out.printf("%nName: %s;%nDescription: %s;%nId: %s;%nCreate: %s.%n ", tracker.findByName(name).getName(), tracker.findByName(name).getDescription(), tracker.findByName(name).getId(), tracker.findByName(name).getCreate());
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            for (Item item : tracker.getAll()) {
+                System.out.print(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
+                        + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
+                        + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
+                        + System.getProperty("line.separator") + "Create :" + item.getCreate() + ";"
+                        + System.getProperty("line.separator"));
+            }
+        }
+    }
 
-				}
-			}
+    /**
+     * @author Vitaly Zubov (zubovvp@yandex.ru)
+     * @version $Id$
+     * @since 0.1
+     */
+    private static class FindItemByName extends BaseAction {
+
+        public FindItemByName(int key, String name) {
+            super(key, name);
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            String name = input.ask("Please, write name :");
+            Item it = tracker.findByName(name);
+            System.out.print(System.getProperty("line.separator") + " Name : " + it.getName() + ";"
+                    + System.getProperty("line.separator") + "Description :" + it.getDescription() + ";"
+                    + System.getProperty("line.separator") + "Id :" + it.getId() + ";"
+                    + System.getProperty("line.separator") + "Create :" + it.getCreate() + ";"
+                    + System.getProperty("line.separator"));
+        }
+    }
 }
-

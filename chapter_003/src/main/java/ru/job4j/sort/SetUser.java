@@ -15,7 +15,7 @@ public class SetUser {
      */
     public Set<User> sort(List<User> list) {
         Set<User> result = new HashSet<>();
-        Collections.sort(list);
+
         result.addAll(list);
         return result;
     }

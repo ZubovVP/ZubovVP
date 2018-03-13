@@ -4,7 +4,9 @@ package ru.job4j.sort;
 import java.util.Comparator;
 
 /**
- *
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
+ * @version $Id$
+ * @since 0.1
  */
 public class User implements Comparable<User> {
     private int age;
@@ -13,7 +15,6 @@ public class User implements Comparable<User> {
     public int getAge() {
         return age;
     }
-
 
     public String getName() {
         return name;

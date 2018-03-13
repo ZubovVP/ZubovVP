@@ -22,7 +22,7 @@ public class Profession {
 	/**
      * Конструктор. 
      */
-	public Profession(){
+	public Profession() {
 		
 	}
 	/**

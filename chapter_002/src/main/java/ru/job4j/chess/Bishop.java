@@ -21,7 +21,7 @@ class Bishop extends Figure {
      * @return Cell[] - массив с значением хода фигуры.
      */
     @Override
-    Cell[] way (Cell source, Cell dest) throws ImposibleMoveException {
+    Cell[] way(Cell source, Cell dest) throws ImposibleMoveException {
         int xSource = source.getX();
         int ySource = source.getY();
         int xDest = dest.getX();
@@ -61,15 +61,15 @@ class Bishop extends Figure {
      * @return Figure - созданный объект с заданами координатами
      */
     @Override
-    Figure copy (Cell source) throws ImposibleCreateFigure {
+    Figure copy(Cell source) throws ImposibleCreateFigure {
         boolean result;
-        if(source.getX() > 7 || source.getX() < 0 || source.getY() > 7 || source.getY() < 0){
+        if (source.getX() > 7 || source.getX() < 0 || source.getY() > 7 || source.getY() < 0) {
             throw new ImposibleCreateFigure("Выход за шахматную доску");
-        }else{
+        } else {
             result = new Board().create(source);
-            if(!result){
+            if (!result) {
                 throw new ImposibleCreateFigure("Данная клетка занята другой фигурой");
-            }else{
+            } else {
                 Bishop bishop = new Bishop(new Cell(source.getX(), source.getY()));
                 Board board = new Board();
                 //Добавляем фигуру на доску
@@ -78,6 +78,4 @@ class Bishop extends Figure {
             }
         }
     }
-
 }
-

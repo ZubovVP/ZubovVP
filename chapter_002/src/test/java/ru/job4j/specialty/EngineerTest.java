@@ -1,7 +1,6 @@
 package ru.job4j.specialty;
 import org.junit.Test;
 
-import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 import static junit.framework.TestCase.assertEquals;
 
 /**

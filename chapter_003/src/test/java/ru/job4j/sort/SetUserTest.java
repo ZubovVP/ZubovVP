@@ -8,9 +8,12 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 /**
- *
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
+ * @version $Id$
+ * @since 0.1
  */
 public class SetUserTest {
+
     @Test
     public void sortTest() throws Exception {
         ArrayList<User> test = new ArrayList<>();
