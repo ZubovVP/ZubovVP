@@ -1,4 +1,4 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
+ используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
@@ -12,6 +12,6 @@ after_success:
 notifications:
   email:
     recipients:
-      - Zubov.VP@yandex.ru
+      - zubov.vp@yandex.ru
     on_success: never # default: change
     on_failure: always # default: always
