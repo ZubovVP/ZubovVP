@@ -1,7 +1,9 @@
 package ru.job4j.bank;
 
+import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +61,20 @@ public class BankTest {
         assertThat(mapUserTest.get(userTest).get(1), is(accountTestTwo));
         bankTest.deleteAccountFromUser(userTest.getPasport(), accountTestOne);
         assertThat(mapUserTest.get(userTest).get(0), is(accountTestTwo));
+    }
+
+    @Test
+    public void getAccounts (){
+        List<Account> result;
+        User userTest = new User("Alex", "123456");
+        Account accountTest1 = new Account(50, "123");
+        Account accountTest2 = new Account(75, "12345");
+        bankTest.addUser(userTest);
+        bankTest.addAccountToUser(userTest.getPasport(), accountTest1);
+        bankTest.addAccountToUser(userTest.getPasport(), accountTest2);
+        result = bankTest.getAccounts(userTest.getPasport());
+        assertThat(result.get(0), is(accountTest1));
+        assertThat(result.get(1), is(accountTest2));
     }
 
     @Test
