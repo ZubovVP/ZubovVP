@@ -120,10 +120,11 @@ public class Bank {
     private Account findAccountOnRequisite(String requisite, String passport) {
         Account result = null;
         for (Map.Entry<User, List<Account>> entry : mapUser.entrySet()) {
-            if(entry.getKey().getPasport().equals(passport)){
+            if (entry.getKey().getPasport().equals(passport)) {
                 for (Account account : entry.getValue()) {
-                    if(account.getRequisites().equals(requisite))
-                    result = account;
+                    if (account.getRequisites().equals(requisite)) {
+                        result = account;
+                    }
                 }
             }
         }

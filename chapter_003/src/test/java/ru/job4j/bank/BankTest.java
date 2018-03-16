@@ -64,7 +64,7 @@ public class BankTest {
     }
 
     @Test
-    public void getAccounts (){
+    public void getAccounts() {
         List<Account> result;
         User userTest = new User("Alex", "123456");
         Account accountTest1 = new Account(50, "123");
