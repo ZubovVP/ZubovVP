@@ -2,6 +2,9 @@ package ru.job4j.start;
 
 import ru.job4j.models.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Vitaly Zubov (zubovvp@yandex.ru)
  * @version $Id$
@@ -54,7 +57,7 @@ public class MenuTracker {
     private String name;
     private String description;
     private String id;
-    private UserAction[] actions = new UserAction[7];
+    private List<UserAction> actions = new ArrayList<>();
     private int position = 0;
 
     public MenuTracker(Input input, Tracker tracker) {
@@ -63,21 +66,21 @@ public class MenuTracker {
     }
 
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        this.actions.get(key).execute(this.input, this.tracker);
     }
 
     public int[] fillActions() {
-        this.actions[position++] = this.new AddItem(0, "Add the new Item. ");
-        this.actions[position++] = new MenuTracker.ShowItems(1, "Show all Items. ");
-        this.actions[position++] = new EditItem(2, "Edit item. ");
-        this.actions[position++] = new DeleteItem(3, "Delete item. ");
-        this.actions[position++] = this.new FindById(4, "Find by id. ");
-        this.actions[position++] = new MenuTracker.FindItemByName(5, "Find item by name. ");
-        int[] ranges = new int[actions.length];
+        this.actions.add(this.new AddItem(0, "Add the new Item. "));
+        this.actions.add(new MenuTracker.ShowItems(1, "Show all Items. "));
+        this.actions.add(new EditItem(2, "Edit item. "));
+        this.actions.add(new DeleteItem(3, "Delete item. "));
+        this.actions.add(this.new FindById(4, "Find by id. "));
+        this.actions.add(new MenuTracker.FindItemByName(5, "Find item by name. "));
+        int[] ranges = new int[actions.size()];
         return  ranges;
     }
     public void addAction(UserAction action) {
-        this.actions[position++] = action;
+        this.actions.add(action);
     }
 
     public void show() {

@@ -24,8 +24,8 @@ public class StartUITest {
             Tracker tracker = new Tracker();
             Input input = new StubInput(new String[]{"0", "TestName1", "TestDescr1", "no", "0", "TestName2", "TestDescr2", "Yes"});
             new StartUI(input, tracker).init();
-            assertThat(tracker.getAll()[1].getName(), is("TestName2"));
-            assertThat(tracker.getAll()[1].getDescription(), is("TestDescr2"));
+            assertThat(tracker.getAll().get(1).getName(), is("TestName2"));
+            assertThat(tracker.getAll().get(1).getDescription(), is("TestDescr2"));
         }
 
     /**
@@ -37,8 +37,8 @@ public class StartUITest {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             Input input = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "2", item.getId(), "test name4", "desc4", "Yes"});
             new StartUI(input, tracker).init();
-            assertThat(tracker.getAll()[0].getName(), is("test name4"));
-            assertThat(tracker.getAll()[0].getDescription(), is("desc4"));
+            assertThat(tracker.getAll().get(0).getName(), is("test name4"));
+            assertThat(tracker.getAll().get(0).getDescription(), is("desc4"));
         }
 
     /**
@@ -50,8 +50,8 @@ public class StartUITest {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             Input input = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3",  item.getId(), "Yes"});
             new StartUI(input, tracker).init();
-            assertThat(tracker.getAll()[0].getName(), is("TestName2"));
-            assertThat(tracker.getAll()[0].getDescription(), is("TestDesc2"));
+            assertThat(tracker.getAll().get(0).getName(), is("TestName2"));
+            assertThat(tracker.getAll().get(0).getDescription(), is("TestDesc2"));
         }
 
     /**

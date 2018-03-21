@@ -28,7 +28,7 @@ import static org.junit.Assert.assertNotEquals;
             // добаляем объект itemOne в массив items
             tracker.add(itemOne);
             //выводим все объекты из массива items и сверяем с добавленными объектами
-            assertThat(tracker.getAll()[0], is(itemOne));
+            assertThat(tracker.getAll().get(0), is(itemOne));
         }
 
     /**
@@ -68,7 +68,7 @@ import static org.junit.Assert.assertNotEquals;
             //изменяем объект в массиве по id
             tracker.replace(itemTwo);
             //Проверяем что данный объект сооветствует ожиданию
-            assertEquals(tracker.getAll()[0], itemTwo);
+            assertEquals(tracker.getAll().get(0), itemTwo);
         }
 
     /**
@@ -87,8 +87,8 @@ import static org.junit.Assert.assertNotEquals;
             // добаляем id для объекта itemTwo в массив items
             tracker.add(itemTwo);
             //Удаляем объект itemOne по id
-            tracker.delete(tracker.getAll()[0].getId());
+            tracker.delete(tracker.getAll().get(0).getId());
             //проверяем что в итоге остаётся в массиве items после удаления
-            assertEquals(tracker.getAll()[0], itemTwo);
+            assertEquals(tracker.getAll().get(0), itemTwo);
         }
     }

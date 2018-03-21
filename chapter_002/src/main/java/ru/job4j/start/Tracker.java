@@ -2,6 +2,8 @@ package ru.job4j.start;
 
 import ru.job4j.models.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -10,19 +12,18 @@ import java.util.Random;
  * @since 0.1
  */
 public class Tracker {
-    private Item[] items = new Item[100];
-    private int position = 0;
+    private List<Item> items = new ArrayList<>();
     private static final Random RN = new Random();
 
     public Item add(Item item) {
         item.setId(this.generateId());
-        this.items[position++] = item;
+        this.items.add(item);
         return item;
     }
 
     protected Item findById(String id) {
         Item result = null;
-        for (Item item : items) {
+        for (Item item : this.items) {
             if (item != null && item.getId().equals(id)) {
                 result = item;
                 break;
@@ -33,7 +34,7 @@ public class Tracker {
 
     protected Item findByName(String name) {
         Item result = null;
-        for (Item item : items) {
+        for (Item item : this.items) {
             if (item != null && item.getName().equals(name)) {
                 result = item;
                 break;
@@ -42,32 +43,24 @@ public class Tracker {
         return result;
     }
     public void replace(Item item) {
-        for (int i = 0; i < this.items.length; i++) {
-            Item it = this.items[i];
-            if (it != null && it.getId().equals(item.getId())) {
-                this.items[i] = item;
+        for (Item result : this.items) {
+            if (result != null && result.getId().equals(item.getId())) {
+                this.items.set(this.items.indexOf(result), item);
             }
         }
     }
 
     public void delete(String id) {
-        for (int i = 0; i < this.items.length; i++) {
-            if (this.items [i] != null && this.items[i].getId().equals(id)) {
-                for (  ; i < this.position - 1; i++) {
-                    this.items[i] = this.items[i + 1];
-                }
+        for (Item result : this.items) {
+            if (result != null && result.getId().equals(id)) {
+                this.items.remove(result);
                 break;
             }
-            this.position--;
         }
     }
 
-    public  Item[] getAll() {
-        Item[] result = new Item[position];
-        for (int index = 0; index != this.position; index++) {
-            result[index] = this.items[index];
-        }
-        return result;
+    public  List<Item> getAll() {
+        return this.items;
     }
 
     String generateId() {
