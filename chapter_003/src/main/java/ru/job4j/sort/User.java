@@ -77,7 +77,7 @@ public class User implements Comparable<User> {
             if (o1.name.length() > o2.name.length()) {
                 return 1;
             } else if (o1.name.length() < o2.name.length()) {
-                return -11;
+                return -1;
             } else if (o1.name.length() == o2.name.length()) {
               if (o1.age > o2.age) {
                   return 1;
