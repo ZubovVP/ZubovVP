@@ -8,9 +8,10 @@ import java.util.NoSuchElementException;
  * @version $Id$.
  * @since 0.1.
  */
-public class PrimeIterator implements Iterator {
+public class PrimeIterator implements Iterator<Integer> {
     private final int[] values;
     private int index = 0;
+    private boolean[] patern = getSieve();
 
     public PrimeIterator(int[] values) {
         this.values = values;
@@ -26,15 +27,12 @@ public class PrimeIterator implements Iterator {
         int step = index;
         boolean result = false;
         while (values.length > step) {
-            if (values[index] > 1 && (values[step] == 3 || values[step] == 2 || values[step] == 5 || values[step] == 7)) {
-                result = true;
-                break;
-            } else if (values[step] % 2 != 0 && values[step] % 3 != 0  && values[step] % 5 != 0 &&  values[step] % 7 != 0) {
-                result = true;
-                break;
-            } else {
-                step++;
-            }
+           if (patern[values[step]]) {
+               result = true;
+               break;
+           } else {
+               step++;
+           }
         }
         return result;
     }
@@ -42,22 +40,33 @@ public class PrimeIterator implements Iterator {
     /**
      * Method next.
      *
-     * @return - Object
+     * @return - count.
      */
     @Override
-    public Object next() {
-        while (values.length > index) {
-            if (values[index] > 1 && (values[index] == 3 || values[index] == 2 || values[index] == 5 || values[index] == 7)) {
-                break;
-            } else if (values[index] > 1 && values[index] % 2 != 0 && values[index] % 3 != 0  && values[index] % 5 != 0 &&  values[index] % 7 != 0) {
-                break;
-            } else {
-                index++;
-            }
+    public Integer next() {
+        while (hasNext()) {
+           if (patern[values[index]]) {
+               break;
+           } else {
+               index++;
+           }
         }
        if (index >= values.length) {
             throw new NoSuchElementException();
         }
         return values[index++];
     }
+    private static boolean[] getSieve() {
+        boolean[] primes = new boolean[100000];
+        for (int x = 0; x < primes.length; x++) {
+            if (x > 1 && x == 3 || x == 2 || x == 5 || x == 7 || x == 11) {
+                primes[x] = true;
+            } else if (x > 1 && x  % 2 != 0 && x % 2 != 0 && x % 5 != 0 && x % 7 != 0 && x % 11 != 0) {
+                primes[x] = true;
+            }
+        }
+        return primes;
+    }
 }
+
+
