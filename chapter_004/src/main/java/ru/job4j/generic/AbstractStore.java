@@ -5,8 +5,8 @@ package ru.job4j.generic;
  * @version $Id$.
  * @since 0.1.
  */
-public abstract class AbstractStore implements Store {
-    private SimpleArray<Base> array = new SimpleArray<>();
+public abstract class AbstractStore<T extends Base> implements Store<T>  {
+    private SimpleArray<Base> array = new SimpleArray<>(100);
     private boolean result;
 
     /**
@@ -15,7 +15,7 @@ public abstract class AbstractStore implements Store {
      * @param model - Base extended.
      */
     @Override
-    public void add(Base model) {
+    public void add(T model) {
         array.add(model);
     }
 
@@ -27,7 +27,7 @@ public abstract class AbstractStore implements Store {
      * @return - result condition.
      */
     @Override
-    public boolean replace(String id, Base model) {
+    public boolean replace(String id, T model) {
         array.set(Integer.parseInt(id), model);
         result = array.get(Integer.parseInt(id)) == model;
         return result;
@@ -62,16 +62,16 @@ public abstract class AbstractStore implements Store {
      * @return - model.
      */
     @Override
-    public Base findById(String id) {
+    public T findById(String id) {
         Base result = null;
         while (array.hasNext()) {
-            result = (Base) array.next();
+            result = array.next();
             if (result.getId().equals(id)) {
                 break;
             } else {
                 result = null;
             }
         }
-        return result;
+        return (T) result;
     }
 }

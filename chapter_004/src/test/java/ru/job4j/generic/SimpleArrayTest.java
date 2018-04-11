@@ -12,8 +12,8 @@ import static org.junit.Assert.*;
  * @since 0.1.
  */
 public class SimpleArrayTest {
-   private SimpleArray<Integer> simpleArrayIntegerTest = new SimpleArray<Integer>();
-   private SimpleArray<String> simpleArrayStringTest = new SimpleArray<String>();
+   private SimpleArray simpleArrayIntegerTest = new SimpleArray(2);
+   private SimpleArray simpleArrayStringTest = new SimpleArray(2);
    private String stringTest = "123";
    private int intTest = 5;
 
@@ -72,7 +72,6 @@ public class SimpleArrayTest {
         assertTrue(simpleArrayStringTest.hasNext());
         simpleArrayStringTest.next();
         assertFalse(simpleArrayStringTest.hasNext());
-
     }
 
     @Test

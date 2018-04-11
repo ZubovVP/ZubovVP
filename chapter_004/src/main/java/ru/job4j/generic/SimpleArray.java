@@ -12,10 +12,13 @@ import java.util.List;
  */
 public class SimpleArray<T> implements Iterator<T> {
 
-    private List<T> list = new ArrayList<T>();
-    private int position = 0;
+    private Object[] list;
     private int step = 0;
+    private int index = 0;
 
+    public SimpleArray(int size) {
+        this.list = new Object[size];
+    }
 
     /**
      * Add model in list.
@@ -23,8 +26,7 @@ public class SimpleArray<T> implements Iterator<T> {
      * @param model - model.
      */
     public void add(T model) {
-        list.add(model);
-        position++;
+        this.list[this.index++] = model;
     }
 
     /**
@@ -34,7 +36,7 @@ public class SimpleArray<T> implements Iterator<T> {
      * @param model - model.
      */
     public void set(int index, T model) {
-        list.set(index, model);
+        this.list[index] = model;
     }
 
     /**
@@ -43,8 +45,13 @@ public class SimpleArray<T> implements Iterator<T> {
      * @param index - index in the list.
      */
     public void delete(int index) {
-        list.remove(index);
-        position--;
+        this.list[index] = null;
+        this.index--;
+        int position = index;
+        while (position < this.list.length - 1) {
+            this.list[position++] = this.list[position];
+            this.list[position] = null;
+        }
     }
 
     /**
@@ -54,7 +61,7 @@ public class SimpleArray<T> implements Iterator<T> {
      * @return - model.
      */
     public T get(int index) {
-        return list.get(index);
+        return (T) this.list[index];
     }
 
 
@@ -65,7 +72,7 @@ public class SimpleArray<T> implements Iterator<T> {
      */
     @Override
     public boolean hasNext() {
-        return step < position;
+        return step < this.index;
     }
 
     /**
@@ -75,6 +82,6 @@ public class SimpleArray<T> implements Iterator<T> {
      */
     @Override
     public T next() {
-        return list.get(step++);
+        return (T) list[step++];
     }
 }
