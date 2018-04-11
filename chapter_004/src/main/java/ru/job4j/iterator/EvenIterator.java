@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * @version $Id$.
  * @since 0.1.
  */
-public class EvenIterator implements Iterator {
+public class EvenIterator implements Iterator<Integer> {
     private final int[] values;
     private int position = 0;
 
@@ -42,10 +42,10 @@ public class EvenIterator implements Iterator {
     /**
      *  Method next.
      *
-     * @return - Object.
+     * @return - count.
      */
     @Override
-    public Object next() {
+    public Integer next() {
         while (position < values.length) {
             if (values[position] % 2 == 0) {
                 break;

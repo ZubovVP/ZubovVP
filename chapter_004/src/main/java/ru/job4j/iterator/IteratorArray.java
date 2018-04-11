@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
-public class IteratorArray implements Iterator {
+public class IteratorArray implements Iterator<Integer> {
     private final int[][] values;
     private int indexInside = 0;
     private int indexOutside = 0;
@@ -34,11 +34,11 @@ public class IteratorArray implements Iterator {
     /**
      * Method next.
      *
-     * @return - Object
+     * @return - count.
      */
     @Override
-    public Object next() {
-        Object result = null;
+    public Integer next() {
+         int result = 0;
             try {
                 if (indexInside < values[indexOutside].length && indexOutside < values.length) {
                     result = values[indexOutside][indexInside++];
