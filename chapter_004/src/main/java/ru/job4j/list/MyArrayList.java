@@ -65,6 +65,23 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
     }
 
     /**
+     * This method check element in container.
+     *
+     * @param e - element.
+     * @return - result.
+     */
+    public boolean contains(E e) {
+        boolean result = false;
+        for (E element : container) {
+            if (element == e) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
      * Iterator.
      * @return - Iterator.
      */

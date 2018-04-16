@@ -33,7 +33,7 @@ public class UserStoreTest {
 
     @Test
     public void whenNeedReplace() throws Exception {
-        Role replace = new Role("3");
+        User replace = new User("3");
         userStoreTest.replace(userTest.getId(), replace);
         result = userStoreTest.findById(replace.getId());
         assertThat(result.getId(), is(replace.getId()));
