@@ -51,44 +51,20 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User o) {
-        if (this.age > o.getAge()) {
-            return 1;
-        } else if (this.age < o.getAge()) {
-            return -1;
-        } else {
-            return 0;
-        }
+       return Integer.compare(this.age, o.age);
     }
+
     public static Comparator<User> nameComparator = new Comparator<User>() {
         @Override
         public int compare(User o1, User o2) {
-            if (o1.name.length() > o2.name.length()) {
-                return 1;
-            } else if (o1.name.length() < o2.name.length()) {
-                return -11;
-            } else {
-                return 0;
-            }
+            return Integer.compare(o1.name.length(), o2.name.length());
         }
     };
     public static Comparator<User> allFieldsComparator = new Comparator<User>() {
         @Override
         public int compare(User o1, User o2) {
-            if (o1.name.length() > o2.name.length()) {
-                return 1;
-            } else if (o1.name.length() < o2.name.length()) {
-                return -1;
-            } else if (o1.name.length() == o2.name.length()) {
-              if (o1.age > o2.age) {
-                  return 1;
-              } else if (o1.age < o2.age) {
-                  return -1;
-              } else {
-                  return 0;
-              }
-            } else {
-                return 0;
-            }
+            final int result = o1.name.compareTo(o2.name);
+            return result != 0 ? result : Integer.compare(o1.age, o2.age);
         }
     };
 }
