@@ -9,6 +9,11 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
+ * @version $Id$.
+ * @since 0.1.
+ */
 public class MyHashSetTest {
     MyHashSet<String> setTest = new MyHashSet<>();
 
