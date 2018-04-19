@@ -12,7 +12,7 @@ import java.util.Map;
  * @version $Id$.
  * @since 0.1.
  */
-public class UserTest {
+public class UserHashTest {
     private final Calendar calendar = new GregorianCalendar(1992, 03, 04);
     private final String name = "Duke";
     private final int age = 2;
@@ -20,8 +20,8 @@ public class UserTest {
     @Test
     public void testUser() {
         Map<User, Object> users = new HashMap<>();
-        User userOne = new User(name, age, calendar);
-        User userTwo = new User(name, age, calendar);
+        UserHash userOne = new UserHash(name, age, calendar);
+        UserHash userTwo = new UserHash(name, age, calendar);
         users.put(userOne, "UserOne");
         users.put(userTwo, "UserTwo");
         System.out.println(users);
