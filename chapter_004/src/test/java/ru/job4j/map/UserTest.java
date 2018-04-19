@@ -19,13 +19,13 @@ public class UserTest {
     private Map<User, Object> users = new HashMap<>();
 
     @Test
-    public void testUser(){
+    public void testUser() {
         User userOne = new User(name, age, calendar);
         User userTwo = new User(name, age, calendar);
         this.users.put(userOne, "UserOne");
         this.users.put(userTwo, "UserTwo");
         System.out.println(this.users);
-        System.out.println("HashCode 1 - " + userOne.hashCode() );
-        System.out.println("HashCode 1 - " + userTwo.hashCode() );
+        System.out.println("HashCode 1 - " + userOne.hashCode());
+        System.out.println("HashCode 1 - " + userTwo.hashCode());
     }
 }

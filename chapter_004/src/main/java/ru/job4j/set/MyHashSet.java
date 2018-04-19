@@ -31,7 +31,7 @@ public class MyHashSet<E> implements Iterable<E> {
     public boolean contains(E e) {
         boolean result = false;
         for (E element : this.table) {
-            if (element == e) {
+            if (element != null && element.hashCode() == e.hashCode() && element.equals(e)) {
                 result = true;
                 break;
             }
@@ -131,5 +131,30 @@ public class MyHashSet<E> implements Iterable<E> {
                 return result;
             }
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        MyHashSet<?> myHashSet = (MyHashSet<?>) o;
+
+        if (count != myHashSet.count) {
+            return false;
+        }
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(table, myHashSet.table);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(table);
+        result = 31 * result + count;
+        return result;
     }
 }
