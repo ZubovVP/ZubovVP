@@ -34,8 +34,8 @@ public class Node<E extends Comparable<E>> implements SimpleTree<E> {
         boolean result = false;
         if (parentNode.isPresent() && !findBy(child).isPresent()) {
             parentNode.get().children.add(new Node<>(child));
-                result = true;
-                modCount++;
+            result = true;
+            modCount++;
         }
         return result;
     }
@@ -56,23 +56,45 @@ public class Node<E extends Comparable<E>> implements SimpleTree<E> {
      * @param value - value.
      * @return - Node.
      */
-        public Optional<Node<E>> findBy(E value) {
-            Optional<Node<E>> rsl = Optional.empty();
-            Queue<Node<E>> data = new LinkedList<>();
-            data.offer(this);
-            while (!data.isEmpty()) {
-                Node<E> el = data.poll();
-                if (el.eqValue(value)) {
-                    rsl = Optional.of(el);
-                    break;
-                }
-                for (Node<E> child : el.leaves()) {
-                    data.offer(child);
-                }
+    public Optional<Node<E>> findBy(E value) {
+        Optional<Node<E>> rsl = Optional.empty();
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.eqValue(value)) {
+                rsl = Optional.of(el);
+                break;
             }
-            return rsl;
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
         }
+        return rsl;
+    }
 
+    /**
+     * Check is binary this tree.
+     *
+     * @return - result.
+     */
+    @Override
+    public boolean isBinary() {
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this);
+        boolean result = true;
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.children.size() > 2) {
+                result = false;
+                break;
+            }
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
+        }
+        return result;
+    }
     /**
      * Compare element with this value.
      *

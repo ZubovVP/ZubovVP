@@ -90,4 +90,26 @@ public class NodeTreeTest {
         tree.add(1, 4);
         itr.next();
     }
+
+    @Test
+    public void whenAdd6ElementIsBinaryTree() {
+        Node<Integer> tree = new Node<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertThat(tree.isBinary(), is(true));
+    }
+
+    @Test
+    public void whenAdd6ElementIsNotBinaryTree() {
+        Node<Integer> tree = new Node<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(4, 5);
+        tree.add(1, 6);
+        assertThat(tree.isBinary(), is(false));
+    }
 }
