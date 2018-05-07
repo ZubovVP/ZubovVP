@@ -1,9 +1,7 @@
 package ru.job4j.set;
 import ru.job4j.list.MyArrayList;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 
 /**
@@ -44,9 +42,9 @@ private int modCount = 0;
             private Iterator<E> itr = list.iterator();
             @Override
             public boolean hasNext() {
-
                 return itr.hasNext();
             }
+
             @Override
             public E next() {
                 return itr.next();
