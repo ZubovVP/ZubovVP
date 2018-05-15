@@ -1,6 +1,5 @@
 package ru.job4j.set;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -29,14 +28,7 @@ public class MyHashSet<E> implements Iterable<E> {
      * @return - result.
      */
     public boolean contains(E e) {
-        boolean result = false;
-        for (E element : this.table) {
-            if (element != null && element.hashCode() == e.hashCode() && element.equals(e)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return this.table[calculatePosition(e)] != null;
     }
 
     /**
@@ -77,7 +69,11 @@ public class MyHashSet<E> implements Iterable<E> {
      */
     private void checkcapacity() {
         if ((double) count / this.table.length >= 0.75) {
-            this.table = Arrays.copyOf(this.table, this.table.length * 2);
+            E[] newTable = (E[]) new Object[this.table.length * 2];
+            for (E count : this.table) {
+                newTable[calculatePosition(count)] = count;
+            }
+            this.table = newTable;
         }
     }
 
@@ -88,7 +84,7 @@ public class MyHashSet<E> implements Iterable<E> {
      * @return - number position.
      */
     private int calculatePosition(E e) {
-        return Math.abs(e.hashCode() % this.table.length - 1);
+        return Math.abs(e.hashCode() % this.table.length);
     }
 
     @Override
@@ -131,30 +127,5 @@ public class MyHashSet<E> implements Iterable<E> {
                 return result;
             }
         };
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        MyHashSet<?> myHashSet = (MyHashSet<?>) o;
-
-        if (count != myHashSet.count) {
-            return false;
-        }
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(table, myHashSet.table);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(table);
-        result = 31 * result + count;
-        return result;
     }
 }

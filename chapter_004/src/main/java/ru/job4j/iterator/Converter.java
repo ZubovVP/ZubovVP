@@ -1,8 +1,6 @@
 package ru.job4j.iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
