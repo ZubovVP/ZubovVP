@@ -2,6 +2,7 @@ package ru.job4j.trade;
 
 import java.util.*;
 
+import static ru.job4j.trade.Action.*;
 import static ru.job4j.trade.Application.*;
 
 /**
@@ -13,7 +14,7 @@ import static ru.job4j.trade.Application.*;
  */
 public class Repository {
     private Map<Double, Application> buySortTable = new TreeMap<>(doubleDecrease);
-    private Map<Double, Application> saleSortTable = new TreeMap<>(doubleDecrease);
+    private Map<Double, Application> sellSortTable = new TreeMap<>(doubleDecrease);
 
     /**
      * Add application in the container.
@@ -21,8 +22,8 @@ public class Repository {
      * @param application - application.
      */
     public void addApplication(Application application) {
-        if (application.getAction().equals("buy")) {
-            for (Map.Entry<Double, Application> entry : this.saleSortTable.entrySet()) {
+        if (application.getAction().equals(BUY.getName())) {
+            for (Map.Entry<Double, Application> entry : this.sellSortTable.entrySet()) {
                 if (entry.getValue().getPrice() <= application.getPrice()) {
                     if (entry.getValue().getVolume() >= application.getVolume()) {
                         entry.getValue().setVolume(entry.getValue().getVolume() - application.getVolume());
@@ -30,17 +31,17 @@ public class Repository {
                         break;
                     } else {
                         application.setVolume(application.getVolume() - entry.getValue().getVolume());
-                        this.saleSortTable.remove(entry.getKey());
+                        this.sellSortTable.remove(entry.getKey());
                         break;
                     }
                 }
             }
-                if (this.buySortTable.get(application.getPrice()) != null && application.getVolume() > 0) {
-                    this.buySortTable.get(application.getPrice()).setVolume(this.buySortTable.get(application.getPrice()).getVolume() + application.getVolume());
-                } else if (this.buySortTable.get(application.getPrice()) == null && application.getVolume() > 0) {
-                    this.buySortTable.put(application.getPrice(), application);
-                }
-        } else if (application.getAction().equals("sale")) {
+            if (this.buySortTable.get(application.getPrice()) != null && application.getVolume() > 0) {
+                this.buySortTable.get(application.getPrice()).setVolume(this.buySortTable.get(application.getPrice()).getVolume() + application.getVolume());
+            } else if (this.buySortTable.get(application.getPrice()) == null && application.getVolume() > 0) {
+                this.buySortTable.put(application.getPrice(), application);
+            }
+        } else if (application.getAction().equals(SELL.getName())) {
             for (Map.Entry<Double, Application> entry : this.buySortTable.entrySet()) {
                 if (entry.getValue().getPrice() >= application.getPrice()) {
                     if (entry.getValue().getVolume() >= application.getVolume()) {
@@ -53,10 +54,10 @@ public class Repository {
                     }
                 }
             }
-            if (this.saleSortTable.get(application.getPrice()) != null && application.getVolume() > 0) {
-                this.saleSortTable.get(application.getPrice()).setVolume(this.saleSortTable.get(application.getPrice()).getVolume() + application.getVolume());
-            } else  if (this.saleSortTable.get(application.getPrice()) == null && application.getVolume() > 0) {
-                this.saleSortTable.put(application.getPrice(), application);
+            if (this.sellSortTable.get(application.getPrice()) != null && application.getVolume() > 0) {
+                this.sellSortTable.get(application.getPrice()).setVolume(this.sellSortTable.get(application.getPrice()).getVolume() + application.getVolume());
+            } else if (this.sellSortTable.get(application.getPrice()) == null && application.getVolume() > 0) {
+                this.sellSortTable.put(application.getPrice(), application);
             }
         }
     }
@@ -67,10 +68,10 @@ public class Repository {
      * @param application - application.
      */
     public void deleteApplication(Application application) {
-        if (application.getAction().equals("buy")) {
+        if (application.getAction().equals(BUY.getName())) {
             this.buySortTable.remove(application.getPrice());
-        } else if (application.getAction().equals("sale")) {
-            this.saleSortTable.remove(application.getPrice());
+        } else if (application.getAction().equals(SELL.getName())) {
+            this.sellSortTable.remove(application.getPrice());
         } else {
             System.out.println("Please, write correct type of application");
         }
@@ -80,28 +81,29 @@ public class Repository {
      * Print all the application.
      */
     public void printApplications() {
-        Iterator<Map.Entry<Double, Application>> itrBuy = this.buySortTable.entrySet().iterator();
-        printTable(itrBuy);
-        printTable(this.saleSortTable.entrySet().iterator());
+        printTable(this.buySortTable.entrySet().iterator());
+        printTable(this.sellSortTable.entrySet().iterator());
     }
 
     private void printTable(Iterator<Map.Entry<Double, Application>> itr) {
         Application apl;
-        StringBuilder builder = new StringBuilder();
-       while (itr.hasNext()) {
-           apl = itr.next().getValue();
-           if (apl.getAction().equals("buy")) {
-               builder.append(apl.getBook() + System.getProperty("line.separator"));
-               builder.append("Buy - Price" + System.getProperty("line.separator"));
-               builder.append(apl.getVolume() + " - " + apl.getPrice() + System.getProperty("line.separator"));
-               builder.append("---------------------" + System.getProperty("line.separator"));
-           } else {
-               builder.append(apl.getBook() + System.getProperty("line.separator"));
-               builder.append("Sale - Price" + System.getProperty("line.separator"));
-               builder.append(apl.getVolume() + " - " + apl.getPrice() + System.getProperty("line.separator"));
-               builder.append("---------------------");
-           }
-       }
-        System.out.print(builder.toString());
+        StringJoiner sj = new StringJoiner(System.getProperty("line.separator"),  "", "\n");
+        while (itr.hasNext()) {
+            apl = itr.next().getValue();
+            if (apl.getAction().equals(BUY.getName())) {
+                sj.add(apl.getBook());
+                sj.add("Buy - Price");
+                sj.add(apl.getVolume() + " - " + apl.getPrice());
+                sj.add("---------------------");
+            } else {
+                sj.add(apl.getBook());
+                sj.add("Sell - Price");
+                sj.add(apl.getVolume() + " - " + apl.getPrice());
+                sj.add("---------------------");
+            }
+        }
+        if (!sj.toString().equals("\n")) {
+            System.out.print(sj.toString());
+        }
     }
 }

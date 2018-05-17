@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.StringJoiner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -30,11 +31,11 @@ public class TradingTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         tr.getTable();
-        assertThat(new String(out.toByteArray()), is(new StringBuilder()
-        .append("Gas" + System.getProperty("line.separator")
-        + "Buy - Price" + System.getProperty("line.separator")
-        + 61 + " - " + 10.0 + System.getProperty("line.separator")
-        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(out.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+        .add("Gas")
+        .add("Buy - Price")
+        .add(61 + " - " + 10.0)
+        .add("---------------------").toString()));
     }
 
     @Test
@@ -45,15 +46,15 @@ public class TradingTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         tr.getTable();
-        assertThat(new String(out.toByteArray()), is(new StringBuilder()
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 16 + " - " + 20.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator"))
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 45 + " - " + 10.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(out.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(16 + " - " + 20.0)
+                        .add("---------------------")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(45 + " - " + 10.0)
+                        .add("---------------------").toString()));
     }
 
     @Test
@@ -64,30 +65,30 @@ public class TradingTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         tr.getTable();
-        assertThat(new String(out.toByteArray()), is(new StringBuilder()
-                .append("Prom" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 16 + " - " + 20.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator"))
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 45 + " - " + 10.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(out.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Prom")
+                        .add("Buy - Price")
+                        .add(16 + " - " + 20.0)
+                        .add("---------------------").toString() + (new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(45 + " - " + 10.0)
+                        .add("---------------------").toString())));
     }
 
     @Test
     public void whenAddSecondApplicationWithAlterativeActiion() {
-        Application testAp3 = new Application("Gas", "add", "sale", 10, 40);
+        Application testAp3 = new Application("Gas", "add", "sell", 10, 40);
         tr.takeApplication(testAp3);
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         tr.getTable();
-        assertThat(new String(out.toByteArray()), is(new StringBuilder()
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 5 + " - " + 10.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(out.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(5 + " - " + 10.0)
+                        .add("---------------------").toString()));
     }
 
     @Test
@@ -98,25 +99,25 @@ public class TradingTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         tr.getTable();
-        assertThat(new String(out.toByteArray()), is(new StringBuilder()
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 16 + " - " + 20.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator"))
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 45 + " - " + 10.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(out.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(16 + " - " + 20.0)
+                        .add("---------------------")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(45 + " - " + 10.0)
+                        .add("---------------------").toString()));
 
         ByteArrayOutputStream outTwo = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outTwo));
         tr.takeApplication(new Application("Gas", "delete", "buy", 20, 16));
         tr.getTable();
-        assertThat(new String(outTwo.toByteArray()), is(new StringBuilder()
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 45 + " - " + 10.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(outTwo.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(45 + " - " + 10.0)
+                        .add("---------------------").toString()));
     }
 
     @Test
@@ -127,18 +128,18 @@ public class TradingTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         tr.getTable();
-        assertThat(new String(out.toByteArray()), is(new StringBuilder()
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 30 + " - " + 18.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator"))
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 15 + " - " + 15.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator"))
-                .append("Gas" + System.getProperty("line.separator")
-                        + "Buy - Price" + System.getProperty("line.separator")
-                        + 45 + " - " + 10.0 + System.getProperty("line.separator")
-                        + "---------------------" + System.getProperty("line.separator")).toString()));
+        assertThat(new String(out.toByteArray()), is(new StringJoiner(System.getProperty("line.separator"), "", "\n")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(30 + " - " + 18.0)
+                        .add("---------------------")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(15 + " - " + 15.0)
+                        .add("---------------------")
+                .add("Gas")
+                        .add("Buy - Price")
+                        .add(45 + " - " + 10.0)
+                        .add("---------------------").toString()));
     }
 }

@@ -1,6 +1,7 @@
 package ru.job4j.trade;
 
 
+import static ru.job4j.trade.Action.*;
 import java.util.*;
 
 /**
@@ -22,9 +23,9 @@ public class Trading {
         if (this.table.get(application.getBook()) == null) {
             this.table.put(application.getBook(), new Repository());
         }
-        if (application.getType().equals("add")) {
+        if (application.getType().equals(ADD.getName())) {
             this.table.get(application.getBook()).addApplication(application);
-        } else if (application.getType().equals("delete")) {
+        } else if (application.getType().equals(DELETE.getName())) {
             this.table.get(application.getBook()).deleteApplication(application);
         } else {
             System.out.println("Please, write correct type application.");
