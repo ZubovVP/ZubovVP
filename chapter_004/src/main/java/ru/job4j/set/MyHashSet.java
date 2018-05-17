@@ -28,7 +28,7 @@ public class MyHashSet<E> implements Iterable<E> {
      * @return - result.
      */
     public boolean contains(E e) {
-        return this.table[calculatePosition(e)] != null;
+        return this.table[calculatePosition(e, this.table.length)] != null;
     }
 
     /**
@@ -41,7 +41,7 @@ public class MyHashSet<E> implements Iterable<E> {
         checkcapacity();
         boolean result = false;
         if (!contains(e)) {
-            this.table[calculatePosition(e)] = e;
+            this.table[calculatePosition(e, this.table.length)] = e;
             result = true;
             count++;
         }
@@ -57,7 +57,7 @@ public class MyHashSet<E> implements Iterable<E> {
     public boolean remove(E e) {
         boolean result = false;
         if (contains(e)) {
-            this.table[calculatePosition(e)] = null;
+            this.table[calculatePosition(e, this.table.length)] = null;
             result = true;
             count--;
         }
@@ -71,7 +71,7 @@ public class MyHashSet<E> implements Iterable<E> {
         if ((double) count / this.table.length >= 0.75) {
             E[] newTable = (E[]) new Object[this.table.length * 2];
             for (E count : this.table) {
-                newTable[calculatePosition(count)] = count;
+                newTable[calculatePosition(count, newTable.length)] = count;
             }
             this.table = newTable;
         }
@@ -83,7 +83,7 @@ public class MyHashSet<E> implements Iterable<E> {
      * @param e - element.
      * @return - number position.
      */
-    private int calculatePosition(E e) {
+    private int calculatePosition(E e, int size) {
         return Math.abs(e.hashCode() % this.table.length);
     }
 
@@ -91,27 +91,42 @@ public class MyHashSet<E> implements Iterable<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
             int step = 0;
+            int returnElement = 0;
             int expectedModCount = count;
 
-            @Override
-            public boolean hasNext() {
-                boolean result = false;
+            /**
+             * check correct of the table.
+             *
+             * @param expectedModCount - count.
+             */
+            private void checkConcurrentModificationException(int expectedModCount) {
                 if (expectedModCount != count) {
                     throw new ConcurrentModificationException();
                 }
-                for (int x = step; x < table.length; x++) {
-                    if (table[x] != null) {
-                        result = true;
-                    }
-                }
-                return result;
             }
 
+            /**
+             * Check next element.
+             *
+             * @return - result.
+             */
+            @Override
+            public boolean hasNext() {
+                checkConcurrentModificationException(expectedModCount);
+                return count > returnElement;
+            }
+
+            /**
+             * Return next count.
+             *
+             * @return - count.
+             */
             @Override
             public E next() {
                 E result = null;
-                if (expectedModCount != count) {
-                    throw new ConcurrentModificationException();
+                checkConcurrentModificationException(expectedModCount);
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
                 }
                 for (int x = step; x < table.length; x++) {
                     if (table[x] != null) {
@@ -121,9 +136,7 @@ public class MyHashSet<E> implements Iterable<E> {
                     }
                     step++;
                 }
-                    if (result == null) {
-                        throw new NoSuchElementException();
-                    }
+                returnElement++;
                 return result;
             }
         };
