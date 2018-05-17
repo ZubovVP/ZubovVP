@@ -84,7 +84,7 @@ public class MyHashSet<E> implements Iterable<E> {
      * @return - number position.
      */
     private int calculatePosition(E e, int size) {
-        return Math.abs(e.hashCode() % this.table.length);
+        return Math.abs(e.hashCode() % size);
     }
 
     @Override
