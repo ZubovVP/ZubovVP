@@ -19,11 +19,12 @@ import static org.junit.Assert.*;
 public class WordIndexUseMyTrieTest {
     private WordIndexUseMyTrie test = new WordIndexUseMyTrie();
     private Set<Integer> expected = new HashSet<>();
+    private String file = "A B C D F A A B";
 
 
     @Before
     public void start() {
-           this.test.loadFile("A B C D F A A B");
+        this.test.loadFile(file);
     }
 
     @Test
@@ -43,5 +44,22 @@ public class WordIndexUseMyTrieTest {
     @Test
     public void whenWeFindElementZShouldNull() throws Exception {
         assertNull(this.test.getIndexes4Word("Z"));
+    }
+
+    @Test
+    public void getIndexOfElementBShould1() throws Exception {
+        assertThat(this.file.indexOf("A"), is(this.test.indexOf("A").get(0)));
+        assertThat(this.file.indexOf("B"), is(this.test.indexOf("B").get(0)));
+        assertThat(this.file.indexOf("C"), is(this.test.indexOf("C").get(0)));
+        assertThat(this.file.indexOf("D"), is(this.test.indexOf("D").get(0)));
+
+    }
+
+    @Test
+    public void testIndexOfWithNewWords() throws Exception {
+        WordIndexUseMyTrie testTwo = new WordIndexUseMyTrie();
+        String fileTwo = "test text";
+        testTwo.loadFile(fileTwo);
+        assertThat(fileTwo.indexOf("text"), is(testTwo.indexOf("text").get(0)));
     }
 }

@@ -1,5 +1,6 @@
 package ru.job4j.trie;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,9 +28,11 @@ public class WordIndexUseMyTrie {
      */
     public void loadFile(String filename) {
         String[] line = filename.split(" ");
-        int step = 1;
+        int count = 1;
+        int index = 0;
         for (String str : line) {
-            this.dictionary.add(str, step++);
+            this.dictionary.add(str, count++, index);
+            index = index + str.length() + 1;
         }
     }
 
@@ -41,5 +44,15 @@ public class WordIndexUseMyTrie {
      */
     public Set getIndexes4Word(String searchWord) {
         return this.dictionary.getCounts(searchWord);
+    }
+
+    /**
+     * IndexOf.
+     *
+     * @param word - word.
+     * @return - list of position.
+     */
+    public List<Integer> indexOf(String word) {
+        return this.dictionary.indexOf(word);
     }
 }

@@ -1,8 +1,6 @@
 package ru.job4j.trie;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * MyTrie
@@ -22,12 +20,18 @@ public class MyTrie<T> {
     /**
      * Add element in the trie.
      *
-     * @param key - key
+     * @param key   - key
      * @param count - count.
      */
-    public void add(String key, T count) {
-        this.root.add(key, count);
+    public void add(String key, T count, int index) {
+        this.root.add(key, count, index);
     }
+
+    public List<Integer> indexOf(String word) {
+        return this.root.getNode(word).getIndexList();
+
+    }
+
 
     /**
      * Get Node.
@@ -46,6 +50,7 @@ public class MyTrie<T> {
     private class Node {
         private Set<T> counts;
         private HashMap<Character, Node> childrenList;
+        private List<Integer> indexList;
 
         /**
          * Constructor.
@@ -53,15 +58,20 @@ public class MyTrie<T> {
         public Node() {
             this.counts = new HashSet<>();
             this.childrenList = new HashMap<>();
+            this.indexList = new ArrayList<>();
+        }
+
+        public List<Integer> getIndexList() {
+            return indexList;
         }
 
         /**
          * Add element in the trie.
          *
-         * @param key - key
+         * @param key   - key
          * @param count - count.
          */
-        private void add(String key, T count) {
+        private void add(String key, T count, int index) {
             char[] keys = key.toCharArray();
             Node list = root;
             for (char element : keys) {
@@ -73,6 +83,8 @@ public class MyTrie<T> {
                 }
                 if (element == keys[keys.length - 1]) {
                     list.counts.add(count);
+                    list.indexList.add(index);
+
                 }
             }
         }
