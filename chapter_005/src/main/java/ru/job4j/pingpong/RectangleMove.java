@@ -9,7 +9,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class RectangleMove implements Runnable {
     private final Rectangle rect;
-    private volatile boolean running = true;
 
     /**
      * Constructor.
@@ -20,19 +19,11 @@ public class RectangleMove implements Runnable {
         this.rect = rect;
     }
 
-    /**
-     * Shutdown from run.
-     */
-    public void shutdown() {
-        running = false;
-    }
-
     @Override
     public void run() {
         int x = 2;
         int y = -1;
-
-        while (running) {
+        while (true) {
             if (this.rect.getY() >= 300) {
                 y = -(int) (Math.random() * 10);
             } else if (this.rect.getY() <= 0) {
@@ -48,7 +39,7 @@ public class RectangleMove implements Runnable {
             try {
                 Thread.sleep(35);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                break;
             }
         }
     }
