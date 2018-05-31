@@ -1,5 +1,8 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.*;
 
 /**
@@ -7,10 +10,12 @@ import java.util.*;
  * @version $Id$
  * @since 0.1
  */
+@ThreadSafe
 public class MyArrayList<E> implements Iterable<E>, List<E> {
 
     private static final int DEFAULT_CAPACITY = 10;
-    private  E[] container;
+    @GuardedBy("this")
+    private E[] container;
     private int size = 0;
     private int modCount = 0;
 
@@ -24,6 +29,7 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
 
     /**
      * This method get size of MyArrayList.
+     *
      * @return size of MyArrayList.
      */
     @Override
@@ -33,11 +39,12 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
 
     /**
      * This method add element in the MyArrayList.
+     *
      * @param e - element.
      * @return - result action.
      */
     @Override
-    public boolean add(E e) {
+    public synchronized boolean add(E e) {
         ensureCapacity(size + 1);
         this.container[size++] = e;
         modCount++;
@@ -46,9 +53,10 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
 
     /**
      * This method expand the MyArrayList.
+     *
      * @param count - size of MyArrayList.
      */
-    private void  ensureCapacity(int count) {
+    private void ensureCapacity(int count) {
         if (count > container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
@@ -56,6 +64,7 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
 
     /**
      * This method return element on index.
+     *
      * @param index - index.
      * @return - element.
      */
@@ -83,14 +92,16 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
 
     /**
      * Iterator.
+     *
      * @return - Iterator.
      */
     @Override
     public Iterator<E> iterator() {
-         int expectedModCount = this.modCount;
+        int expectedModCount = this.modCount;
 
         return new Iterator<E>() {
-             private int step = 0;
+            private int step = 0;
+
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
@@ -98,6 +109,7 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
                 }
                 return step < size;
             }
+
             @Override
             public E next() {
                 if (expectedModCount != modCount) {
@@ -105,7 +117,7 @@ public class MyArrayList<E> implements Iterable<E>, List<E> {
                 } else if (size <= step) {
                     throw new NoSuchElementException();
                 }
-                    return container[step++];
+                return container[step++];
             }
         };
     }

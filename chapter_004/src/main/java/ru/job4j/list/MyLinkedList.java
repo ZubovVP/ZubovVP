@@ -1,5 +1,8 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
@@ -8,13 +11,17 @@ import java.util.Iterator;
  * @version $Id$
  * @since 0.1
  */
+@ThreadSafe
 public class MyLinkedList<E> implements List<E>, Iterable<E> {
+    @GuardedBy("this")
     private Node<E> head;
+    @GuardedBy("this")
     private Node<E> tail;
     private int size = 0;
 
     /**
      * This method get size of MyLinkedList.
+     *
      * @return size of MyLinkedList.
      */
     @Override
@@ -24,11 +31,12 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
 
     /**
      * This method add object in MyLinkedList.
+     *
      * @param e - element.
      * @return - return result action.
      */
     @Override
-    public boolean add(E e) {
+    public synchronized boolean add(E e) {
         if (this.head == null) {
             Node<E> newNode = new Node<E>(null, e, null);
             this.head = newNode;
@@ -44,6 +52,7 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
 
     /**
      * This method return element on the index in the MyLinkedList.
+     *
      * @param index - index.
      * @return - element from MyLinkedList.
      */
@@ -54,6 +63,7 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
 
     /**
      * This method find node in the MyLinkedList.
+     *
      * @param index - index.
      * @return - Node.
      */
@@ -79,9 +89,10 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
 
     /**
      * This method remove object from MyLinkedList.
+     *
      * @param index - index.
      */
-    public void remove(int index)  {
+    public synchronized void remove(int index) {
         Node<E> result = findNode(index);
         if (result.getNext() == null && result.getPerv() != null) {
             result.getPerv().setNext(null);
@@ -100,24 +111,25 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
 
     /**
      * Iterator
+     *
      * @return - Iterator<E>
      */
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-           private final int expectedModCount = size;
+            private final int expectedModCount = size;
             Node<E> result = head;
 
             @Override
             public boolean hasNext() {
-                    if (expectedModCount != size) {
-                        throw new ConcurrentModificationException();
-                    }
-               try {
-                   return result.getItem() != null;
-               } catch (NullPointerException npe) {
-                   return false;
-               }
+                if (expectedModCount != size) {
+                    throw new ConcurrentModificationException();
+                }
+                try {
+                    return result.getItem() != null;
+                } catch (NullPointerException npe) {
+                    return false;
+                }
             }
 
             @Override
@@ -133,7 +145,8 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
     }
 
     /**
-     *  Node class.
+     * Node class.
+     *
      * @param <E> - Node
      */
     private static class Node<E> {
