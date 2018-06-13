@@ -23,7 +23,7 @@ public class RectangleMove implements Runnable {
     public void run() {
         int x = 2;
         int y = -1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (this.rect.getY() >= 300) {
                 y = -(int) (Math.random() * 10);
             } else if (this.rect.getY() <= 0) {
