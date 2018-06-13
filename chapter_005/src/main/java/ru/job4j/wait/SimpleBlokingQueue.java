@@ -12,7 +12,7 @@ import java.util.Queue;
  */
 @ThreadSafe
 public class SimpleBlokingQueue<T> {
-    @GuardedBy("this")
+    @GuardedBy("lock")
     private Queue<T> queue;
     private final int limit;
     private final Object lock = new Object();
@@ -35,7 +35,7 @@ public class SimpleBlokingQueue<T> {
      */
     public void offer(T value) throws InterruptedException {
         synchronized (this.lock) {
-            if (queue.size() == limit) {
+            while (queue.size() == limit) {
                 this.lock.wait();
             }
             queue.offer(value);
@@ -52,7 +52,7 @@ public class SimpleBlokingQueue<T> {
     public T poll() throws InterruptedException {
 
         synchronized (this.lock) {
-            if (queue.size() == 0) {
+            while (queue.isEmpty()) {
                 this.lock.wait();
             }
             this.lock.notify();
