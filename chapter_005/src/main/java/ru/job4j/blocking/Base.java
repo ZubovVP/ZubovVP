@@ -73,7 +73,7 @@ public class Base {
      *
      * @return - Base.
      */
-    public synchronized Base incrementVersion() {
+    public Base incrementVersion() {
         this.version += 1;
         return this;
     }
