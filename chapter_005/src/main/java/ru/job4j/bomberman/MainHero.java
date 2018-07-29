@@ -8,6 +8,12 @@ import java.io.IOException;
  */
 public class MainHero extends Hero {
 
+    /**
+     * Constructor.
+     *
+     * @param source - start place.
+     * @param board - board.
+     */
     public MainHero(Cell source, Board board) {
         super(source, board);
     }
@@ -18,10 +24,9 @@ public class MainHero extends Hero {
         if (source.getX() <= this.board.getLength() && source.getY() <= this.board.getLength(source.getX())) {
             boolean result = false;
             while (!result) {
-                //При создании героя на поле я заблокировал за ним лок(выдаёт true)
                 result = this.board.getLock(source.getX(), source.getY()).tryLock();
-                //System.out.println(result);
             }
+
             while (!Thread.currentThread().isInterrupted()) {
                 count = rd.nextInt(4);
                 Cell dist = null;
@@ -42,7 +47,6 @@ public class MainHero extends Hero {
                     dist = new Cell(this.source.getX() - 1, this.source.getY());
                     print();
                 }
-
                 if (dist != null) {
                     result = this.board.move(this.source, dist);
                     if (result) {
@@ -51,17 +55,22 @@ public class MainHero extends Hero {
                         this.source.setY(dist.getY());
                     }
                 }
+
             }
+
         } else {
             try {
                 throw new IOException("Wrong source");
             } catch (IOException e) {
                 e.printStackTrace();
-            }
 
+            }
         }
     }
 
+    /**
+     * Print.
+     */
     private void print() {
         System.out.println("X = " + this.source.getX());
         System.out.println("Y = " + this.source.getY());

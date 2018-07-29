@@ -1,5 +1,7 @@
 package ru.job4j.bomberman;
 
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -9,50 +11,89 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by ZubovVP on 14.07.2018
  * zubovvp@yadndex.ru
  */
+@ThreadSafe
 public class Board {
-    private Lock[][] locks;
+    private final Lock[][] locks;
 
+    /**
+     * Constructor.
+     *
+     * @param x - coordinate x.
+     * @param y - coordinate y.
+     */
     public Board(int x, int y) {
         this.locks = new ReentrantLock[x][y];
     }
 
+    /**
+     * Get lock in the board.
+     *
+     * @param x - coordinate x.
+     * @param y - coordinate y.
+     * @return - the lock.
+     */
     public Lock getLock(int x, int y) {
         return this.locks[x][y];
     }
 
 
+    /**
+     * Get length the board.
+     *
+     * @return amount.
+     */
     public int getLength() {
         return this.locks.length;
     }
 
-    public int getLength(int x){
+    /**
+     * Get length the board.
+     *
+     * @param x - coordinate x.
+     * @return - amount.
+     */
+    public int getLength(int x) {
         return this.locks[x].length;
     }
 
+    /**
+     * Create locks in the board.
+     */
     public void fill() {
-        for(Lock[] row : this.locks) {
+        for (Lock[] row : this.locks) {
             Arrays.fill(row, new ReentrantLock());
         }
     }
 
-    private boolean takeLocks(Lock lock1, Lock lock2)  {
-        boolean firstLockTaken = false;
+    /**
+     * Check monitor of the locks.
+     *
+     * @param lock1 - lock1.
+     * @param lock2 - lock 2.
+     * @return - result.
+     */
+    private boolean takeLocks(Lock lock1, Lock lock2) {
+        boolean firstLockTaken;
         boolean secondLockTaken = false;
-        //Несмотря на то что я заблокировал данный лок за героем в момент создания на достке у меня опять появляется true
-            firstLockTaken = lock1.tryLock();
+        firstLockTaken = lock1.tryLock();
         try {
             secondLockTaken = lock2.tryLock(500, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
-        return !firstLockTaken && secondLockTaken;
+        return firstLockTaken && secondLockTaken;
     }
 
-    public boolean move(Cell source, Cell dist)  {
-        boolean result = takeLocks(getLock(source.getX(), source.getY()),getLock(dist.getX(), dist.getY()));
-    //    System.out.println("RESULT = " + result);
-        return  result;
+    /**
+     * Move the hero on the board.
+     *
+     * @param source - start place.
+     * @param dist - finish place.
+     * @return - result.
+     */
+    public boolean move(Cell source, Cell dist) {
+        boolean result = takeLocks(getLock(source.getX(), source.getY()), getLock(dist.getX(), dist.getY()));
+        return result;
     }
 }
