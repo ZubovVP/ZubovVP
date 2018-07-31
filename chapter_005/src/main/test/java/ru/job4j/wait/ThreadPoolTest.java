@@ -7,19 +7,20 @@ import org.junit.Test;
  * zubovvp@yadndex.ru
  */
 public class ThreadPoolTest {
-    ThreadPool tr = new ThreadPool();
+    private ThreadPool tr;
 
-    public ThreadPoolTest() throws InterruptedException {
+    public ThreadPoolTest() {
+        tr = new ThreadPool();
     }
 
     @Test
-    public void work() throws InterruptedException {
-        for (int x = 0; x < 5; x++) {
+    public void work() {
+        for (int x = 0; x < 11; x++) {
             tr.work(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -27,14 +28,17 @@ public class ThreadPoolTest {
                 }
             });
         }
-        Thread.sleep(5000);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         tr.shutdown();
     }
 
-
     @Test
     public void work2() throws InterruptedException {
-        for (int x = 0; x < 5; x++) {
+        for (int x = 0; x < 11; x++) {
             tr.work(new Runnable() {
                 @Override
                 public void run() {
@@ -49,7 +53,7 @@ public class ThreadPoolTest {
         }
         Thread.sleep(5000);
 
-        for (int x = 0; x < 5; x++) {
+        for (int x = 0; x < 10; x++) {
             tr.work(new Runnable() {
                 @Override
                 public void run() {
