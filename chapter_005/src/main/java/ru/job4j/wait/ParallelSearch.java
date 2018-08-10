@@ -55,7 +55,7 @@ public class ParallelSearch {
     }
 
     /**
-     *Start program(start two threads:
+     * Start program(start two threads:
      * 1) search file
      * 2) read file and equals with the text).
      *
@@ -131,7 +131,7 @@ public class ParallelSearch {
     /**
      * MyFileVisitor.
      */
-   private class MyFileVisitor extends SimpleFileVisitor<Path> {
+    private class MyFileVisitor extends SimpleFileVisitor<Path> {
         private List<String> exts;
         private Queue<String> files;
 
@@ -142,10 +142,11 @@ public class ParallelSearch {
 
         @Override
         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-            for (String ext : exts)
+            for (String ext : exts) {
                 if (path.toString().endsWith("." + ext)) {
                     files.offer(path.toString());
                 }
+            }
             return FileVisitResult.CONTINUE;
         }
     }
