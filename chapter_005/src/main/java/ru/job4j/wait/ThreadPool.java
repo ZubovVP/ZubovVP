@@ -31,12 +31,13 @@ public class ThreadPool {
     private void execute(int size) {
         for (int x = 0; x < size; x++) {
             treads.add(new Thread(() -> {
-                Runnable nextTask = null;
+                Runnable nextTask;
                 while (running) {
                     try {
                         nextTask = tasks.poll(1000, TimeUnit.MILLISECONDS);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        System.out.println(Thread.currentThread().getName() + "- finish.");
+                        break;
                     }
                     if (nextTask != null) {
                         nextTask.run();
@@ -68,5 +69,10 @@ public class ThreadPool {
      */
     public void shutdown() {
         this.running = false;
+        for (Thread thread : this.treads) {
+            if (!thread.isInterrupted()) {
+                thread.interrupt();
+            }
+        }
     }
 }
