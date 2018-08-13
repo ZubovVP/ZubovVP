@@ -14,7 +14,6 @@ import static org.junit.Assert.assertThat;
  */
 public class EmailNotificationTest {
     BlockingQueue<User> users = new LinkedBlockingDeque<>();
-    //private ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @Test
     public void testEmailTo() throws InterruptedException {
