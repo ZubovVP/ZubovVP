@@ -7,6 +7,7 @@ import java.io.IOException;
  * zubovvp@yadndex.ru
  */
 public class MainHero extends Hero {
+    private boolean running = true;
 
     /**
      * Constructor.
@@ -27,7 +28,7 @@ public class MainHero extends Hero {
                 result = this.board.getLock(source.getX(), source.getY()).tryLock();
             }
 
-            while (!Thread.currentThread().isInterrupted()) {
+            while (running) {
                 count = rd.nextInt(4);
                 Cell dist = null;
 
@@ -55,7 +56,6 @@ public class MainHero extends Hero {
                         this.source.setY(dist.getY());
                     }
                 }
-
             }
 
         } else {
@@ -75,5 +75,11 @@ public class MainHero extends Hero {
         System.out.println("X = " + this.source.getX());
         System.out.println("Y = " + this.source.getY());
         System.out.println("------------------------");
+    }
+
+    public void shutdown() {
+        running = false;
+        Thread.currentThread().interrupt();
+        System.out.println("FINISH!");
     }
 }
