@@ -1,5 +1,8 @@
 package ru.job4j.bomberman;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 

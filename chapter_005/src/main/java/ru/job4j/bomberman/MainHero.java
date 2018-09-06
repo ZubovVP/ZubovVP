@@ -1,6 +1,7 @@
 package ru.job4j.bomberman;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Created by ZubovVP on 15.07.2018
@@ -8,12 +9,15 @@ import java.io.IOException;
  */
 public class MainHero extends Hero {
     private boolean running = true;
+    private Scanner scanner = new Scanner(System.in);
+    private boolean takenLock;
+
 
     /**
      * Constructor.
      *
      * @param source - start place.
-     * @param board - board.
+     * @param board  - board.
      */
     public MainHero(Cell source, Board board) {
         super(source, board);
@@ -21,49 +25,42 @@ public class MainHero extends Hero {
 
     @Override
     public void run() {
-        int count;
-        if (source.getX() <= this.board.getLength() && source.getY() <= this.board.getLength(source.getX())) {
-            boolean result = false;
-            while (!result) {
-                result = this.board.getLock(source.getX(), source.getY()).tryLock();
+
+        boolean result = this.board.checkPosition(source);
+        if (result) {
+            while (!takenLock) {
+                    takenLock = this.board.getLock(source.getX(), source.getY()).tryLock();
+
             }
-
             while (running) {
-                count = rd.nextInt(4);
-                Cell dist = null;
+                System.out.println("pls write dist");
+                int x = scanner.nextInt();
+                int y = scanner.nextInt();
+                Cell dist = new Cell(x, y);
 
-                if (count == 0 && this.source.getY() > 0) {
-                    dist = new Cell(this.source.getX(), this.source.getY() - 1);
-                    print();
-
-                } else if (count == 1 && this.source.getX() + 1 < this.board.getLength()) {
-                    dist = new Cell(this.source.getX() + 1, this.source.getY());
-                    print();
-
-                } else if (count == 2 && this.source.getY() + 1 < this.board.getLength(this.source.getX())) {
-                    dist = new Cell(this.source.getX(), this.source.getY() + 1);
-                    print();
-
-                } else if (count == 3 && this.source.getX() > 0) {
-                    dist = new Cell(this.source.getX() - 1, this.source.getY());
-                    print();
-                }
-                if (dist != null) {
-                    result = this.board.move(this.source, dist);
+                if ((dist.getX() + 1 == this.source.getX() || dist.getX() - 1 == this.source.getX() || dist.getX() == this.source.getX()) && (dist.getY() + 1 == this.source.getY() || dist.getY() - 1 == this.source.getY() || dist.getY() == this.source.getY())) {
+                        result = this.board.move(this.source, dist);
                     if (result) {
-                        this.board.getLock(source.getX(), source.getY()).unlock();
                         this.source.setX(dist.getX());
                         this.source.setY(dist.getY());
+                        print();
+
                     }
+                    System.out.println("Exit? Yes/No");
+                    String answer = scanner.next();
+                    if (answer.equals("Yes")) {
+                        shutdown();
+                    }
+                } else {
+                    System.out.println("Wrong dist, please write correct dist");
+                    print();
                 }
             }
-
         } else {
             try {
                 throw new IOException("Wrong source");
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
         }
     }
@@ -72,14 +69,18 @@ public class MainHero extends Hero {
      * Print.
      */
     private void print() {
+        System.out.println(Thread.currentThread().getName() + "HERO");
         System.out.println("X = " + this.source.getX());
         System.out.println("Y = " + this.source.getY());
         System.out.println("------------------------");
     }
 
+    /**
+     * Finish game.
+     */
     public void shutdown() {
+        System.out.println("FINISH!");
         running = false;
         Thread.currentThread().interrupt();
-        System.out.println("FINISH!");
     }
 }

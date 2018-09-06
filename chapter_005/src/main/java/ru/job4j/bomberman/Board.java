@@ -1,5 +1,6 @@
 package ru.job4j.bomberman;
 
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @ThreadSafe
 public class Board {
+    @GuardedBy("this")
     private final Lock[][] locks;
 
     /**
@@ -68,32 +70,42 @@ public class Board {
     /**
      * Check monitor of the locks.
      *
-     * @param lock1 - lock1.
-     * @param lock2 - lock 2.
+     * @param lock - lock.
      * @return - result.
      */
-    private boolean takeLocks(Lock lock1, Lock lock2) {
-        boolean firstLockTaken;
+    private boolean takeLocks(Lock lock) {
         boolean secondLockTaken = false;
-        firstLockTaken = lock1.tryLock();
         try {
-            secondLockTaken = lock2.tryLock(500, TimeUnit.MILLISECONDS);
+            secondLockTaken = lock.tryLock(500, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return firstLockTaken && secondLockTaken;
+        return secondLockTaken;
     }
 
     /**
      * Move the hero on the board.
      *
      * @param source - start place.
-     * @param dist - finish place.
+     * @param dist   - finish place.
      * @return - result.
      */
     public boolean move(Cell source, Cell dist) {
-        boolean result = takeLocks(getLock(source.getX(), source.getY()), getLock(dist.getX(), dist.getY()));
+        boolean result = takeLocks(getLock(dist.getX(), dist.getY()));
+        if (result) {
+            getLock(source.getX(), source.getY()).unlock();
+        }
         return result;
+    }
+
+    /**
+     * Check position.
+     *
+     * @param source - source on the board.
+     * @return - true - right, false - wrong.
+     */
+    public boolean checkPosition(Cell source) {
+        return (source.getX() <= getLength() && source.getY() <= getLength(source.getX()) && source.getX() >= 0 && source.getY() >= 0);
     }
 }
