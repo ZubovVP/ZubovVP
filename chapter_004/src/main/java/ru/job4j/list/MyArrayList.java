@@ -11,9 +11,15 @@ import java.util.*;
  * @since 0.1
  */
 @ThreadSafe
-public class MyArrayList<E> implements Iterable<E>, List<E> {
+public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
 
     private static final int DEFAULT_CAPACITY = 10;
+
+    @Override
+    public MyArrayList clone() throws CloneNotSupportedException {
+        return (MyArrayList) super.clone();
+    }
+
     @GuardedBy("this")
     private E[] container;
     private int size = 0;
