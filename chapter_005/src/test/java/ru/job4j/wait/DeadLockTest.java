@@ -9,10 +9,10 @@ import static org.junit.Assert.assertTrue;
  * zubovvp@yadndex.ru
  */
 public class DeadLockTest {
+    private DeadLock d1 = new DeadLock();
 
     @Test
     public void start() throws InterruptedException {
-        DeadLock d1 = new DeadLock();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

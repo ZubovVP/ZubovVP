@@ -9,12 +9,24 @@ import java.util.concurrent.locks.ReentrantLock;
  * zubovvp@yadndex.ru
  */
 public class DeadLock {
-    private CountDownLatch count = new CountDownLatch(2);
-    private Lock lock1 = new ReentrantLock();
-    private Lock lock2 = new ReentrantLock();
+    private CountDownLatch count;
+    private Lock lock1;
+    private Lock lock2;
     private Thread th1;
     private Thread th2;
 
+    /**
+     * Constructor.
+     */
+    public DeadLock( ) {
+        this.count = new CountDownLatch(2);
+        this.lock1 = new ReentrantLock();
+        this.lock2 = new ReentrantLock();
+    }
+
+    /**
+     * 2 threads try to control 2 locks.
+     */
     public void start() {
         th1 = new Thread(() -> {
             lock1.lock();
@@ -44,7 +56,7 @@ public class DeadLock {
     /**
      * Check are live threads.
      *
-     * @return
+     * @return - result.
      */
     public boolean areAliveThreads() {
         return th1.isAlive() && th2.isAlive();
