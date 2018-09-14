@@ -18,7 +18,7 @@ public class DeadLock {
     /**
      * Constructor.
      */
-    public DeadLock( ) {
+    public DeadLock() {
         this.count = new CountDownLatch(2);
         this.lock1 = new ReentrantLock();
         this.lock2 = new ReentrantLock();
