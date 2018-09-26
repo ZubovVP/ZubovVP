@@ -1,6 +1,4 @@
-﻿--create database
-create database system_of_applications;
-
+﻿
 --create table Categories
 create table categories (
 	id serial primary key,
