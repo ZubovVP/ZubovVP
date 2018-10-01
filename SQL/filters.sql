@@ -35,7 +35,9 @@ INSERT INTO products(name, type_id, expired_date, price) VALUES('Агуша', 13
 INSERT INTO products(name, type_id, expired_date, price) VALUES('Мороженое_сливочное', 14, '2019-10-28', 25);
 
 --1. Написать запрос получение всех продуктов с типом "СЫР"
-SELECT * FROM products WHERE type_id = 10;
+SELECT * FROM products AS p 
+INNER JOIN types AS t on p.type_id = t.id 
+WHERE t.name = 'СЫР';
 
 --2. Написать запрос получения всех продуктов, у кого в имени есть слово "мороженное"
 SELECT * FROM products WHERE name LIKE '%Мороженое%';
@@ -50,7 +52,9 @@ SELECT * FROM products WHERE price = (SELECT MAX(price) FROM products);
 SELECT COUNT(*) FROM products WHERE type_id=10;
 
 --6. Написать запрос получение всех продуктов с типом "СЫР" и "МОЛОКО"
-SELECT * FROM products WHERE type_id = 10 OR type_id = 11;
+SELECT p.name FROM products AS p 
+INNER JOIN types AS t on p.type_id = t.id
+WHERE t.name = 'СЫР' OR t.name = 'МОЛОКО';
 
 --7. Написать запрос, который выводит тип продуктов, которых осталось меньше 3 штук. 
 SELECT type_id, COUNT(*) AS ModelsCount
@@ -60,6 +64,3 @@ HAVING COUNT(*) < 3;
   
 --8. Вывести все продукты и их тип.
 SELECT p.name, t.name FROM products as p INNER JOIN types as t  on t.id = type_id;
-
-
-
