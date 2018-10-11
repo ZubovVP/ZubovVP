@@ -40,8 +40,10 @@ class  EditItem extends BaseAction {
         String id = input.ask("Please, write the id :");
         String name = input.ask("Please, write the new task's name :");
         String description = input.ask("Please, write the new task's description");
-        tracker.findById(id).name = name;
-        tracker.findById(id).description = description;
+        Item result = tracker.findById(id);
+        result.setName(name);
+        result.setDescription(description);
+        tracker.replace(result);
         System.out.println("Item edited !");
     }
 }
@@ -54,11 +56,7 @@ class  EditItem extends BaseAction {
 public class MenuTracker {
     private Input input;
     private Tracker tracker;
-    private String name;
-    private String description;
-    private String id;
     private List<UserAction> actions = new ArrayList<>();
-    private int position = 0;
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -76,8 +74,7 @@ public class MenuTracker {
         this.actions.add(new DeleteItem(3, "Delete item. "));
         this.actions.add(this.new FindById(4, "Find by id. "));
         this.actions.add(new MenuTracker.FindItemByName(5, "Find item by name. "));
-        int[] ranges = new int[actions.size()];
-        return  ranges;
+        return new int[actions.size()];
     }
     public void addAction(UserAction action) {
         this.actions.add(action);
@@ -102,8 +99,8 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            name = input.ask("Please, write the task's name :");
-            description = input.ask("Please, write the task's description");
+            String name = input.ask("Please, write the task's name :");
+            String description = input.ask("Please, write the task's description");
             tracker.add(new Item(name, description, System.currentTimeMillis()));
             System.out.println("Item added!");
         }
@@ -122,7 +119,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            id = input.ask("Please, write the id :");
+            String id = input.ask("Please, write the id :");
             Item it = tracker.findById(id);
             System.out.print(System.getProperty("line.separator") + " Name : " + it.getName() + ";"
                     + System.getProperty("line.separator") + "Description :" + it.getDescription() + ";"

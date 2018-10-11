@@ -4,91 +4,139 @@ package ru.job4j.start;
 import org.junit.Test;
 import ru.job4j.models.Item;
 
-import static junit.framework.TestCase.assertEquals;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * add test
+ *
  * @author Vitaly Zubov (zubovvp@yandex.ru)
  * @version $Id$
  * @since 0.1
  */
-    public class TrackerTest {
-        /**
-         * Add Test.
-         */
-        @Test
-        public void whenAddNewItemThenTrackerHasSameItem() {
-            //Создём объект tracker
-            Tracker tracker = new Tracker();
-            //Cоздаём объект itemOne и инициализируем его поля
-            Item itemOne = new Item("test1", "testDescriprion", 123L);
-            // добаляем объект itemOne в массив items
-            tracker.add(itemOne);
-            //выводим все объекты из массива items и сверяем с добавленными объектами
-            assertThat(tracker.getAll().get(0), is(itemOne));
-        }
+public class TrackerTest {
+    private Config config = new Config();
 
     /**
      * Add Test.
      */
-        @Test
-        public void whenCheckIdItemOnewithIdItemTwo() {
-            //Создём объект tracker
-            Tracker tracker = new Tracker();
-            //Cоздаём объект itemOne и инициализируем его поля
-            Item item = new Item("test1", "testDescriprion", 123L);
-            // добаляем объект itemOne в массив items
+    @Test
+    public void addNewItemGetThisItemCompareItemsShouldTrue() {
+        Item item = new Item("Test_Name", "Test_Desc", System.currentTimeMillis());
+        Item result;
+        try (Tracker tracker = new Tracker(config)) {
             tracker.add(item);
-            //Cоздаём объект itemTwo и инициализируем его поля
-            Item itemTwo = new Item("test2", "testDescriprion2", 456L);
-            // добаляем объект itemTwo в массив items
-            tracker.add(itemTwo);
-            //Проверяем что у каждого объекта присвоен свой id
-            assertNotEquals(item.getId(), itemTwo.getId());
-        }
-
-    /**
-     * Add Test.
-     */
-        @Test
-        public void whenUpdateItemOneOnItemTwo() {
-            //Создём объект tracker
-            Tracker tracker = new Tracker();
-            //Cоздаём объект itemOne и инициализируем его поля
-            Item itemOne = new Item("test1", "testDescriprion", 123L);
-            // добаляем объект itemOne в массив items
-            tracker.add(itemOne);
-            //Cоздаём объект itemTwo и инициализируем его поля
-            Item itemTwo = new Item("test2", "testDescriprion2", 456L);
-            // добаляем id для объекта itemTwo(получается что один id на который ссылаются два объекта(itemOne и ItemTwo))
-            itemTwo.setId(itemOne.getId());
-            //изменяем объект в массиве по id
-            tracker.replace(itemTwo);
-            //Проверяем что данный объект сооветствует ожиданию
-            assertEquals(tracker.getAll().get(0), itemTwo);
-        }
-
-    /**
-     * Add Test.
-     */
-        @Test
-        public void whenWeDeleteItem() {
-            //Создём объект tracker
-            Tracker tracker = new Tracker();
-            //Cоздаём объект itemOne и инициализируем его поля
-            Item itemOne = new Item("test1", "testDescriprion", 123L);
-            // добаляем объект itemOne в массив items
-            tracker.add(itemOne);
-            //Cоздаём объект itemTwo и инициализируем его поля
-            Item itemTwo = new Item("test2", "testDescriprion2", 1234L);
-            // добаляем id для объекта itemTwo в массив items
-            tracker.add(itemTwo);
-            //Удаляем объект itemOne по id
-            tracker.delete(tracker.getAll().get(0).getId());
-            //проверяем что в итоге остаётся в массиве items после удаления
-            assertEquals(tracker.getAll().get(0), itemTwo);
+            result = tracker.findByName(item.getName());
+            tracker.delete(result.getId());
+            assertThat(result, is(item));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+    /**
+     * Add Test.
+     */
+    @Test
+    public void addItemCheckFindByIdShouldTrue() {
+        Item item = new Item("Test_Name", "Test_Desc", System.currentTimeMillis());
+        Item result;
+        try (Tracker tracker = new Tracker(config)) {
+            tracker.add(item);
+            result = tracker.findById(item.getId());
+            tracker.delete(result.getId());
+            assertThat(result, is(item));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Add Test.
+     */
+    @Test
+    public void addItemAndFindByNameItemAndCompareShouldTrue() {
+        Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
+        try (Tracker tracker = new Tracker(config)) {
+            tracker.add(item);
+            Item result = tracker.findByName(item.getName());
+            assertThat(result, is(item));
+            tracker.delete(result.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Add Test
+     */
+    @Test
+    public void addItemAndFindByIdItemAndCompareShouldTrue() {
+        Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
+        try (Tracker tracker = new Tracker(config)) {
+            tracker.add(item);
+            Item result = tracker.findById(item.getId());
+            assertThat(result, is(item));
+            tracker.delete(result.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Add Test.
+     */
+    @Test
+    public void whenWeDeleteItem() {
+        Item item = new Item("Test_Name", "Test_Desc", System.currentTimeMillis());
+        Item result;
+        try (Tracker tracker = new Tracker(config)) {
+            tracker.add(item);
+            result = tracker.findById(item.getId());
+            assertThat(result, is(item));
+            tracker.delete(result.getId());
+           result = tracker.findById(item.getId());
+            assertNull(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Add Test
+     */
+    @Test
+    public void addItemAndReplaceItemAndCompareShouldTrue() {
+        Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
+        try (Tracker tracker = new Tracker(config)) {
+            tracker.add(item);
+            item.setName("Test_Name10");
+            tracker.replace(item);
+            Item result = tracker.findByName(item.getName());
+            assertThat(result, is(item));
+            tracker.delete(result.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Add Test
+     */
+    @Test
+    public void addGetAll() {
+        Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
+        try (Tracker tracker = new Tracker(config)) {
+            tracker.add(item);
+            List<Item> result = tracker.getAll();
+            tracker.delete(item.getId());
+            assertThat(result.size(), is(1));
+            assertThat(result.get(0), is(item));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

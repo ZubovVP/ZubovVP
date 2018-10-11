@@ -1,7 +1,5 @@
 package ru.job4j.start;
 
-import ru.job4j.models.*;
-
 /**
  * @author Vitaly Zubov (zubovvp@yandex.ru)
  * @version $Id$
@@ -10,7 +8,6 @@ import ru.job4j.models.*;
 public class StartUI {
     private Input input;
     private Tracker tracker;
-    private  int[] ranges;
 
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
@@ -19,8 +16,7 @@ public class StartUI {
 
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        Tracker tracker = new Tracker();
-        ranges = menu.fillActions();
+        int[] ranges = menu.fillActions();
         UserAction deleteAction = new UserAction() {
             @Override
             public int key() {
@@ -45,12 +41,12 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-       new StartUI(
-               new ValidateInput(
-                       new ConsoleInput()
-               ),
-               new Tracker()
-               ).init();
+        new StartUI(
+                new ValidateInput(
+                        new ConsoleInput()
+                ),
+                new Tracker()
+        ).init();
     }
 }
 
