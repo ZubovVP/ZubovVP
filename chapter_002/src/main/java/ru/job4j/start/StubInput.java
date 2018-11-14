@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.List;
+
 /**
  * @author Vitaly Zubov (zubovvp@yandex.ru)
  * @version $Id$
@@ -16,8 +18,7 @@ public class StubInput implements Input {
     public String ask(String question) {
         return  answers[position++];
     }
-    public  int ask(String question, int[] range) {
-        //throw new UnsupportedOperationException("Unsupported operation");
+    public  int ask(String question, List<UserAction> range) {
         return Integer.valueOf(answers[position++]);
     }
 }

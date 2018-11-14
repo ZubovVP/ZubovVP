@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.List;
+
 /**
  * @author Vitaly Zubov (zubovvp@yandex.ru)
  * @version $Id$
@@ -16,7 +18,7 @@ public class StartUI {
 
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        int[] ranges = menu.fillActions();
+        List<UserAction> ranges = menu.fillActions();
         UserAction deleteAction = new UserAction() {
             @Override
             public int key() {

@@ -18,7 +18,6 @@ import static org.junit.Assert.assertNull;
  * @since 0.1
  */
 public class TrackerTest {
-    private Config config = new Config();
 
     /**
      * Add Test.
@@ -27,7 +26,7 @@ public class TrackerTest {
     public void addNewItemGetThisItemCompareItemsShouldTrue() {
         Item item = new Item("Test_Name", "Test_Desc", System.currentTimeMillis());
         Item result;
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             result = tracker.findByName(item.getName());
             tracker.delete(result.getId());
@@ -44,7 +43,7 @@ public class TrackerTest {
     public void addItemCheckFindByIdShouldTrue() {
         Item item = new Item("Test_Name", "Test_Desc", System.currentTimeMillis());
         Item result;
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             result = tracker.findById(item.getId());
             tracker.delete(result.getId());
@@ -60,7 +59,7 @@ public class TrackerTest {
     @Test
     public void addItemAndFindByNameItemAndCompareShouldTrue() {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             Item result = tracker.findByName(item.getName());
             assertThat(result, is(item));
@@ -76,7 +75,7 @@ public class TrackerTest {
     @Test
     public void addItemAndFindByIdItemAndCompareShouldTrue() {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             Item result = tracker.findById(item.getId());
             assertThat(result, is(item));
@@ -93,12 +92,12 @@ public class TrackerTest {
     public void whenWeDeleteItem() {
         Item item = new Item("Test_Name", "Test_Desc", System.currentTimeMillis());
         Item result;
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             result = tracker.findById(item.getId());
             assertThat(result, is(item));
             tracker.delete(result.getId());
-           result = tracker.findById(item.getId());
+            result = tracker.findById(item.getId());
             assertNull(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +110,7 @@ public class TrackerTest {
     @Test
     public void addItemAndReplaceItemAndCompareShouldTrue() {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             item.setName("Test_Name10");
             tracker.replace(item);
@@ -129,7 +128,7 @@ public class TrackerTest {
     @Test
     public void addGetAll() {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
-        try (Tracker tracker = new Tracker(config)) {
+        try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             List<Item> result = tracker.getAll();
             tracker.delete(item.getId());
@@ -138,5 +137,11 @@ public class TrackerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void checkConnection() {
+        Tracker sql = new Tracker();
+        assertThat(sql.connect(), is(true));
     }
 }

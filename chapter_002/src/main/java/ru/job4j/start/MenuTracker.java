@@ -67,14 +67,14 @@ public class MenuTracker {
         this.actions.get(key).execute(this.input, this.tracker);
     }
 
-    public int[] fillActions() {
+    public List<UserAction> fillActions() {
         this.actions.add(this.new AddItem(0, "Add the new Item. "));
         this.actions.add(new MenuTracker.ShowItems(1, "Show all Items. "));
         this.actions.add(new EditItem(2, "Edit item. "));
         this.actions.add(new DeleteItem(3, "Delete item. "));
         this.actions.add(this.new FindById(4, "Find by id. "));
         this.actions.add(new MenuTracker.FindItemByName(5, "Find item by name. "));
-        return new int[actions.size()];
+        return this.actions;
     }
     public void addAction(UserAction action) {
         this.actions.add(action);
