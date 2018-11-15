@@ -24,7 +24,7 @@ public class DataBase implements AutoCloseable {
     /**
      * Connect to database.
      */
-    private void connect() {
+    public boolean connect() {
         LOGGER.info("--------CONNECTION TO DATABASE--------");
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("offers.properties")) {
             Properties props = new Properties();
@@ -37,6 +37,7 @@ public class DataBase implements AutoCloseable {
             LOGGER.info("--------CONNECTION TO DATABASE - ERROR--------");
             LOGGER.error(e.getMessage(), e);
         }
+        return this.conn != null;
     }
 
     /**
@@ -50,15 +51,13 @@ public class DataBase implements AutoCloseable {
         try {
             LOGGER.info("--------CHECK TABLE--------");
             DatabaseMetaData dbm = this.conn.getMetaData();
-            rs = dbm.getTables(null, null, "offers", null);
+            this.rs = dbm.getTables(null, null, "offers", null);
             if (!rs.next()) {
                 LOGGER.info("--------CREATE TABLE--------");
                 this.st = conn.prepareStatement(CREATE_TABLE);
-                st.executeUpdate();
-                st.close();
+                this.st.executeUpdate();
                 newTable = true;
             }
-            this.rs.close();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -77,19 +76,17 @@ public class DataBase implements AutoCloseable {
         try {
             LOGGER.info("--------ADD NEW OFFERS--------");
             for (Offer offer : offers) {
-                this.st = conn.prepareStatement(SELECT);
+                this.st = this.conn.prepareStatement(SELECT);
                 this.st.setString(1, offer.getWay());
-                this.rs = st.executeQuery();
-                if (!rs.next()) {
+                this.rs = this.st.executeQuery();
+                if (!this.rs.next()) {
                     this.st.close();
-                    this.st = conn.prepareStatement(ADD_ELEMENT);
-                    st.setString(1, offer.getName());
-                    st.setString(2, offer.getWay());
-                    st.setTimestamp(3, offer.getDate());
-                    st.executeUpdate();
+                    this.st = this.conn.prepareStatement(ADD_ELEMENT);
+                    this.st.setString(1, offer.getName());
+                    this.st.setString(2, offer.getWay());
+                    this.st.setTimestamp(3, offer.getDate());
+                    this.st.executeUpdate();
                 }
-                this.rs.close();
-                this.st.close();
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -111,7 +108,6 @@ public class DataBase implements AutoCloseable {
     public void close() throws Exception {
         this.conn.commit();
         this.conn.setAutoCommit(true);
-
         if (this.rs != null) {
             this.rs.close();
         }

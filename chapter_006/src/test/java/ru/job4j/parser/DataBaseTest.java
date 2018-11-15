@@ -4,12 +4,15 @@ package ru.job4j.parser;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.start.Tracker;
 
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -148,5 +151,11 @@ public class DataBaseTest {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Test
+    public void checkConnection() {
+        DataBase db = new DataBase();
+        assertThat(db.connect(), is(true));
     }
 }
