@@ -1,77 +1,77 @@
 ﻿
 --create table Categories
-create table categories (
-	id serial primary key,
-	name_category varchar(200) NOT NULL,
+CREATE TABLE categories (
+	id serial PRIMARY KEY,
+	name_category VARCHAR(200) NOT NULL,
 	description text
 );
 
 --create table Users
-create table users (
-	id serial primary key,
-	login character varying (100) NOT NULL,
-	password character varying (100) NOT NULL,
-	last_name varchar(50) NOT NULL,
-	first_name varchar(50),
-	create_date date 
+CREATE TABLE users (
+	id serial PRIMARY KEY,
+	login CHARACTER VARYING(100) NOT NULL,
+	password CHARACTER VARYING(100) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	first_name VARCHAR(50),
+	create_date DATE
 );
 
 --create table Items
-create table items (
-	id serial primary key,
-	name character varying(100) NOT NULL,
-	size character varying(50) NOT NULL,
-	weight numeric(5,2) NOT NULL,
-	id_category integer references categories(id),
-	user_id integer references users(id) UNIQUE
+CREATE TABLE items (
+	id serial PRIMARY KEY,
+	name CHARACTER VARYING(100) NOT NULL,
+	dimensions CHARACTER VARYING(50) NOT NULL,
+	weight NUMERIC(5,2) NOT NULL,
+	id_category INTEGER REFERENCES categories(id),
+	user_id INTEGER REFERENCES users(id) UNIQUE
 );
 
 --create table Roles
-create table roles (
-	id serial primary key,
-	name varchar(100) NOT NULL,
+CREATE TABLE roles (
+	id serial PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
 	description text NOT NULL
 );
 
 --create table Users_Roles
-create table users_roles(
-	id serial primary key,
-	id_user integer references users(id)NOT NULL,
-	id_roles integer references roles(id) NOT NULL
+CREATE TABLE users_roles(
+	id serial PRIMARY KEY,
+	id_user INTEGER REFERENCES users(id)NOT NULL,
+	id_roles INTEGER REFERENCES roles(id) NOT NULL
 );
 
 --create table rules
-create table rules(
-	id serial primary key,
+CREATE TABLE rules(
+	id serial PRIMARY KEY,
 	name varchar(200) NOT NULL,
 	description text NOT NULL
 );
 
 --create table Roles_Rules
-create table roles_rules(
-	id serial primary key,
-	id_role integer NOT NULL,
-	id_rule integer Not NULL
+CREATE TABLE roles_rules(
+	id serial PRIMARY KEY,
+	id_role INTEGER NOT NULL,
+	id_rule INTEGER Not NULL
 );
 
 --crete table Statuses
-create table statuses(
-	id serial primary key,
-	name varchar(100) NOT NULL,
+CREATE TABLE statuses(
+	id serial PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
 	description text NOT NULL,
-	id_item integer references items(id) NOT NULL
+	id_item INTEGER REFERENCES items(id) NOT NULL
 );
 
 --create table Attach 
-create table attach(
-	id serial primary key,
-	image varchar 
+CREATE TABLE attach(
+	id serial PRIMARY KEY,
+	image BLOB
 );
 
 --create table Comments
-create table comments(
-	id serial primary key,
-	id_item integer references items(id),
+CREATE TABLE comments(
+	id serial PRIMARY KEY,
+	id_item INTEGER REFERENCES items(id),
 	text text NOT NULL,
-	time_publicate timestamp NOT NULL
+	time_publicate TIMESTAMP NOT NULL
 );

@@ -49,18 +49,19 @@ SELECT * FROM products WHERE '2018-10-25' >= expired_date;
 SELECT * FROM products WHERE price = (SELECT MAX(price) FROM products);
 
 --5. Написать запрос, который выводит количество всех продуктов определенного типа.
-SELECT COUNT(*) FROM products WHERE type_id=10;
+SELECT t.name, COUNT(*) as count FROM types AS t
+INNER JOIN products AS p on t.id = p.type_id
+GROUP BY t.name;
 
 --6. Написать запрос получение всех продуктов с типом "СЫР" и "МОЛОКО"
-SELECT p.name FROM products AS p 
+SELECT p.name, t.name FROM products AS p
 INNER JOIN types AS t on p.type_id = t.id
-WHERE t.name = 'СЫР' OR t.name = 'МОЛОКО';
+WHERE t.name = 'СЫР' OR  t.name ='МОЛОКО';
 
---7. Написать запрос, который выводит тип продуктов, которых осталось меньше 3 штук. 
-SELECT type_id, COUNT(*) AS ModelsCount
-FROM products
+--7. Написать запрос, который выводит тип продуктов, которых осталось меньше 3 штук.
+SELECT type_id, COUNT(*) AS ModelsCount FROM products
 GROUP BY type_id
 HAVING COUNT(*) < 3;
-  
+
 --8. Вывести все продукты и их тип.
-SELECT p.name, t.name FROM products as p INNER JOIN types as t  on t.id = type_id;
+SELECT p.name, t.name FROM products as p INNER JOIN types as t  on t.id
