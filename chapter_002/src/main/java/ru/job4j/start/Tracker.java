@@ -19,6 +19,9 @@ import java.util.Properties;
 public class Tracker implements AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tracker.class);
     private Connection conn;
+    private PreparedStatement st;
+    private  ResultSet rs;
+
 
     /**
      * Connect to database.
@@ -42,13 +45,13 @@ public class Tracker implements AutoCloseable {
             connect();
         }
         try {
-            PreparedStatement st = this.conn.prepareStatement("INSERT INTO users(name, description, create_date, id_item) VALUES(?, ?, ?, ?)");
-            st.setString(1, item.getName());
-            st.setString(2, item.getDescription());
-            st.setTimestamp(3, new Timestamp(item.getCreate()));
-            st.setString(4, item.getId());
-            st.executeUpdate();
-            st.close();
+            this.st = this.conn.prepareStatement("INSERT INTO users(name, description, create_date, id_item) VALUES(?, ?, ?, ?)");
+            this.st.setString(1, item.getName());
+            this.st.setString(2, item.getDescription());
+            this.st.setTimestamp(3, new Timestamp(item.getCreate()));
+            this.st.setString(4, item.getId());
+            this.st.executeUpdate();
+            this.st.close();
         } catch (SQLException e) {
             try {
                 this.conn.rollback();
@@ -66,18 +69,18 @@ public class Tracker implements AutoCloseable {
             connect();
         }
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM users WHERE id_item = ?");
-            st.setString(1, id);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                resultId = new Item(rs.getString("name"), rs.getString("description"), rs.getTimestamp("create_date").getTime(), rs.getString("id_item"));
+            this.st = this.conn.prepareStatement("SELECT * FROM users WHERE id_item = ?");
+            this.st.setString(1, id);
+            this.rs = this.st.executeQuery();
+            while (this.rs.next()) {
+                resultId = new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getString("id_item"));
                 if (resultId.getName() == null || resultId.getDescription() == null) {
                     resultId = null;
                     break;
                 }
             }
-            rs.close();
-            st.close();
+            this.rs.close();
+            this.st.close();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -90,14 +93,14 @@ public class Tracker implements AutoCloseable {
             connect();
         }
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM users WHERE name = ?");
-            st.setString(1, name);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                resultName = new Item(rs.getString("name"), rs.getString("description"), rs.getTimestamp("create_date").getTime(), rs.getString("id_item"));
+            this.st = this.conn.prepareStatement("SELECT * FROM users WHERE name = ?");
+            this.st.setString(1, name);
+            this.rs = this.st.executeQuery();
+            while (this.rs.next()) {
+                resultName = new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getString("id_item"));
             }
-            rs.close();
-            st.close();
+            this.rs.close();
+            this.st.close();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -105,17 +108,16 @@ public class Tracker implements AutoCloseable {
     }
 
     public void replace(Item item) {
-        PreparedStatement st;
         if (this.conn == null) {
             connect();
         }
         try {
-            st = conn.prepareStatement("UPDATE users SET name = ?, description = ? WHERE id_item = ?");
-            st.setString(1, item.getName());
-            st.setString(2, item.getDescription());
-            st.setString(3, item.getId());
-            st.executeUpdate();
-            st.close();
+            this.st = this.conn.prepareStatement("UPDATE users SET name = ?, description = ? WHERE id_item = ?");
+            this.st.setString(1, item.getName());
+            this.st.setString(2, item.getDescription());
+            this.st.setString(3, item.getId());
+            this.st.executeUpdate();
+            this.st.close();
         } catch (SQLException e) {
             try {
                 this.conn.rollback();
@@ -127,15 +129,14 @@ public class Tracker implements AutoCloseable {
     }
 
     public void delete(String id) {
-        PreparedStatement st;
         if (this.conn == null) {
             connect();
         }
         try {
-            st = conn.prepareStatement("DELETE FROM users WHERE id_item = ?");
-            st.setString(1, id);
-            st.executeUpdate();
-            st.close();
+            this.st = this.conn.prepareStatement("DELETE FROM users WHERE id_item = ?");
+            this.st.setString(1, id);
+            this.st.executeUpdate();
+            this.st.close();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
             try {
@@ -153,13 +154,13 @@ public class Tracker implements AutoCloseable {
             connect();
         }
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM users");
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                result.add(new Item(rs.getString("name"), rs.getString("description"), rs.getTimestamp("create_date").getTime(), rs.getString("id_item")));
+            this.st = this.conn.prepareStatement("SELECT * FROM users");
+            this.rs = this.st.executeQuery();
+            while (this.rs.next()) {
+                result.add(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getString("id_item")));
             }
-            rs.close();
-            st.close();
+            this.rs.close();
+            this.st.close();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -170,9 +171,9 @@ public class Tracker implements AutoCloseable {
     public void close() throws Exception {
         this.conn.commit();
         this.conn.setAutoCommit(true);
-        if (conn != null) {
+        if (this.conn != null) {
             try {
-                conn.close();
+                this.conn.close();
             } catch (SQLException e) {
                 try {
                     this.conn.rollback();
