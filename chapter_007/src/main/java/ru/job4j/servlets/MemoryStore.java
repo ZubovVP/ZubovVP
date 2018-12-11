@@ -16,9 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @ThreadSafe
 public class MemoryStore implements Store {
-    @GuardedBy("this")
-    private final static MemoryStore MEMORY_STORE = new MemoryStore();
+    @GuardedBy("users")
     private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap();
+    private final static MemoryStore MEMORY_STORE = new MemoryStore();
 
 
     /**
