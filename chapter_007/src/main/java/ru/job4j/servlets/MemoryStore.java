@@ -17,8 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @ThreadSafe
 public class MemoryStore implements Store {
     @GuardedBy("users")
-    private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap();
+    private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
     private final static MemoryStore MEMORY_STORE = new MemoryStore();
+    private static int id = 1;
 
 
     /**
@@ -45,6 +46,7 @@ public class MemoryStore implements Store {
      */
     @Override
     public boolean add(User user) {
+        user.setId(id++);
         this.users.put(user.getId(), user);
         return true;
     }

@@ -10,8 +10,7 @@ import java.util.Date;
  * Date: 03.12.2018
  */
 public class User {
-    private static int calc = 0;
-    private int id;
+    private int id = 0;
     private String name;
     private String login;
     private String email;
@@ -25,7 +24,6 @@ public class User {
      * @param email - email.
      */
     public User(String name, String login, String email) {
-        this.id = calc++;
         this.name = name;
         this.login = login;
         this.email = email;

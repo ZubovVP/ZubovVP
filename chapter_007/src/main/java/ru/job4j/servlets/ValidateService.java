@@ -33,7 +33,7 @@ public class ValidateService {
         return true;
     }
 
-    public boolean update(User user) {
+    public boolean update(User user) throws IncorrectDateException {
         boolean result = false;
         if (checkUser(user)) {
             for (User step : this.logic.findAll()) {
@@ -44,18 +44,14 @@ public class ValidateService {
             }
         }
         if (!result) {
-            try {
-                throw new IncorrectDateException("User does not exist");
-            } catch (IncorrectDateException e) {
-                e.printStackTrace();
-            }
+            throw new IncorrectDateException("User does not exist");
         } else {
             this.logic.update(user);
         }
         return result;
     }
 
-    public void delete(int id) {
+    public void delete(int id) throws IncorrectDateException {
         boolean result = false;
         List<User> users = this.logic.findAll();
         for (User user : users) {
@@ -65,11 +61,7 @@ public class ValidateService {
             }
         }
         if (!result) {
-            try {
-                throw new IncorrectDateException("User exist");
-            } catch (IncorrectDateException e) {
-                e.printStackTrace();
-            }
+            throw new IncorrectDateException("User exist");
         }
     }
 
@@ -77,25 +69,17 @@ public class ValidateService {
         return this.logic.findAll();
     }
 
-    public User findById(int id) {
+    public User findById(int id) throws IncorrectDateException {
         User aimUser = this.logic.findById(id);
         if (aimUser == null) {
-            try {
-                throw new IncorrectDateException("User with id doesn't exist");
-            } catch (IncorrectDateException e) {
-                e.printStackTrace();
-            }
+            throw new IncorrectDateException("User with id doesn't exist");
         }
         return aimUser;
     }
 
-    private boolean checkUser(User user) {
+    private boolean checkUser(User user) throws IncorrectDateException {
         if (user.getName() == null || user.getLogin() == null || user.getEmail() == null) {
-            try {
-                throw new IncorrectDateException("Fields name, login, email must be filled");
-            } catch (IncorrectDateException e) {
-                e.printStackTrace();
-            }
+            throw new IncorrectDateException("Fields name, login, email must be filled");
         }
         return true;
     }

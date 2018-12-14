@@ -19,7 +19,7 @@ public class UserServlet extends HttpServlet {
     /**
      * Shows all users.
      *
-     * @param req - HttpServletRequest.
+     * @param req  - HttpServletRequest.
      * @param resp - HttpServletResponse.
      * @throws IOException - IOException.
      */
@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
     /**
      * Add or update or delete user from storage.
      *
-     * @param req - HttpServletRequest.
+     * @param req  - HttpServletRequest.
      * @param resp - HttpServletResponse.
      * @throws IOException - IOException.
      */
@@ -54,14 +54,31 @@ public class UserServlet extends HttpServlet {
                 this.vs.add(user);
             } catch (IncorrectDateException e) {
                 e.getMessage();
+                resp.sendError(406, e.getMessage());
             }
         } else if (action.equals("delete")) {
-            this.vs.delete(Integer.parseInt(req.getParameter("id")));
+            try {
+                this.vs.delete(Integer.parseInt(req.getParameter("id")));
+            } catch (IncorrectDateException e) {
+                e.getMessage();
+                resp.sendError(406, e.getMessage());
+            }
         } else if (action.equals("update")) {
             User user = new User(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"));
-            vs.update(user);
+            try {
+                vs.update(user);
+            } catch (IncorrectDateException e) {
+                e.getMessage();
+                resp.sendError(406, e.getMessage());
+            }
         } else if (action.equals("findById")) {
-            User result = this.vs.findById(Integer.parseInt(req.getParameter("id")));
+            User result = null;
+            try {
+                result = this.vs.findById(Integer.parseInt(req.getParameter("id")));
+            } catch (IncorrectDateException e) {
+                e.getMessage();
+                resp.sendError(406, e.getMessage());
+            }
             resp.setContentType("text/html");
             PrintWriter writer = new PrintWriter(resp.getOutputStream());
             writer.append("Id = ").append(String.valueOf(result.getId()));

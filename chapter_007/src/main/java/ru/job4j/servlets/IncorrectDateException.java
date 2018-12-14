@@ -7,7 +7,7 @@ package ru.job4j.servlets;
  * Version: $Id$
  * Date: 06.12.2018
  */
-public class IncorrectDateException extends Throwable {
+public class IncorrectDateException extends RuntimeException {
     /**
      * Constructor.
      * @param description - description.
