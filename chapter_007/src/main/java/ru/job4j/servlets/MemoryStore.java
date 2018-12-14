@@ -6,6 +6,7 @@ import net.jcip.annotations.ThreadSafe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Intellij IDEA.
@@ -19,6 +20,7 @@ public class MemoryStore implements Store {
     @GuardedBy("users")
     private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
     private final static MemoryStore MEMORY_STORE = new MemoryStore();
+    private AtomicInteger id = new AtomicInteger(1);
 
     /**
      * Constructor.
@@ -43,7 +45,7 @@ public class MemoryStore implements Store {
      */
     @Override
     public boolean add(User user) {
-        user.setId(getId());
+        user.setId(this.id.getAndIncrement());
         this.users.put(user.getId(), user);
         return true;
     }
@@ -93,14 +95,5 @@ public class MemoryStore implements Store {
     @Override
     public User findById(int id) {
         return this.users.get(id);
-    }
-
-    /**
-     * Get id for user.
-     *
-     * @return - id.
-     */
-    private synchronized int getId() {
-        return this.users.size() + 1;
     }
 }
