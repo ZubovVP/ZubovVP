@@ -19,8 +19,6 @@ public class MemoryStore implements Store {
     @GuardedBy("users")
     private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
     private final static MemoryStore MEMORY_STORE = new MemoryStore();
-    private static int id = 1;
-
 
     /**
      * Constructor.
@@ -37,7 +35,6 @@ public class MemoryStore implements Store {
         return MEMORY_STORE;
     }
 
-
     /**
      * Insert element in the users.
      *
@@ -46,7 +43,7 @@ public class MemoryStore implements Store {
      */
     @Override
     public boolean add(User user) {
-        user.setId(id++);
+        user.setId(getId());
         this.users.put(user.getId(), user);
         return true;
     }
@@ -96,5 +93,14 @@ public class MemoryStore implements Store {
     @Override
     public User findById(int id) {
         return this.users.get(id);
+    }
+
+    /**
+     * Get id for user.
+     *
+     * @return - id.
+     */
+    private synchronized int getId() {
+        return this.users.size() + 1;
     }
 }
