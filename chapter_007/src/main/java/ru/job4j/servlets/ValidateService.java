@@ -14,6 +14,11 @@ public class ValidateService {
     private final Store logic = MemoryStore.getInstance();
 
 
+    /**
+     * Return object ValidateService.
+     *
+     * @return ValidateService.
+     */
     public static ValidateService getInstance() {
         return VALIDATE_SERVICE;
     }
@@ -21,7 +26,13 @@ public class ValidateService {
     private ValidateService() {
     }
 
-    public boolean add(User user) throws IncorrectDateException {
+    /**
+     * Check add user in the storage.
+     *
+     * @param user - user.
+     * @throws IncorrectDateException
+     */
+    public void add(User user) throws IncorrectDateException {
         if (checkUser(user)) {
             for (User step : this.logic.findAll()) {
                 if (step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail())) {
@@ -30,12 +41,21 @@ public class ValidateService {
             }
         }
         this.logic.add(user);
-        return true;
     }
 
-    public boolean update(User user) throws IncorrectDateException {
+    /**
+     * Check update user in the storage if true add user.
+     *
+     * @param user - user.
+     */
+    public void update(User user) throws IncorrectDateException {
         boolean result = false;
         if (checkUser(user)) {
+            for (User step : this.logic.findAll()) {
+                if (step.getId() != user.getId() && step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail())) {
+                    throw new IncorrectDateException("Login or email were busy");
+                }
+            }
             for (User step : this.logic.findAll()) {
                 if (step.getId() == user.getId()) {
                     result = true;
@@ -48,9 +68,13 @@ public class ValidateService {
         } else {
             this.logic.update(user);
         }
-        return result;
     }
 
+    /**
+     * Check delete user in the storage if true delete user.
+     *
+     * @throws IncorrectDateException
+     */
     public void delete(int id) throws IncorrectDateException {
         boolean result = false;
         List<User> users = this.logic.findAll();
@@ -65,6 +89,11 @@ public class ValidateService {
         }
     }
 
+    /**
+     * Return all users from storage.
+     *
+     * @return - list of users.
+     */
     public List<User> findAll() {
         return this.logic.findAll();
     }
@@ -77,8 +106,15 @@ public class ValidateService {
         return aimUser;
     }
 
+    /**
+     * Check correct user.
+     *
+     * @param user - user
+     * @return - result.
+     * @throws IncorrectDateException
+     */
     private boolean checkUser(User user) throws IncorrectDateException {
-        if (user.getName() == null || user.getLogin() == null || user.getEmail() == null) {
+        if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty()) {
             throw new IncorrectDateException("Fields name, login, email must be filled");
         }
         return true;
