@@ -52,7 +52,7 @@ public class ValidateService {
         boolean result = false;
         if (checkUser(user)) {
             for (User step : this.logic.findAll()) {
-                if (step.getId() != user.getId() && step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail())) {
+                if (step.getId() != user.getId() && (step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail()))) {
                     throw new IncorrectDateException("Login or email were busy");
                 }
             }

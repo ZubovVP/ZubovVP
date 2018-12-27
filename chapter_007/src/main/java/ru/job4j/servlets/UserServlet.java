@@ -127,6 +127,7 @@ public class UserServlet extends HttpServlet {
 
     private String getFindByIdAndCreate(HttpServletRequest req) {
         StringBuilder sb = new StringBuilder("</table>");
+        sb.append("<br><br>");
         sb.append("<form action='").append(req.getContextPath()).append("/user' method='POST'>");
         sb.append("<label for='sub'></label><input type='text' id='sub' name='id' value='0'>");
         sb.append("<input type='submit' name='submit' value='Find by id'>");
