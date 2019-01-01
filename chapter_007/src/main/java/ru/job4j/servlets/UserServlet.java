@@ -26,27 +26,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        StringBuilder sb = new StringBuilder(getHeaderTable());
-        for (User user : vs.findAll()) {
-            sb.append("<tr>");
-            sb.append(fillTable(user));
-            sb.append("<td>");
-            sb.append(getCorrectAndDelete(user, req));
-        }
-        sb.append(getFindByIdAndCreate(req));
-
-        writer.append("<!DOCTYPE html>");
-        writer.append("<html lang='en'>");
-        writer.append("<head>");
-        writer.append("    <meta charset='UTF-8'>");
-        writer.append("    <title>Users</title>");
-        writer.append("</head>");
-        writer.append("<body>");
-        writer.append(sb.toString());
-        writer.append("</body>");
-        writer.append("</html>");
-        writer.flush();
+        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
     }
 
     /**
@@ -111,14 +91,14 @@ public class UserServlet extends HttpServlet {
     private String getCorrectAndDelete(User user, HttpServletRequest req) {
         StringBuilder sb = new StringBuilder("<form action='");
         sb.append(req.getContextPath()).append("/edit' method='GET'>");
-        sb.append("<input type='submit' name='submit' value='Correct' style='float: right'>");
+        sb.append("<input type='submit' name='submit' value='Correct' style='float: left'>");
         sb.append("<input type='hidden' name='id' value=").append(user.getId()).append(">");
         sb.append("<input type='hidden' name='userName' value=").append(user.getName()).append(">");
         sb.append("<input type='hidden' name='login' value=").append(user.getLogin()).append(">");
         sb.append("<input type='hidden' name='email' value=").append(user.getEmail()).append(">");
         sb.append("</form>");
         sb.append("<form action='").append(req.getContextPath()).append("/user' method='POST'>");
-        sb.append("<input type='submit' name='submit' value='Delete' style='float: right'>");
+        sb.append("<input type='submit' name='submit' value='Delete' style='float: left'>");
         sb.append("<input type='hidden' name='id' value=").append(user.getId()).append(">");
         sb.append("<input type='hidden' name='action' value= delete>");
         sb.append("</form>");
