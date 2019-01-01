@@ -9,10 +9,10 @@ import java.util.List;
  * Version: $Id$
  * Date: 04.12.2018
  */
-public interface Store {
-    boolean add(User user);
-    boolean update(User user);
+public interface Store<T> {
+    boolean add(T element);
+    boolean update(T element);
     boolean delete(int id);
-    List<User> findAll();
+    List<T> findAll();
     User findById(int id);
 }

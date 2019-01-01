@@ -9,9 +9,9 @@ import java.util.List;
  * Version: $Id$
  * Date: 03.12.2018
  */
-public class ValidateService {
+public class ValidateService implements Store<User> {
     private final static ValidateService VALIDATE_SERVICE = new ValidateService();
-    private final Store logic = MemoryStore.getInstance();
+    private final Store<User> logic = MemoryStore.getInstance();
 
 
     /**
@@ -32,7 +32,7 @@ public class ValidateService {
      * @param user - user.
      * @throws IncorrectDateException
      */
-    public void add(User user) throws IncorrectDateException {
+    public boolean add(User user) throws IncorrectDateException {
         if (checkUser(user)) {
             for (User step : this.logic.findAll()) {
                 if (step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail())) {
@@ -40,7 +40,7 @@ public class ValidateService {
                 }
             }
         }
-        this.logic.add(user);
+        return this.logic.add(user);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ValidateService {
      *
      * @param user - user.
      */
-    public void update(User user) throws IncorrectDateException {
+    public boolean update(User user) throws IncorrectDateException {
         boolean result = false;
         if (checkUser(user)) {
             for (User step : this.logic.findAll()) {
@@ -65,9 +65,8 @@ public class ValidateService {
         }
         if (!result) {
             throw new IncorrectDateException("User does not exist");
-        } else {
-            this.logic.update(user);
         }
+            return this.logic.update(user);
     }
 
     /**
@@ -75,7 +74,7 @@ public class ValidateService {
      *
      * @throws IncorrectDateException
      */
-    public void delete(int id) throws IncorrectDateException {
+    public boolean delete(int id) throws IncorrectDateException {
         boolean result = false;
         List<User> users = this.logic.findAll();
         for (User user : users) {
@@ -87,6 +86,7 @@ public class ValidateService {
         if (!result) {
             throw new IncorrectDateException("User exist");
         }
+        return true;
     }
 
     /**

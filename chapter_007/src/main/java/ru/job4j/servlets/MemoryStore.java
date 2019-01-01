@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Date: 04.12.2018
  */
 @ThreadSafe
-public class MemoryStore implements Store {
+public class MemoryStore implements Store<User> {
     @GuardedBy("users")
     private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
     private final static MemoryStore MEMORY_STORE = new MemoryStore();
