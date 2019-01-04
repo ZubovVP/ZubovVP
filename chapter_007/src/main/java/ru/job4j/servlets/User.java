@@ -46,6 +46,14 @@ public class User {
         this.createDate = new Date();
     }
 
+    public User(int id, String name, String login, String email, Date date) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = date;
+    }
+
     public int getId() {
         return id;
     }

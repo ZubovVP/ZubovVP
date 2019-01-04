@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ValidateService implements Store<User> {
     private final static ValidateService VALIDATE_SERVICE = new ValidateService();
-    private final Store<User> logic = MemoryStore.getInstance();
+    private final Store<User> logic = DBStore.getInstance();
 
 
     /**
