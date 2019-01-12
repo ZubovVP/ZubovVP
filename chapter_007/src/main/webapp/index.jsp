@@ -17,6 +17,7 @@
     <th align="left">Id</th>
     <th align="left">Name</th>
     <th align="left">Login</th>
+    <th align="left">Email</th>
     <th align="left">Create time</th>
 
     <%for (User user : vs.findAll()) { %>
@@ -26,6 +27,8 @@
         <td align="left"><%= user.getName()%>
         </td>
         <td align="left"><%= user.getLogin()%>
+        </td>
+        <td align="left"><%= user.getEmail()%>
         </td>
         <td align="left"><%= user.getCreateDate()%>
         </td>
@@ -56,7 +59,7 @@
     </form>
 </td>
 <td>
-    <form action="http://localhost:8080/echo/create" method="GET">
+    <form action="<%=request.getContextPath()%>/create" method="GET">
         <input type="submit" name="submit" value="Create new user">
     </form>
 </td>

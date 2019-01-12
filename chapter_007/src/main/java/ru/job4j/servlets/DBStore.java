@@ -3,6 +3,8 @@ package ru.job4j.servlets;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -17,13 +19,11 @@ import java.util.Properties;
  * Version: $Id$
  * Date: 01.01.2019
  */
-public class DBStore implements Store<User>, AutoCloseable {
+public class DBStore implements Store<User> {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DBStore INSTANCE = new DBStore();
     private static final Logger LOGGER = LoggerFactory.getLogger(DBStore.class);
-    private Connection conn;
-    private PreparedStatement st;
-    private ResultSet rs;
+    private static Marker fatal = MarkerFactory.getMarker("FATAL");
 
 
     public static DBStore getInstance() {
@@ -34,12 +34,6 @@ public class DBStore implements Store<User>, AutoCloseable {
      * Constructor.
      */
     private DBStore() {
-    }
-
-    /**
-     * Connect to database.
-     */
-    private boolean connect() {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("db.properties")) {
             Properties props = new Properties();
             props.load(in);
@@ -50,12 +44,9 @@ public class DBStore implements Store<User>, AutoCloseable {
             SOURCE.setMinIdle(5);
             SOURCE.setMaxIdle(10);
             SOURCE.setMaxOpenPreparedStatements(100);
-            this.conn = SOURCE.getConnection();
-            this.conn.setAutoCommit(false);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(fatal, "Failed to obtain JDBC connection {}.", SOURCE.getUrl());
         }
-        return this.conn != null;
     }
 
     /**
@@ -66,24 +57,15 @@ public class DBStore implements Store<User>, AutoCloseable {
      */
     @Override
     public boolean add(User user) {
-        if (this.conn == null) {
-            connect();
-        }
-        try {
-            this.st = this.conn.prepareStatement("INSERT INTO users(name, login, email, createDate) VALUES(?, ?, ?, ?)");
-            this.st.setString(1, user.getName());
-            this.st.setString(2, user.getLogin());
-            this.st.setString(3, user.getEmail());
-            this.st.setTimestamp(4, new Timestamp(user.getCreateDate().getTime()));
-            this.st.executeUpdate();
-            this.st.close();
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("INSERT INTO users(name, login, email, createDate) VALUES(?, ?, ?, ?)")) {
+            st.setString(1, user.getName());
+            st.setString(2, user.getLogin());
+            st.setString(3, user.getEmail());
+            st.setTimestamp(4, new Timestamp(user.getCreateDate().getTime()));
+            st.executeUpdate();
         } catch (SQLException e) {
-            try {
-                this.conn.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(fatal, "Failed to add element in the DataBase. User - id = {}, login = {}.", user.getId(), user.getLogin());
         }
         return true;
     }
@@ -96,24 +78,15 @@ public class DBStore implements Store<User>, AutoCloseable {
      */
     @Override
     public boolean update(User user) {
-        if (this.conn == null) {
-            connect();
-        }
-        try {
-            this.st = this.conn.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?  WHERE id = ?");
-            this.st.setString(1, user.getName());
-            this.st.setString(2, user.getLogin());
-            this.st.setString(3, user.getEmail());
-            this.st.setInt(4, user.getId());
-            this.st.executeUpdate();
-            this.st.close();
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?  WHERE id = ?")) {
+            st.setString(1, user.getName());
+            st.setString(2, user.getLogin());
+            st.setString(3, user.getEmail());
+            st.setInt(4, user.getId());
+            st.executeUpdate();
         } catch (SQLException e) {
-            try {
-                this.conn.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(fatal, "Failed to update element in the DataBase. User - id = {}, login = {}.", user.getId(), user.getLogin());
         }
         return true;
     }
@@ -126,22 +99,12 @@ public class DBStore implements Store<User>, AutoCloseable {
      */
     @Override
     public boolean delete(int id) {
-        if (this.conn == null) {
-            connect();
-        }
-        try {
-            this.st = this.conn.prepareStatement("DELETE FROM users WHERE id = ?");
-            this.st.setInt(1, id);
-            this.st.executeUpdate();
-            this.st.close();
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            st.setInt(1, id);
+            st.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
-            try {
-                this.conn.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(fatal, "Error to delete user from the DataBase. Id = {}.", id);
         }
         return true;
     }
@@ -154,19 +117,14 @@ public class DBStore implements Store<User>, AutoCloseable {
     @Override
     public List<User> findAll() {
         List<User> result = new ArrayList<>();
-        if (this.conn == null) {
-            connect();
-        }
-        try {
-            this.st = this.conn.prepareStatement("SELECT * FROM users");
-            this.rs = this.st.executeQuery();
-            while (this.rs.next()) {
-                result.add(new User(this.rs.getInt("id"), this.rs.getString("name"), this.rs.getString("login"), this.rs.getString("email"), new Date(this.rs.getTimestamp("createdate").getTime())));
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT * FROM users");
+             ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                result.add(new User(rs.getInt("id"), rs.getString("name"), rs.getString("login"), rs.getString("email"), new Date(rs.getTimestamp("createdate").getTime())));
             }
-            this.rs.close();
-            this.st.close();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(fatal, "Failed to get all the elements from Database.");
         }
         return result;
     }
@@ -180,50 +138,17 @@ public class DBStore implements Store<User>, AutoCloseable {
     @Override
     public User findById(int id) {
         User resultId = null;
-        if (this.conn == null) {
-            connect();
-        }
-        try {
-            this.st = this.conn.prepareStatement("SELECT * FROM users WHERE id = ?");
-            this.st.setInt(1, id);
-            this.rs = this.st.executeQuery();
-            while (this.rs.next()) {
-                resultId = new User(this.rs.getInt("id"), this.rs.getString("name"), this.rs.getString("login"), this.rs.getString("email"), new Date(this.rs.getTimestamp("createdate").getTime()));
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
+            st.setInt(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    resultId = new User(rs.getInt("id"), rs.getString("name"), rs.getString("login"), rs.getString("email"), new Date(rs.getTimestamp("createdate").getTime()));
+                }
             }
-            this.rs.close();
-            this.st.close();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(fatal, "Failed to find by id. Id = {}.", id);
         }
         return resultId;
-    }
-
-    /**
-     * Close connection.
-     *
-     * @throws Exception
-     */
-    @Override
-    public void close() throws Exception {
-        this.conn.commit();
-        this.conn.setAutoCommit(true);
-        if (this.rs != null) {
-            this.rs.close();
-        }
-        if (this.st != null) {
-            this.st.close();
-        }
-        if (this.conn != null) {
-            try {
-                this.conn.close();
-            } catch (SQLException e) {
-                try {
-                    this.conn.rollback();
-                } catch (SQLException e1) {
-                    LOGGER.error(e.getMessage(), e);
-                }
-                LOGGER.error(e.getMessage(), e);
-            }
-        }
     }
 }

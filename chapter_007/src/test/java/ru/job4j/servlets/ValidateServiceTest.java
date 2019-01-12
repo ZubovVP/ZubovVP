@@ -1,7 +1,10 @@
 package ru.job4j.servlets;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 
@@ -14,8 +17,8 @@ import static org.junit.Assert.assertFalse;
  */
 public class ValidateServiceTest {
     private ValidateService vs;
+    private DBStore db = DBStore.getInstance();
     private User userTest = new User("NameTest", "LoginTest", "EmailTest");
-
 
     @Before
     public void start() {
@@ -23,8 +26,21 @@ public class ValidateServiceTest {
         assertFalse(this.vs == null);
     }
 
+    @After
+    public void finish() {
+        checkDB();
+    }
+
+    private void checkDB() {
+        List<User> users = this.db.findAll();
+        for (User user : users) {
+            this.db.delete(user.getId());
+        }
+    }
+
     @Test(expected = IncorrectDateException.class)
     public void addTheSameElement() {
+        checkDB();
         this.vs.add(this.userTest);
         this.vs.add(this.userTest);
     }
@@ -36,30 +52,32 @@ public class ValidateServiceTest {
     }
 
     @Test(expected = IncorrectDateException.class)
-    public void addElementWhithClearName() {
+    public void addElementWithClearName() {
         User userTest = new User("", "LoginTest", "EmailTest");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
-    public void addElementWhithClearLogin() {
+    public void addElementWithClearLogin() {
         User userTest = new User("NameTest", "", "EmailTest");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
-    public void addElementWhithClearEmail() {
+    public void addElementWithClearEmail() {
         User userTest = new User("NameTest", "LoginTest", "");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void updateNotExistingElement() {
+        checkDB();
         this.vs.update(this.userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void updateElementWithBusyLogin() {
+        checkDB();
         this.vs.add(this.userTest);
         User user2 = new User("NameTest", "LoginTest1", "EmailTest1");
         this.vs.add(user2);
@@ -70,6 +88,7 @@ public class ValidateServiceTest {
 
     @Test(expected = IncorrectDateException.class)
     public void updateElementWithBusyEmail() {
+        checkDB();
         this.vs.add(this.userTest);
         User user2 = new User("NameTest", "LoginTest1", "EmailTest1");
         this.vs.add(user2);
@@ -80,12 +99,14 @@ public class ValidateServiceTest {
 
     @Test(expected = IncorrectDateException.class)
     public void deleteNotExistingElement() {
+        checkDB();
         User userTest = new User("NameTest", "LoginTest", "EmailTest");
         this.vs.update(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void findByIdWhereIdNotExist() {
-        this.vs.findById(10);
+        checkDB();
+        this.vs.findById(0);
     }
 }
