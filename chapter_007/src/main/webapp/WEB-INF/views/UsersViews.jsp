@@ -33,8 +33,9 @@
         <td align="left"><%= user.getCreateDate()%>
         </td>
         <td>
-            <form action="<%=request.getContextPath()%>/edit" method="GET">
+            <form action="<%=request.getContextPath()%>/" method="GET">
                 <input type="submit" name="submit" value="Correct" style="float: right">
+                <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" value="<%=user.getId()%>">
                 <input type="hidden" name="userName" value="<%=user.getName()%>">
                 <input type="hidden" name="login" value="<%=user.getLogin()%>">
@@ -42,7 +43,7 @@
             </form>
         </td>
         <td>
-            <form action="<%=request.getContextPath()%>/user" method="POST">
+            <form action="<%=request.getContextPath()%>/" method="POST">
                 <input type="submit" name="submit" value="Delete" style="float: left">
                 <input type="hidden" name="id" value="<%=user.getId()%>">
                 <input type="hidden" name="action" value="delete">
@@ -52,7 +53,7 @@
     <%}%>
 </table>
 <td>
-    <form action="<%=request.getContextPath()%>/user" method="POST">
+    <form action="<%=request.getContextPath()%>/" method="POST">
         <label for="sub"></label><input type="text" id="sub" name="id" value="0">
         <input type="submit" name="submit" value="Find by id">
         <input type="hidden" name="action" value=findById>

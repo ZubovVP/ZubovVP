@@ -1,5 +1,6 @@
 package ru.job4j.servlets;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
  * Version: $Id$
  * Date: 03.12.2018
  */
-public class UserServlet extends HttpServlet {
+public class UsersController extends HttpServlet {
     private final ValidateService vs = ValidateService.getInstance();
 
     /**
@@ -24,9 +25,8 @@ public class UserServlet extends HttpServlet {
      * @throws IOException - IOException.
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getRequestDispatcher("WEB-INF/views/UsersViews.jsp").forward(req, resp);
     }
 
     /**
@@ -37,7 +37,7 @@ public class UserServlet extends HttpServlet {
      * @throws IOException - IOException.
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter("action");
         if (action.equals("delete")) {
             try {
@@ -47,6 +47,8 @@ public class UserServlet extends HttpServlet {
                 resp.sendError(406, e.getMessage());
             }
             doGet(req, resp);
+        } else if (action.equals("update")) {
+            req.getRequestDispatcher("/UserUpdateServlet").forward(req, resp);
         } else if (action.equals("findById")) {
             User result = null;
             try {
@@ -127,5 +129,11 @@ public class UserServlet extends HttpServlet {
         sb.append("<td>").append(user.getEmail()).append("</td>");
         sb.append("<td>").append(user.getCreateDate()).append("</td>");
         return sb.toString();
+    }
+
+    @Override
+    public void destroy() {
+        this.vs.close();
+        super.destroy();
     }
 }

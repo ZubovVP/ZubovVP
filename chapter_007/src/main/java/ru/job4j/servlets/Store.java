@@ -15,4 +15,5 @@ public interface Store<T> {
     boolean delete(int id);
     List<T> findAll();
     User findById(int id);
+    void close();
 }

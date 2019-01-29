@@ -68,11 +68,17 @@ public class UserCreateServlet extends HttpServlet {
         writer.append("<body>");
         writer.append("User added!");
         writer.append("<tr>");
-        writer.append("<form action='").append(req.getContextPath()).append("/user' method='get'>");
+        writer.append("<form action='").append(req.getContextPath()).append("/' method='GET'>");
         writer.append("<td><input type='submit' name='create' value='List of users' ></td>");
         writer.append("</form>");
         writer.append("</body>");
         writer.append("</html>");
         writer.flush();
+    }
+
+    @Override
+    public void destroy() {
+        this.vs.close();
+        super.destroy();
     }
 }

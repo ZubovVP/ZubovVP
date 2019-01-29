@@ -32,15 +32,9 @@ public class ValidateService implements Store<User> {
      * @param user - user.
      * @throws IncorrectDateException
      */
-    public boolean add(User user) throws IncorrectDateException {
-        if (checkUser(user)) {
-            for (User step : this.logic.findAll()) {
-                if (step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail())) {
-                    throw new IncorrectDateException("User with this login or email exists");
-                }
-            }
-        }
-        return this.logic.add(user);
+    public boolean add(User user)  {
+        User userCorrect = checkUser(user);
+        return this.logic.add(userCorrect);
     }
 
     /**
@@ -49,24 +43,16 @@ public class ValidateService implements Store<User> {
      * @param user - user.
      */
     public boolean update(User user) throws IncorrectDateException {
-        boolean result = false;
-        if (checkUser(user)) {
-            for (User step : this.logic.findAll()) {
-                if (step.getId() != user.getId() && (step.getLogin().equals(user.getLogin()) || step.getEmail().equals(user.getEmail()))) {
-                    throw new IncorrectDateException("Login or email were busy");
-                }
-            }
-            for (User step : this.logic.findAll()) {
-                if (step.getId() == user.getId()) {
-                    result = true;
-                    break;
-                }
-            }
+        boolean result;
+        if (user.getId() == 0) {
+            throw new IncorrectDateException("User does not exist, please write correctly id");
         }
+        User userCorrect = checkUser(user);
+        result = logic.update(userCorrect);
         if (!result) {
             throw new IncorrectDateException("User does not exist");
         }
-            return this.logic.update(user);
+        return true;
     }
 
     /**
@@ -75,16 +61,8 @@ public class ValidateService implements Store<User> {
      * @throws IncorrectDateException
      */
     public boolean delete(int id) throws IncorrectDateException {
-        boolean result = false;
-        List<User> users = this.logic.findAll();
-        for (User user : users) {
-            if (user.getId() == id) {
-                result = this.logic.delete(id);
-                break;
-            }
-        }
-        if (!result) {
-            throw new IncorrectDateException("User exist");
+        if (!this.logic.delete(id)) {
+            throw new IncorrectDateException("User isn't exist");
         }
         return true;
     }
@@ -113,10 +91,16 @@ public class ValidateService implements Store<User> {
      * @return - result.
      * @throws IncorrectDateException
      */
-    private boolean checkUser(User user) throws IncorrectDateException {
+    private User checkUser(User user) throws IncorrectDateException {
         if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty()) {
             throw new IncorrectDateException("Fields name, login, email must be filled");
         }
-        return true;
+        user.setEmail(user.getEmail().toLowerCase());
+        return user;
+    }
+
+    @Override
+    public void close() {
+        this.logic.close();
     }
 }

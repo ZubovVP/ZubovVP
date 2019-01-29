@@ -1,10 +1,8 @@
 package ru.job4j.servlets;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -22,8 +20,7 @@ import java.util.Properties;
 public class DBStore implements Store<User> {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DBStore INSTANCE = new DBStore();
-    private static final Logger LOGGER = LoggerFactory.getLogger(DBStore.class);
-    private static Marker fatal = MarkerFactory.getMarker("FATAL");
+    private static final Logger LOGGER = LogManager.getLogger(DBStore.class.getName());
 
 
     public static DBStore getInstance() {
@@ -45,7 +42,7 @@ public class DBStore implements Store<User> {
             SOURCE.setMaxIdle(10);
             SOURCE.setMaxOpenPreparedStatements(100);
         } catch (Exception e) {
-            LOGGER.error(fatal, "Failed to obtain JDBC connection {}.", SOURCE.getUrl());
+            LOGGER.error("Failed to obtain JDBC connection {}.", SOURCE.getUrl());
         }
     }
 
@@ -65,7 +62,8 @@ public class DBStore implements Store<User> {
             st.setTimestamp(4, new Timestamp(user.getCreateDate().getTime()));
             st.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(fatal, "Failed to add element in the DataBase. User - id = {}, login = {}.", user.getId(), user.getLogin());
+            LOGGER.error("Failed to add element in the DataBase. User - name = {}, login = {}, email = {}.", user.getName(), user.getLogin(), user.getEmail());
+            throw new IncorrectDateException();
         }
         return true;
     }
@@ -86,7 +84,8 @@ public class DBStore implements Store<User> {
             st.setInt(4, user.getId());
             st.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(fatal, "Failed to update element in the DataBase. User - id = {}, login = {}.", user.getId(), user.getLogin());
+            LOGGER.error("Failed to update element in the DataBase. User - id = {}, login = {}.", user.getId(), user.getLogin());
+            throw new IncorrectDateException();
         }
         return true;
     }
@@ -104,7 +103,8 @@ public class DBStore implements Store<User> {
             st.setInt(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(fatal, "Error to delete user from the DataBase. Id = {}.", id);
+            LOGGER.error("Error to delete user from the DataBase. Id = {}.", id);
+            return false;
         }
         return true;
     }
@@ -124,7 +124,7 @@ public class DBStore implements Store<User> {
                 result.add(new User(rs.getInt("id"), rs.getString("name"), rs.getString("login"), rs.getString("email"), new Date(rs.getTimestamp("createdate").getTime())));
             }
         } catch (SQLException e) {
-            LOGGER.error(fatal, "Failed to get all the elements from Database.");
+            LOGGER.error("Failed to get all the elements from Database.");
         }
         return result;
     }
@@ -147,8 +147,32 @@ public class DBStore implements Store<User> {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error(fatal, "Failed to find by id. Id = {}.", id);
+            LOGGER.error("Failed to find by id. Id = {}.", id);
         }
         return resultId;
+    }
+
+//    @Override
+//    public boolean contains(User element) {
+//        boolean result = false;
+//        try (Connection conn = SOURCE.getConnection();
+//             PreparedStatement st = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
+//            st.setInt(1, element.getId());
+//            try (ResultSet rs = st.executeQuery()) {
+//               result = rs.getInt("id") > 0;
+//            }
+//        } catch (SQLException e) {
+//            LOGGER.error("User( id = {} ) does not exist.", element.getId());
+//        }
+//        return result;
+//    }
+
+    @Override
+    public void close() {
+        try {
+            SOURCE.close();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to close BasicDataSource");
+        }
     }
 }

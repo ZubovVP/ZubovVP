@@ -1,12 +1,14 @@
 package ru.job4j.servlets;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Intellij IDEA.
@@ -23,7 +25,7 @@ public class ValidateServiceTest {
     @Before
     public void start() {
         this.vs = ValidateService.getInstance();
-        assertFalse(this.vs == null);
+        assertNotNull(this.vs);
     }
 
     @After
@@ -47,31 +49,34 @@ public class ValidateServiceTest {
 
     @Test(expected = IncorrectDateException.class)
     public void addClearElement() {
+        checkDB();
         User userTest = new User("", "", "");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearName() {
+        checkDB();
         User userTest = new User("", "LoginTest", "EmailTest");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearLogin() {
+        checkDB();
         User userTest = new User("NameTest", "", "EmailTest");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearEmail() {
+        checkDB();
         User userTest = new User("NameTest", "LoginTest", "");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void updateNotExistingElement() {
-        checkDB();
         this.vs.update(this.userTest);
     }
 
@@ -98,15 +103,16 @@ public class ValidateServiceTest {
     }
 
     @Test(expected = IncorrectDateException.class)
-    public void deleteNotExistingElement() {
-        checkDB();
-        User userTest = new User("NameTest", "LoginTest", "EmailTest");
-        this.vs.update(userTest);
+    public void findByIdWhereIdNotExist() {
+        this.vs.findById(0);
     }
 
-    @Test(expected = IncorrectDateException.class)
-    public void findByIdWhereIdNotExist() {
+    @Test
+    public void deleteElement() {
         checkDB();
-        this.vs.findById(0);
+        this.vs.add(this.userTest);
+        User user2 = this.vs.findAll().get(0);
+        this.vs.delete(user2.getId());
+        Assert.assertThat(0, is(this.vs.findAll().size()));
     }
 }

@@ -96,4 +96,9 @@ public class MemoryStore implements Store<User> {
     public User findById(int id) {
         return this.users.get(id);
     }
+
+    @Override
+    public void close() {
+        users.clear();
+    }
 }
