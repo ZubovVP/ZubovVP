@@ -1,6 +1,8 @@
 package ru.job4j.servlets;
 
 import org.junit.Test;
+import ru.job4j.models.User;
+import ru.job4j.storage.DBStore;
 
 import java.util.List;
 

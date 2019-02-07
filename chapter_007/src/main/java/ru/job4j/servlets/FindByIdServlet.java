@@ -13,22 +13,23 @@ import java.io.IOException;
  * User: Vitaly Zubov
  * Email: Zubov.VP@yandex.ru
  * Version: $Id$
- * Date: 03.12.2018
+ * Date: 14.12.2018
  */
-public class UsersController extends HttpServlet {
+public class FindByIdServlet extends HttpServlet {
     private final ValidateService vs = ValidateService.getInstance();
 
     /**
-     * Shows all users. Request UsersViews.jsp.
+     * Find the user form DB and request on the FindById.jsp.
      *
      * @param req  - HttpServletRequest.
      * @param resp - HttpServletResponse.
-     * @throws IOException - IOException.
+     * @throws ServletException - ServletException.
+     * @throws IOException      - IOException.
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("users", ValidateService.getInstance().findAll());
-        req.getRequestDispatcher("WEB-INF/views/UsersViews.jsp").forward(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("user", this.vs.findById(Integer.parseInt(req.getParameter("id"))));
+        req.getRequestDispatcher("WEB-INF/views/FindById.jsp").forward(req, resp);
     }
 
     /**

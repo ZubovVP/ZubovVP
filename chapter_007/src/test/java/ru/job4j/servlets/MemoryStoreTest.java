@@ -2,6 +2,8 @@ package ru.job4j.servlets;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.models.User;
+import ru.job4j.storage.MemoryStore;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;

@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>Users Controller Servlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.UsersController </servlet-class>
+        <servlet-class>ru.job4j.servlets.UsersController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Users Controller Servlet</servlet-name>
@@ -39,4 +39,23 @@
         <servlet-name>UserUpdateServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FindByIdServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.FindByIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindByIdServlet</servlet-name>
+        <url-pattern>/find</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.UserDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
 </web-app>

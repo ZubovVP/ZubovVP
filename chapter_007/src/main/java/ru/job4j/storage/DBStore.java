@@ -1,8 +1,9 @@
-package ru.job4j.servlets;
+package ru.job4j.storage;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.models.User;
 
 import java.io.InputStream;
 import java.sql.*;

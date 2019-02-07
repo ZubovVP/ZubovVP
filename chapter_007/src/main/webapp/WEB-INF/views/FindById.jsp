@@ -1,9 +1,9 @@
 <%--
- Created by Intellij IDEA.
- User: Vitaly Zubov
- Email: Zubov.VP@yandex.ru
- Version: $Id$
- Date: 30.12.2018
+  Created by Intellij IDEA.
+  User: Vitaly Zubov
+  Email: Zubov.VP@yandex.ru
+  Version: $Id$
+  Date: 05.02.2019
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -12,7 +12,6 @@
 </head>
 <body>
 <%@ page import="ru.job4j.models.User" %>
-<%@ page import="java.util.List" %>
 <table width="100%" border="0">
     <th align="left">Id</th>
     <th align="left">Name</th>
@@ -20,7 +19,7 @@
     <th align="left">Email</th>
     <th align="left">Create time</th>
 
-    <%for (User user : (List<User>)request.getAttribute("users")) { %>
+    <%User user = (User) request.getAttribute("user"); %>
     <tr>
         <td align="left"><%= user.getId()%>
         </td>
@@ -48,18 +47,11 @@
             </form>
         </td>
     </tr>
-    <%}%>
+    <td>
+        <form action="<%=request.getContextPath()%>/" method="GET">
+            <input type="submit" name="submit" value="Home" style="float: left">
+        </form>
+    </td>
 </table>
-<td>
-    <form action="<%=request.getContextPath()%>/find" method="POST">
-        <label for="sub"></label><input type="text" id="sub" name="id" value="0">
-        <input type="submit" name="submit" value="Find by id">
-    </form>
-</td>
-<td>
-    <form action="<%=request.getContextPath()%>/create" method="GET">
-        <input type="submit" name="submit" value="Create new user">
-    </form>
-</td>
 </body>
 </html>

@@ -1,4 +1,6 @@
-package ru.job4j.servlets;
+package ru.job4j.storage;
+
+import ru.job4j.models.User;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class ValidateService implements Store<User> {
      * @param user - user.
      * @throws IncorrectDateException
      */
-    public boolean add(User user)  {
+    public boolean add(User user) {
         User userCorrect = checkUser(user);
         return this.logic.add(userCorrect);
     }

@@ -1,4 +1,4 @@
-package ru.job4j.servlets;
+package ru.job4j.storage;
 
 /**
  * Created by Intellij IDEA.
@@ -10,6 +10,7 @@ package ru.job4j.servlets;
 public class IncorrectDateException extends RuntimeException {
     /**
      * Constructor.
+     *
      * @param description - description.
      */
     public IncorrectDateException(String description) {

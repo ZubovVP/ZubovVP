@@ -1,7 +1,8 @@
-package ru.job4j.servlets;
+package ru.job4j.storage;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
+import ru.job4j.models.User;
 
 import java.util.ArrayList;
 import java.util.List;

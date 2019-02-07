@@ -1,4 +1,6 @@
-package ru.job4j.servlets;
+package ru.job4j.storage;
+
+import ru.job4j.models.User;
 
 import java.util.List;
 
@@ -11,9 +13,14 @@ import java.util.List;
  */
 public interface Store<T> {
     boolean add(T element);
+
     boolean update(T element);
+
     boolean delete(int id);
+
     List<T> findAll();
+
     User findById(int id);
+
     void close();
 }
