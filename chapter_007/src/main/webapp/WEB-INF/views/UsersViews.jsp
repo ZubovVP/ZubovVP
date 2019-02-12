@@ -33,7 +33,7 @@
                 <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
                 <input type="hidden" name="userName" value="<c:out value="${user.name}"></c:out>">
                 <input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">
-                <input type="hidden" name="email" value="<c:out value="${user.createDate}"></c:out>">
+                <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
             </form>
         </td>
         <td>
