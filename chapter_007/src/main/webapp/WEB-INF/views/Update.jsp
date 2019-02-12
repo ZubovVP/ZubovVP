@@ -6,6 +6,7 @@
   Date: 05.02.2019
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Update</title>
@@ -16,17 +17,18 @@
         <th>Login</th>
         <th>Email</th>
     </tr>
-    <form action="<%=request.getContextPath()%>/edit" method="POST" id="myform"></form>
+    <form action="${pageContext.servletContext.contextPath}/edit" method="POST" id="myform"></form>
     <td> name : <label>
-        <input type="text" name="name" value="<%=request.getParameter("userName")%>" form="myform">
+
+        <input type="text" name="name" value="<c:out value="${param.userName}"></c:out>" form="myform">
     </label></td>
     <td> login : <label>
-        <input type="text" name="login" value="<%=request.getParameter("login")%>" form="myform">
+        <input type="text" name="login" value="<c:out value="${param.login}"></c:out>" form="myform">
     </label></td>
     <td> email : <label>
-        <input type="text" name="email" value="<%=request.getParameter("email")%>" form="myform">
+        <input type="text" name="email" value="<c:out value="${param.email}"></c:out>" form="myform">
     </label></td>
-    <input type="hidden" name="id" value="<%=request.getParameter("id")%>" form="myform">
+    <input type="hidden" name="id" value="<c:out value="${param.id}"></c:out>" form="myform">
 </table>
 <br><br><br>
 <input type="submit" name="Update" value="Update" form="myform">

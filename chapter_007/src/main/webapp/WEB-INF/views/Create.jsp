@@ -6,12 +6,13 @@
   Date: 05.02.2019
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Create</title>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/create" method="POST" id="myform"></form>
+<form action="${pageContext.servletContext.contextPath}/create" method="POST" id="myform"></form>
 <table align="left" width="50%" border="1">
     <tr>
         <td>Name</td>

@@ -153,21 +153,6 @@ public class DBStore implements Store<User> {
         return resultId;
     }
 
-//    @Override
-//    public boolean contains(User element) {
-//        boolean result = false;
-//        try (Connection conn = SOURCE.getConnection();
-//             PreparedStatement st = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
-//            st.setInt(1, element.getId());
-//            try (ResultSet rs = st.executeQuery()) {
-//               result = rs.getInt("id") > 0;
-//            }
-//        } catch (SQLException e) {
-//            LOGGER.error("User( id = {} ) does not exist.", element.getId());
-//        }
-//        return result;
-//    }
-
     @Override
     public void close() {
         try {
