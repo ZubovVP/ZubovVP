@@ -1,5 +1,7 @@
 package ru.job4j.storage;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.models.User;
 
 import java.util.List;
@@ -14,7 +16,6 @@ import java.util.List;
 public class ValidateService implements Store<User> {
     private final static ValidateService VALIDATE_SERVICE = new ValidateService();
     private final Store<User> logic = DBStore.getInstance();
-
 
     /**
      * Return object ValidateService.
@@ -32,10 +33,16 @@ public class ValidateService implements Store<User> {
      * Check add user in the storage.
      *
      * @param user - user.
-     * @throws IncorrectDateException
      */
     public boolean add(User user) {
         User userCorrect = checkUser(user);
+        if (this.logic.getClass().getSimpleName().equals("MemoryStore")) {
+            for (User us : this.logic.findAll()) {
+                if (us.getLogin().equals(user.getLogin()) || us.getEmail().equals(user.getEmail())) {
+                    throw new IncorrectDateException("User or Email are busy");
+                }
+            }
+        }
         return this.logic.add(userCorrect);
     }
 
@@ -44,12 +51,19 @@ public class ValidateService implements Store<User> {
      *
      * @param user - user.
      */
-    public boolean update(User user) throws IncorrectDateException {
+    public boolean update(User user) {
         boolean result;
         if (user.getId() == 0) {
             throw new IncorrectDateException("User does not exist, please write correctly id");
         }
         User userCorrect = checkUser(user);
+        if (this.logic.getClass().getSimpleName().equals("MemoryStore")) {
+            for (User us : this.logic.findAll()) {
+                if (user.getId() != us.getId() && (us.getLogin().equals(user.getLogin()) || us.getEmail().equals(user.getEmail()))) {
+                    throw new IncorrectDateException("User or Email are busy");
+                }
+            }
+        }
         result = logic.update(userCorrect);
         if (!result) {
             throw new IncorrectDateException("User does not exist");
@@ -59,10 +73,8 @@ public class ValidateService implements Store<User> {
 
     /**
      * Check delete user in the storage if true delete user.
-     *
-     * @throws IncorrectDateException
      */
-    public boolean delete(int id) throws IncorrectDateException {
+    public boolean delete(int id) {
         if (!this.logic.delete(id)) {
             throw new IncorrectDateException("User isn't exist");
         }
@@ -78,7 +90,7 @@ public class ValidateService implements Store<User> {
         return this.logic.findAll();
     }
 
-    public User findById(int id) throws IncorrectDateException {
+    public User findById(int id) {
         User aimUser = this.logic.findById(id);
         if (aimUser == null) {
             throw new IncorrectDateException("User with id doesn't exist");
@@ -91,9 +103,8 @@ public class ValidateService implements Store<User> {
      *
      * @param user - user
      * @return - result.
-     * @throws IncorrectDateException
      */
-    private User checkUser(User user) throws IncorrectDateException {
+    private User checkUser(User user) {
         if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty()) {
             throw new IncorrectDateException("Fields name, login, email must be filled");
         }

@@ -5,9 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.models.User;
-import ru.job4j.storage.DBStore;
-import ru.job4j.storage.IncorrectDateException;
-import ru.job4j.storage.ValidateService;
+import ru.job4j.storage.*;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ValidateServiceTest {
     private ValidateService vs;
-    private DBStore db = DBStore.getInstance();
+    private Store db = DBStore.getInstance();
     private User userTest = new User("NameTest", "LoginTest", "EmailTest");
 
     @Before
@@ -83,6 +81,32 @@ public class ValidateServiceTest {
     public void updateNotExistingElement() {
         this.vs.update(this.userTest);
     }
+
+    @Test(expected = IncorrectDateException.class)
+    public void updateElementWhithExistEmail() {
+        checkDB();
+        User userTest = new User("NameTest", "LoginTest", "EmailTest");
+        this.vs.add(userTest);
+        User userTest2 = new User("NameTest1", "LoginTest1", "EmailTest1");
+        this.vs.add(userTest2);
+        userTest2 = this.vs.findAll().get(1);
+        userTest2.setEmail("EmailTest");
+        this.vs.update(userTest2);
+    }
+
+    @Test(expected = IncorrectDateException.class)
+    public void updateElementWithExistLogin() {
+        checkDB();
+        User userTest = new User("NameTest", "LoginTest", "EmailTest");
+        this.vs.add(userTest);
+        User userTest2 = new User("NameTest1", "LoginTest1", "EmailTest1");
+        this.vs.add(userTest2);
+        userTest2 = this.vs.findAll().get(1);
+        userTest2.setLogin("LoginTest");
+        this.vs.update(userTest2);
+    }
+
+
 
     @Test(expected = IncorrectDateException.class)
     public void updateElementWithBusyLogin() {

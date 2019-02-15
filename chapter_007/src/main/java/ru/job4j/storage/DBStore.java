@@ -22,6 +22,8 @@ public class DBStore implements Store<User> {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DBStore INSTANCE = new DBStore();
     private static final Logger LOGGER = LogManager.getLogger(DBStore.class.getName());
+    private static final String CREATE_TABLE = "CREATE TABLE users(id SERIAL PRIMARY KEY, name CHARACTER VARYING(50) NOT NULL , login CHARACTER VARYING(50) NOT NULL UNIQUE, email CHARACTER VARYING(50) NOT NULL UNIQUE, createDate TIMESTAMP NOT NULL);";
+    private boolean createTable = false;
 
 
     public static DBStore getInstance() {
@@ -55,6 +57,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public boolean add(User user) {
+        checkTable();
         try (Connection conn = SOURCE.getConnection();
              PreparedStatement st = conn.prepareStatement("INSERT INTO users(name, login, email, createDate) VALUES(?, ?, ?, ?)")) {
             st.setString(1, user.getName());
@@ -77,6 +80,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public boolean update(User user) {
+        checkTable();
         try (Connection conn = SOURCE.getConnection();
              PreparedStatement st = conn.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?  WHERE id = ?")) {
             st.setString(1, user.getName());
@@ -99,6 +103,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public boolean delete(int id) {
+        checkTable();
         try (Connection conn = SOURCE.getConnection();
              PreparedStatement st = conn.prepareStatement("DELETE FROM users WHERE id = ?")) {
             st.setInt(1, id);
@@ -117,6 +122,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public List<User> findAll() {
+        checkTable();
         List<User> result = new ArrayList<>();
         try (Connection conn = SOURCE.getConnection();
              PreparedStatement st = conn.prepareStatement("SELECT * FROM users");
@@ -138,6 +144,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public User findById(int id) {
+        checkTable();
         User resultId = null;
         try (Connection conn = SOURCE.getConnection();
              PreparedStatement st = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
@@ -161,4 +168,22 @@ public class DBStore implements Store<User> {
             LOGGER.error("Failed to close BasicDataSource");
         }
     }
-}
+
+    /**
+     * Check table existence.
+     * If the table is not created, create a table.
+     */
+    private void checkTable() {
+            try (Connection conn = SOURCE.getConnection()) {
+                DatabaseMetaData dbm = conn.getMetaData();
+                ResultSet rs = dbm.getTables(null, null, "entry", null);
+                if (!rs.next()) {
+                    PreparedStatement st = conn.prepareStatement(CREATE_TABLE);
+                    st.executeUpdate();
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+            this.createTable = true;
+        }
+    }
