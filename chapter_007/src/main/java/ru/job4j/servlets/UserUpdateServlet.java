@@ -1,6 +1,8 @@
 package ru.job4j.servlets;
 
+import ru.job4j.models.Admin;
 import ru.job4j.models.User;
+import ru.job4j.models.Viewer;
 import ru.job4j.storage.IncorrectDateException;
 import ru.job4j.storage.ValidateService;
 
@@ -33,6 +35,8 @@ public class UserUpdateServlet extends HttpServlet {
         req.setAttribute("userName", req.getParameter("userName"));
         req.setAttribute("login", req.getParameter("login"));
         req.setAttribute("email", req.getParameter("email"));
+        req.setAttribute("password", req.getParameter("password"));
+        req.setAttribute("role", req.getParameter("role"));
         req.getRequestDispatcher("WEB-INF/views/Update.jsp").forward(req, resp);
     }
 
@@ -45,12 +49,18 @@ public class UserUpdateServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User us = new User(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"));
+        User us = null;
+        if (req.getParameter("role").equals("admin")) {
+            us = new Admin(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+        } else if (req.getParameter("role").equals("viewer")) {
+            us = new Viewer(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+        }
         try {
             this.vs.update(us);
         } catch (IncorrectDateException e) {
             e.getMessage();
             resp.sendError(406, e.getMessage());
+            return;
         }
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }

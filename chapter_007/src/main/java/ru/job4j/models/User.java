@@ -1,6 +1,7 @@
 package ru.job4j.models;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Intellij IDEA.
@@ -9,19 +10,21 @@ import java.util.Date;
  * Version: $Id$
  * Date: 03.12.2018
  */
-public class User {
+public abstract class User {
     private int id = 0;
     private String name;
     private String login;
     private String email;
     private Date createDate;
+    private String password;
+    private String role;
 
     /**
      * Constector.
      *
-     * @param name - name.
-     * @param login - login.
-     * @param email - email.
+     * @param name     - name.
+     * @param login    - login.
+     * @param email    - email.
      */
     public User(String name, String login, String email) {
         this.name = name;
@@ -31,12 +34,28 @@ public class User {
     }
 
     /**
+     * Constector.
+     *
+     * @param name     - name.
+     * @param login    - login.
+     * @param email    - email.
+     * @param password - password.
+     */
+    public User(String name, String login, String email, String password) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = new Date();
+        this.password = password;
+    }
+
+    /**
      * Constructor.
      *
-     * @param id - id.
-     * @param name - name.
-     * @param login - login.
-     * @param email - email.
+     * @param id       - id.
+     * @param name     - name.
+     * @param login    - login.
+     * @param email    - email.
      */
     public User(int id, String name, String login, String email) {
         this.id = id;
@@ -44,14 +63,60 @@ public class User {
         this.login = login;
         this.email = email;
         this.createDate = new Date();
+        this.password = "";
     }
 
+    /**
+     * Constructor.
+     *
+     * @param id       - id.
+     * @param name     - name.
+     * @param login    - login.
+     * @param email    - email.
+     * @param date     - date.
+     */
     public User(int id, String name, String login, String email, Date date) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = date;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param id       - id.
+     * @param name     - name.
+     * @param login    - login.
+     * @param email    - email.
+     * @param date     - date.
+     * @param password - password.
+     */
+    public User(int id, String name, String login, String email, Date date, String password) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = date;
+        this.password = password;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param id       - id.
+     * @param name     - name.
+     * @param login    - login.
+     * @param email    - email.
+     * @param password - password.
+     */
+    public User(int id, String name, String login, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
@@ -68,6 +133,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getLogin() {
@@ -94,6 +167,8 @@ public class User {
         this.createDate = createDate;
     }
 
+    public abstract String getRole();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,31 +177,12 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         User user = (User) o;
-
-        if (id != user.id) {
-            return false;
-        }
-        if (name != null ? !name.equals(user.name) : user.name != null) {
-            return false;
-        }
-        if (login != null ? !login.equals(user.login) : user.login != null) {
-            return false;
-        }
-        if (email != null ? !email.equals(user.email) : user.email != null) {
-            return false;
-        }
-        return createDate != null ? createDate.equals(user.createDate) : user.createDate == null;
+        return Objects.equals(login, user.login) && Objects.equals(email, user.email) && Objects.equals(createDate, user.createDate) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
-        return result;
+        return Objects.hash(login, email, createDate, password);
     }
 }

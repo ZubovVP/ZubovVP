@@ -1,6 +1,8 @@
 package ru.job4j.servlets;
 
+import ru.job4j.models.Admin;
 import ru.job4j.models.User;
+import ru.job4j.models.Viewer;
 import ru.job4j.storage.IncorrectDateException;
 import ru.job4j.storage.ValidateService;
 
@@ -42,7 +44,12 @@ public class UserCreateServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User user = new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"));
+        User user = null;
+        if (req.getParameter("role").equals("admin")) {
+            user = new Admin(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+        } else if (req.getParameter("role").equals("viewer")) {
+            user = new Viewer(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+        }
         try {
             this.vs.add(user);
         } catch (IncorrectDateException e) {

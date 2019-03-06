@@ -20,40 +20,54 @@
     <th align="left">Login</th>
     <th align="left">Email</th>
     <th align="left">Create time</th>
-<c:forEach items="${users}" var="user">
-    <tr>
-        <td align="left"> <c:out value="${user.id}"></c:out></td>
-        <td align="left"> <c:out value="${user.name}"></c:out></td>
-        <td align="left"> <c:out value="${user.login}"></c:out></td>
-        <td align="left"> <c:out value="${user.email}"></c:out></td>
-        <td align="left"> <c:out value="${user.createDate}"></c:out></td>
-        <td>
-            <form action="${pageContext.servletContext.contextPath}/edit" method="GET">
-                <input type="submit" name="submit" value="Correct" style="float: right">
-                <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
-                <input type="hidden" name="userName" value="<c:out value="${user.name}"></c:out>">
-                <input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">
-                <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
-            </form>
-        </td>
-        <td>
-            <form action="${pageContext.servletContext.contextPath}/delete" method="POST">
-                <input type="submit" name="submit" value="Delete" style="float: left">
-                <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
-            </form>
-        </td>
-    </tr>
-</c:forEach>
+    <th align="left">Role</th>
+
+    <c:forEach items="${users}" var="user">
+        <tr>
+            <td align="left"><c:out value="${user.id}"></c:out></td>
+            <td align="left"><c:out value="${user.name}"></c:out></td>
+            <td align="left"><c:out value="${user.login}"></c:out></td>
+            <td align="left"><c:out value="${user.email}"></c:out></td>
+            <td align="left"><c:out value="${user.createDate}"></c:out></td>
+            <td align="left"><c:out value="${user.role}"></c:out></td>
+            <td>
+                <form action="${pageContext.servletContext.contextPath}/edit" method="GET">
+                    <input type="submit" name="submit" value="Correct" style="float: right">
+                    <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+                    <input type="hidden" name="userName" value="<c:out value="${user.name}"></c:out>">
+                    <input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">
+                    <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
+                    <input type="hidden" name="password" value="<c:out value="${user.password}"></c:out>">
+                    <input type="hidden" name="role" value="<c:out value="${user.role}"></c:out>">
+                </form>
+            </td>
+            <c:if test="${sessionScope.role == 'admin'}">
+                <td>
+                    <form action="${pageContext.servletContext.contextPath}/delete" method="POST">
+                        <input type="submit" name="submit" value="Delete" style="float: left">
+                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+                    </form>
+                </td>
+            </c:if>
+        </tr>
+    </c:forEach>
 </table>
+<c:if test="${sessionScope.role == 'admin'}">
+    <td>
+        <form action="${pageContext.servletContext.contextPath}/find" method="POST">
+            <label for="sub"></label><input type="text" id="sub" name="id" value="0">
+            <input type="submit" name="submit" value="Find by id">
+        </form>
+    </td>
+    <td>
+        <form action="${pageContext.servletContext.contextPath}/create" method="GET">
+            <input type="submit" name="submit" value="Create new user">
+        </form>
+    </td>
+</c:if>
 <td>
-    <form action="${pageContext.servletContext.contextPath}/find" method="POST">
-        <label for="sub"></label><input type="text" id="sub" name="id" value="0">
-        <input type="submit" name="submit" value="Find by id">
-    </form>
-</td>
-<td>
-    <form action="${pageContext.servletContext.contextPath}/create" method="GET">
-        <input type="submit" name="submit" value="Create new user">
+    <form action="${pageContext.servletContext.contextPath}/logout" method="POST">
+        <input type="submit" name="submit" value="Logout">
     </form>
 </td>
 </body>

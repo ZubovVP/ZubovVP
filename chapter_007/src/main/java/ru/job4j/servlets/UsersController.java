@@ -1,12 +1,16 @@
 package ru.job4j.servlets;
 
+import ru.job4j.models.User;
 import ru.job4j.storage.ValidateService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Intellij IDEA.
@@ -27,7 +31,19 @@ public class UsersController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("users", ValidateService.getInstance().findAll());
+        HttpSession session = req.getSession();
+        if (session.getAttribute("login") == null) {
+            resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
+        } else {
+            if (session.getAttribute("role").equals("admin")) {
+                req.setAttribute("users", ValidateService.getInstance().findAll());
+            } else if (session.getAttribute("role").equals("viewer")) {
+                req.setAttribute("users", ValidateService.getInstance().findAll());
+                List<User> user = new ArrayList<>();
+                user.add(ValidateService.getInstance().findByLogin((String) session.getAttribute("login")));
+                req.setAttribute("users", user);
+            }
+        }
         req.getRequestDispatcher("WEB-INF/views/UsersViews.jsp").forward(req, resp);
     }
 

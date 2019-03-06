@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import org.junit.Test;
+import ru.job4j.models.Admin;
 import ru.job4j.models.User;
 import ru.job4j.storage.DBStore;
 
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class DBStoreTest {
     private DBStore db;
-    private User userTest = new User("Name", "Login", "Email");
+    private User userTest = new Admin("Name", "Login", "Email", "TestPassword");
 
     @Test
     public void getInstance() {
@@ -76,7 +77,7 @@ public class DBStoreTest {
         assertTrue(this.db.findAll().isEmpty());
         this.db.add(this.userTest);
         assertThat(this.db.findAll().size(), is(1));
-        this.db.add(new User("NameTest2", "LoginTest2", "EmailTest2"));
+        this.db.add(new Admin("NameTest2", "LoginTest2", "EmailTest2", "TestPassword"));
         assertThat(this.db.findAll().size(), is(2));
         for (User us : this.db.findAll()) {
             this.db.delete(us.getId());
@@ -90,6 +91,16 @@ public class DBStoreTest {
         this.db.add(this.userTest);
         User user2 = this.db.findAll().get(0);
         assertThat(this.db.findById(user2.getId()), is(user2));
+        this.db.delete(user2.getId());
+    }
+
+    @Test
+    public void findByLogin() {
+        this.db = DBStore.getInstance();
+        assertTrue(this.db.findAll().isEmpty());
+        this.db.add(this.userTest);
+        User user2 = this.db.findAll().get(0);
+        assertThat(this.db.findByLogin(user2.getLogin()), is(user2));
         this.db.delete(user2.getId());
     }
 }

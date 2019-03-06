@@ -1,7 +1,5 @@
 package ru.job4j.storage;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ru.job4j.models.User;
 
 import java.util.List;
@@ -99,21 +97,50 @@ public class ValidateService implements Store<User> {
     }
 
     /**
+     * Check password.
+     *
+     * @param login    - login.
+     * @param password - password.
+     * @return - result.
+     */
+    @Override
+    public boolean isCredentional(String login, String password) {
+        if (login.isEmpty() || password.isEmpty()) {
+            throw new IncorrectDateException("Login or password id Empty");
+        }
+        return this.logic.isCredentional(login, password);
+    }
+
+    /**
      * Check correct user.
      *
      * @param user - user
      * @return - result.
      */
     private User checkUser(User user) {
-        if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty()) {
+        if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
             throw new IncorrectDateException("Fields name, login, email must be filled");
         }
         user.setEmail(user.getEmail().toLowerCase());
         return user;
     }
 
+    /**
+     * Clear users.
+     */
     @Override
     public void close() {
         this.logic.close();
+    }
+
+    /**
+     * Find user by login.
+     *
+     * @param login - login of user.
+     * @return - user.
+     */
+    @Override
+    public User findByLogin(String login) {
+        return this.logic.findByLogin(login);
     }
 }

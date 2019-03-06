@@ -16,20 +16,28 @@
         <th>Name</th>
         <th>Login</th>
         <th>Email</th>
+        <th>Password</th>
+        <c:if test="${sessionScope.role == 'admin'}">
+            <th>Role</th>
+        </c:if>
     </tr>
     <form action="${pageContext.servletContext.contextPath}/edit" method="POST" id="myform"></form>
-    <td> name : <label>
-
-        <input type="text" name="name" value="<c:out value="${param.userName}"></c:out>" form="myform">
-    </label></td>
-    <td> login : <label>
-        <input type="text" name="login" value="<c:out value="${param.login}"></c:out>" form="myform">
-    </label></td>
-    <td> email : <label>
-        <input type="text" name="email" value="<c:out value="${param.email}"></c:out>" form="myform">
-    </label></td>
+    <td> name : <input type="text" name="name" value="<c:out value="${param.userName}"></c:out>" form="myform"></td>
+    <td> login : <input type="text" name="login" value="<c:out value="${param.login}"></c:out>" form="myform"></td>
+    <td> email : <input type="text" name="email" value="<c:out value="${param.email}"></c:out>" form="myform"></td>
+    <td> password : <input type="password" name="password" value="<c:out value="${param.password}"></c:out>"
+                           form="myform"></td>
+    <c:if test="${sessionScope.role == 'admin'}">
+        <td><select name="role" form="myform">
+            <option value="viewer">viewer</option>
+            <option value="admin">admin</option>
+        </select></td>
+    </c:if>
+    <c:if test="${sessionScope.role != 'admin'}">
+        <input type="hidden" name="role" value="<c:out value="${param.role}"></c:out>" form="myform">
+    </c:if>
     <input type="hidden" name="id" value="<c:out value="${param.id}"></c:out>" form="myform">
 </table>
-<br><br><br>
+<br><br><br><br>
 <input type="submit" name="Update" value="Update" form="myform">
 </html>

@@ -22,5 +22,9 @@ public interface Store<T> {
 
     User findById(int id);
 
+    boolean isCredentional(String login, String password);
+
     void close();
+
+    User findByLogin(String login);
 }

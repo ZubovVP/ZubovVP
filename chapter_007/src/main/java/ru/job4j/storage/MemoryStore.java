@@ -6,6 +6,7 @@ import ru.job4j.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,6 +23,8 @@ public class MemoryStore implements Store<User> {
     private ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
     private final static MemoryStore MEMORY_STORE = new MemoryStore();
     private AtomicInteger id = new AtomicInteger(1);
+    private static final Encryption ENCRYPT = Encryption.getInstance();
+
 
     /**
      * Constructor.
@@ -98,8 +101,47 @@ public class MemoryStore implements Store<User> {
         return this.users.get(id);
     }
 
+    /**
+     * Check login and password from the users.
+     *
+     * @param login    - login.
+     * @param password - password.
+     * @return - result.
+     */
+    @Override
+    public boolean isCredentional(String login, String password) {
+        boolean result = false;
+        User user = findByLogin(login);
+        String ps = ENCRYPT.encrypt(password);
+        if (user != null && user.getPassword().equals(ps)) {
+            result = true;
+        }
+        return result;
+    }
+
+    /**
+     * Clear users.
+     */
     @Override
     public void close() {
         users.clear();
+    }
+
+    /**
+     * Find user by login of the element.
+     *
+     * @param login - login.
+     * @return - user.
+     */
+    @Override
+    public User findByLogin(String login) {
+        User result = null;
+        for (Map.Entry<Integer, User> entry : users.entrySet()) {
+            if (entry.getValue().getLogin().equals(login)) {
+                result = entry.getValue();
+                break;
+            }
+        }
+        return result;
     }
 }
