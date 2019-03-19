@@ -21,8 +21,8 @@ import static org.junit.Assert.assertNotNull;
  * Date: 26.12.2018
  */
 public class ValidateServiceTest {
-    private ValidateService vs;
-    private Store db = DBStore.getInstance();
+    private Store vs;
+    private Store<User> db = DBStore.getInstance();
     private User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword");
 
     @Before
@@ -97,7 +97,7 @@ public class ValidateServiceTest {
         this.vs.add(userTest);
         User userTest2 = new Admin("NameTest1", "LoginTest1", "EmailTest1", "TestPassword");
         this.vs.add(userTest2);
-        userTest2 = this.vs.findAll().get(1);
+        userTest2 = (User) this.vs.findAll().get(1);
         userTest2.setEmail("EmailTest");
         this.vs.update(userTest2);
     }
@@ -109,7 +109,7 @@ public class ValidateServiceTest {
         this.vs.add(userTest);
         User userTest2 = new Admin("NameTest1", "LoginTest1", "EmailTest1", "TestPassword");
         this.vs.add(userTest2);
-        userTest2 = this.vs.findAll().get(1);
+        userTest2 = (User) this.vs.findAll().get(1);
         userTest2.setLogin("LoginTest");
         this.vs.update(userTest2);
     }
@@ -120,7 +120,7 @@ public class ValidateServiceTest {
         this.vs.add(this.userTest);
         User user2 = new Admin("NameTest", "LoginTest1", "EmailTest1", "TestPassword");
         this.vs.add(user2);
-        user2 = this.vs.findAll().get(1);
+        user2 = (User) this.vs.findAll().get(1);
         user2.setLogin("LoginTest");
         this.vs.update(user2);
     }
@@ -131,7 +131,7 @@ public class ValidateServiceTest {
         this.vs.add(this.userTest);
         User user2 = new Admin("NameTest", "LoginTest1", "EmailTest1", "TestPassword");
         this.vs.add(user2);
-        user2 = this.vs.findAll().get(1);
+        user2 = (User) this.vs.findAll().get(1);
         user2.setEmail("EmailTest");
         this.vs.update(user2);
     }
@@ -145,7 +145,7 @@ public class ValidateServiceTest {
     public void deleteElement() {
         checkDB();
         this.vs.add(this.userTest);
-        User user2 = this.vs.findAll().get(0);
+        User user2 = (User) this.vs.findAll().get(0);
         this.vs.delete(user2.getId());
         Assert.assertThat(0, is(this.vs.findAll().size()));
     }

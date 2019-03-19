@@ -1,5 +1,6 @@
 package ru.job4j.servlets;
 
+import ru.job4j.storage.Store;
 import ru.job4j.storage.ValidateService;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import java.io.IOException;
  * Date: 14.12.2018
  */
 public class FindByIdServlet extends HttpServlet {
-    private final ValidateService vs = ValidateService.getInstance();
+    private final Store vs = ValidateService.getInstance();
 
     /**
      * Find the user form DB and request on the FindById.jsp.

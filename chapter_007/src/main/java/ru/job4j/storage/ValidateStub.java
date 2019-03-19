@@ -9,23 +9,10 @@ import java.util.List;
  * User: Vitaly Zubov
  * Email: Zubov.VP@yandex.ru
  * Version: $Id$
- * Date: 03.12.2018
+ * Date: 17.03.2019
  */
-public class ValidateService implements Store<User> {
-    private final static Store VALIDATE_SERVICE = new ValidateService();
-    private final Store<User> logic = DBStore.getInstance();
-
-    /**
-     * Return object ValidateService.
-     *
-     * @return ValidateService.
-     */
-    public static Store getInstance() {
-        return VALIDATE_SERVICE;
-    }
-
-    private ValidateService() {
-    }
+public class ValidateStub implements Store<User> {
+    private final Store<User> logic = MemoryStore.getInstance();
 
     /**
      * Check add user in the storage.

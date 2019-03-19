@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import ru.job4j.storage.IncorrectDateException;
+import ru.job4j.storage.Store;
 import ru.job4j.storage.ValidateService;
 
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ import java.io.IOException;
  * Date: 14.12.2018
  */
 public class UserDeleteServlet extends HttpServlet {
-    private final ValidateService vs = ValidateService.getInstance();
+    private final Store vs = ValidateService.getInstance();
 
     /**
      * Delete the user from DB abd redirect on the home.

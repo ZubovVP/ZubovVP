@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import ru.job4j.models.User;
+import ru.job4j.storage.Store;
 import ru.job4j.storage.ValidateService;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ import java.util.List;
  * Date: 03.12.2018
  */
 public class UsersController extends HttpServlet {
-    private final ValidateService vs = ValidateService.getInstance();
+    private final Store vs = ValidateService.getInstance();
 
     /**
      * Shows all users. Request UsersViews.jsp.

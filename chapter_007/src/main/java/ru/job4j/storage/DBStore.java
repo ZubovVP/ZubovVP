@@ -25,7 +25,7 @@ public class DBStore implements Store<User> {
     private static final DBStore INSTANCE = new DBStore();
     private static final Logger LOGGER = LogManager.getLogger(DBStore.class.getName());
     private static final String CREATE_TABLE = "CREATE TABLE users(id SERIAL PRIMARY KEY, name CHARACTER VARYING(50) NOT NULL , login CHARACTER VARYING(50) NOT NULL UNIQUE, email CHARACTER VARYING(50) NOT NULL UNIQUE, createDate TIMESTAMP NOT NULL, password CHARACTER VARYING(32) NOT NUll, role CHARACTER VARYING(20) NOT NUll);";
-    private boolean createTable = false;
+    private static boolean createTable = false;
     private static final Encryption ENCRYPT = Encryption.getInstance();
 
 
@@ -261,7 +261,7 @@ public class DBStore implements Store<User> {
      * If the table is not created, create a table.
      */
     private void checkTable() {
-        if (!this.createTable) {
+        if (!createTable) {
             try (Connection conn = SOURCE.getConnection()) {
                 DatabaseMetaData dbm = conn.getMetaData();
                 ResultSet rs = dbm.getTables(null, null, "entry", null);
@@ -272,7 +272,7 @@ public class DBStore implements Store<User> {
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage(), e);
             }
-            this.createTable = true;
+            createTable = true;
         }
     }
 }

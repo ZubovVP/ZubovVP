@@ -4,6 +4,7 @@ import ru.job4j.models.Admin;
 import ru.job4j.models.User;
 import ru.job4j.models.Viewer;
 import ru.job4j.storage.IncorrectDateException;
+import ru.job4j.storage.Store;
 import ru.job4j.storage.ValidateService;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ import java.io.IOException;
  * Date: 14.12.2018
  */
 public class UserCreateServlet extends HttpServlet {
-    private final ValidateService vs = ValidateService.getInstance();
+    private final Store vs = ValidateService.getInstance();
 
     /**
      * Request on the Create.jsp.

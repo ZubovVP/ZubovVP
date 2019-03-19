@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import ru.job4j.storage.IncorrectDateException;
+import ru.job4j.storage.Store;
 import ru.job4j.storage.ValidateService;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import java.io.IOException;
  * Date: 02.03.2019
  */
 public class SigninController extends HttpServlet {
-    private final ValidateService vs = ValidateService.getInstance();
+    private final Store vs = ValidateService.getInstance();
 
 
     @Override
@@ -40,10 +41,8 @@ public class SigninController extends HttpServlet {
         if (result) {
             String role = this.vs.findByLogin(login).getRole();
             HttpSession session = req.getSession();
-            synchronized (session) {
                 session.setAttribute("login", login);
                 session.setAttribute("role", role);
-            }
             resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {
             req.setAttribute("error", "Credentional invalid");
