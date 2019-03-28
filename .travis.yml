@@ -8,11 +8,11 @@ sudo: false
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почту youremail@smtp.ru если сборка упала
+# Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
 notifications:
   email:
     recipients:
-      - zubov.vp@yandex.ru
+     - zubovvp@yandex.ru
     on_success: never # default: change
     on_failure: always # default: always
 
@@ -21,3 +21,7 @@ notifications:
      	before_script:
      	- psql -c "CREATE DATABASE tracker_storage;" -U postgres
      	- psql -c "CREATE DATABASE web_storage;" -U postgres
+
+
+
+
