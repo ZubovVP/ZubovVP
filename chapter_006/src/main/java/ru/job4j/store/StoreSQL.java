@@ -3,9 +3,11 @@ package ru.job4j.store;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by ZubovVP on 13.10.2018
@@ -20,16 +22,23 @@ public class StoreSQL implements AutoCloseable {
     private static final String SELECT_TABLE = "SELECT * FROM entry";
     private static final String CREATE_TABLE = "CREATE TABLE entry (field INT NOT NULL);";
     private static final String SELECT_ELEMENT = "SELECT * from entry";
+    private static final String DELETE_TABLE = "DELETE FROM entry";
     static final long TIME_START = System.currentTimeMillis();
 
 
     /**
-     * Constructor.
-     *
-     * @param config - settings for connection.
+     * Connect to database.
      */
-    public StoreSQL(Config config) {
-        this.conn = config.getConn();
+    public void connect() {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("store.properties")) {
+            Properties props = new Properties();
+            props.load(in);
+            Class.forName(props.getProperty("driver-class-name"));
+            this.conn = DriverManager.getConnection(props.getProperty("url"), props.getProperty("username"), props.getProperty("password"));
+            this.conn.setAutoCommit(false);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
     }
 
     /**
@@ -38,21 +47,20 @@ public class StoreSQL implements AutoCloseable {
      * @param n - quantity of generated records.
      */
     public void generate(int n) {
-        this.st = null;
-        this.rs = null;
+        if (this.conn == null) {
+            connect();
+        }
         checkTable();
         for (int x = 1; x <= n; x++) {
             try {
-                this.conn.setAutoCommit(false);
                 this.st = conn.prepareStatement(ADD_ELEMENT);
                 this.st.setInt(1, x);
                 this.st.executeUpdate();
-                this.conn.setAutoCommit(true);
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 try {
                     this.conn.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
+                } catch (SQLException ex) {
+                    LOGGER.error(ex.getMessage(), ex);
                 }
                 LOGGER.error(e.getMessage(), e);
             }
@@ -65,16 +73,17 @@ public class StoreSQL implements AutoCloseable {
      * @return - List<Field>.
      */
     public List<StoreXML.Field> getAllEntries() {
+        if (this.conn == null) {
+            connect();
+        }
         List<StoreXML.Field> result = new ArrayList<>();
-        st = null;
-        rs = null;
         try {
             st = conn.prepareStatement(SELECT_TABLE);
             rs = st.executeQuery();
             while (rs.next()) {
                 result.add(new StoreXML.Field(rs.getInt("field")));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
         return result;
@@ -84,7 +93,11 @@ public class StoreSQL implements AutoCloseable {
      * Check table existence.
      * If the table is not created, create a table.
      */
+
     private void checkTable() {
+        if (this.conn == null) {
+            connect();
+        }
         try {
             DatabaseMetaData dbm = conn.getMetaData();
             rs = dbm.getTables(null, null, "entry", null);
@@ -95,7 +108,7 @@ public class StoreSQL implements AutoCloseable {
                 st.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -104,22 +117,23 @@ public class StoreSQL implements AutoCloseable {
      * If there are records in the table, all records are deleted.
      */
     private void checkRecords() {
-        this.st = null;
-        this.rs = null;
+        if (this.conn == null) {
+            connect();
+        }
         try {
             this.st = conn.prepareStatement(SELECT_ELEMENT);
             this.rs = this.st.executeQuery();
             if (this.rs.next()) {
-                this.st = conn.prepareStatement(String.format("%s %s", "DROP TABLE entry;", "CREATE TABLE entry (field INT NOT NULL);"));
+                this.st = conn.prepareStatement(DELETE_TABLE);
                 st.executeUpdate();
             }
         } catch (SQLException e) {
             try {
                 this.conn.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+            } catch (SQLException ex) {
+                LOGGER.error(ex.getMessage(), ex);
             }
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -131,6 +145,7 @@ public class StoreSQL implements AutoCloseable {
     @Override
     public void close() throws Exception {
         this.conn.commit();
+        this.conn.setAutoCommit(true);
         if (this.rs != null) {
             this.rs.close();
         }
@@ -144,7 +159,5 @@ public class StoreSQL implements AutoCloseable {
                 LOGGER.error(e.getMessage(), e);
             }
         }
-
     }
-
 }
