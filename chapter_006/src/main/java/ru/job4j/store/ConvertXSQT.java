@@ -23,12 +23,12 @@ public class ConvertXSQT {
      * @throws TransformerException - TransformerException.
      * @throws IOException          - IOException.
      */
-    public void convert(File source, File scheme) throws TransformerException, IOException {
+    public void convert(File source, File dest, File scheme) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer(
                 new StreamSource(scheme));
         StreamSource ss = new StreamSource(source);
-        StreamResult sr = new StreamResult(new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML_XSLT.xml"));
+        StreamResult sr = new StreamResult(dest);
         transformer.transform(ss, sr);
     }
 

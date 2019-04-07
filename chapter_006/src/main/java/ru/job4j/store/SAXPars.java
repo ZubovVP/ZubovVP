@@ -18,11 +18,11 @@ public class SAXPars extends DefaultHandler {
     private int count;
 
 
-    public void startDocument() throws SAXException {
+    public void startDocument() {
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equals(ENTRY_TAG)) {
             this.count = this.count + Integer.valueOf(attributes.getValue(FIELD));
         }
@@ -36,7 +36,7 @@ public class SAXPars extends DefaultHandler {
     }
 
     @Override
-    public void endDocument() throws SAXException {
+    public void endDocument() {
         System.out.println(this.count);
     }
 }

@@ -9,8 +9,10 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,18 +23,27 @@ import static org.junit.Assert.assertThat;
  */
 public class SAXParsTest {
     private Config config = new Config();
+    private Properties values = new Properties();
     private final PrintStream stdout = System.out;
     private ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     @Before
     public void loadOutput() {
+        try (InputStream in = Config.class.getClassLoader().getResourceAsStream("store.properties")) {
+            values.load(in);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
         System.setOut(new PrintStream(this.out));
-
     }
 
     @After
     public void backOutput() {
         System.setOut(this.stdout);
+    }
+
+    private String get(String key) {
+        return this.values.getProperty(key);
     }
 
     @Test
@@ -41,32 +52,32 @@ public class SAXParsTest {
             StoreSQL storeSQL = new StoreSQL(this.config);
             storeSQL.generate(1);
             List<StoreXML.Field> result = storeSQL.getAllEntries();
-            StoreXML storeXML = new StoreXML(new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML.xml"));
+            StoreXML storeXML = new StoreXML(new File(get("Result_XML")));
             storeXML.save(result);
             ConvertXSQT convertXSQT = new ConvertXSQT();
-            convertXSQT.convert(new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML.xml"), new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\Scheme.xml"));
+            convertXSQT.convert(new File(get("Result_XML")), new File(get("Result_XML_XSLT")), new File(get("Scheme")));
             SAXParserFactory spf = SAXParserFactory.newInstance();
             SAXParser saxParser = spf.newSAXParser();
             XMLReader xmlReader = saxParser.getXMLReader();
             SAXPars saxPars = new SAXPars();
             xmlReader.setContentHandler(saxPars);
-            xmlReader.parse("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML_XSLT.xml");
+            xmlReader.parse(get("Result_XML_XSLT"));
             assertThat(new String(out.toByteArray()), is("1\r\n"));
 
             out = new ByteArrayOutputStream();
             storeSQL.generate(3);
             result = storeSQL.getAllEntries();
-            storeXML = new StoreXML(new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML.xml"));
+            storeXML = new StoreXML(new File(get("Result_XML")));
             storeXML.save(result);
             convertXSQT = new ConvertXSQT();
-            convertXSQT.convert(new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML.xml"), new File("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\Scheme.xml"));
+            convertXSQT.convert(new File(get("Result_XML")), new File(get("Result_XML_XSLT")), new File(get("Scheme")));
             spf = SAXParserFactory.newInstance();
             saxParser = spf.newSAXParser();
             xmlReader = saxParser.getXMLReader();
             saxPars = new SAXPars();
             xmlReader.setContentHandler(saxPars);
             System.setOut(new PrintStream(this.out));
-            xmlReader.parse("C:\\projects\\ZubovVP\\chapter_006\\src\\main\\java\\ru\\job4j\\store\\files\\Result_XML_XSLT.xml");
+            xmlReader.parse(get("Result_XML_XSLT"));
             assertThat(new String(out.toByteArray()), is("6\r\n"));
         } catch (Exception e) {
             e.printStackTrace();
