@@ -18,9 +18,11 @@ import java.util.Properties;
  */
 public class Tracker implements AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tracker.class);
+    private static final String CREATE_TABLE = "CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(25) NOT NULL, description TEXT NOT NULL, create_date TIMESTAMP, id_item VARCHAR(15));";
+    private static boolean createTable = false;
     private Connection conn;
     private PreparedStatement st;
-    private  ResultSet rs;
+    private ResultSet rs;
 
 
     /**
@@ -44,6 +46,7 @@ public class Tracker implements AutoCloseable {
         if (this.conn == null) {
             connect();
         }
+        checkTable();
         try {
             this.st = this.conn.prepareStatement("INSERT INTO users(name, description, create_date, id_item) VALUES(?, ?, ?, ?)");
             this.st.setString(1, item.getName());
@@ -68,6 +71,7 @@ public class Tracker implements AutoCloseable {
         if (this.conn == null) {
             connect();
         }
+        checkTable();
         try {
             this.st = this.conn.prepareStatement("SELECT * FROM users WHERE id_item = ?");
             this.st.setString(1, id);
@@ -92,6 +96,7 @@ public class Tracker implements AutoCloseable {
         if (this.conn == null) {
             connect();
         }
+        checkTable();
         try {
             this.st = this.conn.prepareStatement("SELECT * FROM users WHERE name = ?");
             this.st.setString(1, name);
@@ -111,6 +116,7 @@ public class Tracker implements AutoCloseable {
         if (this.conn == null) {
             connect();
         }
+        checkTable();
         try {
             this.st = this.conn.prepareStatement("UPDATE users SET name = ?, description = ? WHERE id_item = ?");
             this.st.setString(1, item.getName());
@@ -132,6 +138,7 @@ public class Tracker implements AutoCloseable {
         if (this.conn == null) {
             connect();
         }
+        checkTable();
         try {
             this.st = this.conn.prepareStatement("DELETE FROM users WHERE id_item = ?");
             this.st.setString(1, id);
@@ -153,6 +160,7 @@ public class Tracker implements AutoCloseable {
         if (this.conn == null) {
             connect();
         }
+        checkTable();
         try {
             this.st = this.conn.prepareStatement("SELECT * FROM users");
             this.rs = this.st.executeQuery();
@@ -165,6 +173,26 @@ public class Tracker implements AutoCloseable {
             LOGGER.error(e.getMessage(), e);
         }
         return result;
+    }
+
+    /**
+     * Check table existence.
+     * If the table is not created, create a table.
+     */
+    private void checkTable() {
+        if (!createTable) {
+            try {
+                DatabaseMetaData dbm = conn.getMetaData();
+                ResultSet rs = dbm.getTables(null, null, "users", null);
+                if (!rs.next()) {
+                    PreparedStatement st = conn.prepareStatement(CREATE_TABLE);
+                    st.executeUpdate();
+                    createTable = true;
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
