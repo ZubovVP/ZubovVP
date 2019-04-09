@@ -17,9 +17,10 @@ public class EmailNotificationTest {
 
     @Test
     public void testEmailTo() throws InterruptedException {
-        users.addAll(Arrays.asList(new User("Duke", "duke@yandex.ru"), new User("Kate", "kate@yandex.ru"), new User("Tom", "tom@google.com")));
-        EmailNotification em = new EmailNotification(users);
+        this.users.addAll(Arrays.asList(new User("Duke", "duke@yandex.ru"), new User("Kate", "kate@yandex.ru"), new User("Tom", "tom@google.com")));
+        EmailNotification em = new EmailNotification(this.users);
         em.start();
-        assertThat(users.size(), is(0));
+        Thread.sleep(200);
+        assertThat(em.getUsers().size(), is(0));
     }
 }
