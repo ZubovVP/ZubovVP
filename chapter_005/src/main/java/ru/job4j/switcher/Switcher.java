@@ -35,7 +35,7 @@ public class Switcher {
     private void addNumber(int number) {
         try {
             semaphore.acquire();
-            Thread.sleep(2000);
+            Thread.sleep(200);
 
             for (int x = 0; x < 10; x++) {
                 sb.append(number);

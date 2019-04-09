@@ -20,7 +20,7 @@ public class ThreadPoolTest {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -29,7 +29,7 @@ public class ThreadPoolTest {
             });
         }
         try {
-            Thread.sleep(5000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class ThreadPoolTest {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -51,14 +51,14 @@ public class ThreadPoolTest {
                 }
             });
         }
-        Thread.sleep(5000);
+        Thread.sleep(500);
 
         for (int x = 0; x < 10; x++) {
             tr.work(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -66,7 +66,7 @@ public class ThreadPoolTest {
                 }
             });
         }
-        Thread.sleep(5000);
+        Thread.sleep(500);
         tr.shutdown();
     }
 }

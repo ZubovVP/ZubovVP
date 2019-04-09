@@ -20,17 +20,15 @@ public class SwitcherTest {
     @Test
     public void testPlayShouldTrue() throws InterruptedException {
         System.setOut(new PrintStream(this.out));
-
         sw.play();
-        Thread.sleep(4100);
-
+        Thread.sleep(410);
         String result = sw.getLine();
         String first = result.substring(0, 10);
         String second = result.substring(10);
         assertThat(sw.getLine(), is(new StringBuilder().
                 append(first).append(second).
                 toString()));
-        Thread.sleep(2100);
+        Thread.sleep(210);
         assertThat(sw.getLine(), is(new StringBuilder().
                 append(first).append(second).append(first)
                 .toString()));
@@ -48,9 +46,9 @@ public class SwitcherTest {
     @Test
     public void testShutdown() throws InterruptedException {
         sw.play();
-        Thread.sleep(1000);
+        Thread.sleep(100);
         sw.shutdown();
-        Thread.sleep(2100);
+        Thread.sleep(210);
         String res = sw.getLine();
         String result2 = sw.getLine();
         assertThat(res, is(result2));

@@ -34,7 +34,7 @@ public class MyLockTest {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int x = 0; x < 10_000_000; x++) {
+                for (int x = 0; x < 1_000_000; x++) {
                     try {
                         rightIncrement();
                     } catch (InterruptedException e) {
@@ -47,7 +47,7 @@ public class MyLockTest {
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int x = 0; x < 10_000_000; x++) {
+                for (int x = 0; x < 1_000_000; x++) {
                     try {
                         rightIncrement();
                     } catch (InterruptedException e) {
@@ -62,14 +62,14 @@ public class MyLockTest {
         thread1.join();
         thread2.join();
 //      System.out.printf("Count = %d%n", count);
-        assertThat(this.count, is(20_000_000));
+        assertThat(this.count, is(2_000_000));
     }
     @Test
     public void useMyLockShouldWrongCount() throws InterruptedException {
         Thread thread3 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int x = 0; x < 100_000_000; x++) {
+                for (int x = 0; x < 1_000_000; x++) {
                     try {
                         wrongIncrement();
                     } catch (InterruptedException e) {
@@ -82,7 +82,7 @@ public class MyLockTest {
         Thread thread4 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int x = 0; x < 100_000_000; x++) {
+                for (int x = 0; x < 1_000_000; x++) {
                     try {
                         wrongIncrement();
                     } catch (InterruptedException e) {

@@ -1,7 +1,9 @@
 package ru.job4j.wait;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class ParallelSearchTest {
     public void findNameBobShouldTwo() throws InterruptedException {
         List<String> exts = new ArrayList<>();
         exts.add("txt");
-        ParallelSearch test1 = new ParallelSearch("C:\\projects\\ZubovVP\\files", "Bob", exts);
+        ParallelSearch test1 = new ParallelSearch(new File("files").getAbsolutePath(), "Bob", exts);
         test1.init();
         assertThat(test1.result().size(), is(2));
     }
@@ -27,7 +29,7 @@ public class ParallelSearchTest {
     public void findNameDukeShouldOne() throws InterruptedException {
         List<String> exts = new ArrayList<>();
         exts.add("txt");
-        ParallelSearch test2 = new ParallelSearch("C:\\projects\\ZubovVP\\files", "Duke", exts);
+        ParallelSearch test2 = new ParallelSearch(new File("files").getAbsolutePath(), "Duke", exts);
         test2.init();
         assertThat(test2.result().size(), is(2));
     }
@@ -36,7 +38,7 @@ public class ParallelSearchTest {
     public void findNameSamShouldZero() throws InterruptedException {
         List<String> exts = new ArrayList<>();
         exts.add("txt");
-        ParallelSearch test3 = new ParallelSearch("C:\\projects\\ZubovVP\\files", "Sam", exts);
+        ParallelSearch test3 = new ParallelSearch(new File("files").getAbsolutePath(), "Sam", exts);
         test3.init();
         assertThat(test3.result().size(), is(0));
     }

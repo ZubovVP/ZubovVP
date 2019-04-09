@@ -20,9 +20,8 @@ public class DeadLockTest {
             }
         });
         thread.start();
-
         for (int x = 0; x < 5; x++) {
-            Thread.sleep(1000);
+            Thread.sleep(200);
             assertTrue(d1.areAliveThreads());
         }
     }
