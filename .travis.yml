@@ -9,10 +9,8 @@ services:
 before_install:
   - psql -c "CREATE DATABASE tracker_storage;" -U postgres
   - psql -c "CREATE DATABASE web_storage;" -U postgres
-  - psql -c "CREATE DATABASE entry;" -U postgres
-  - psql -c "CREATE DATABASE users;" -U postgres
-
-
+  - psql -c "CREATE DATABASE store_db;" -U postgres
+  - psql -c "CREATE DATABASE shop_db;" -U postgres
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
