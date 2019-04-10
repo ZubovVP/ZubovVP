@@ -74,8 +74,4 @@ public class EmailNotification {
     private void send(String subject, String body, String email) {
         //TODO
     }
-
-    public BlockingQueue<User> getUsers() {
-        return users;
-    }
 }

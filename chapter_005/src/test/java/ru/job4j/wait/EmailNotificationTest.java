@@ -20,7 +20,7 @@ public class EmailNotificationTest {
         this.users.addAll(Arrays.asList(new User("Duke", "duke@yandex.ru"), new User("Kate", "kate@yandex.ru"), new User("Tom", "tom@google.com")));
         EmailNotification em = new EmailNotification(this.users);
         em.start();
-        Thread.sleep(200);
-        assertThat(em.getUsers().size(), is(0));
+        Thread.sleep(300);
+        assertThat(this.users.size(), is(0));
     }
 }
