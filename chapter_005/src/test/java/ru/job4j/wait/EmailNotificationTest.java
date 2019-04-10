@@ -16,12 +16,12 @@ import static org.junit.Assert.assertThat;
 public class EmailNotificationTest {
     BlockingQueue<User> users = new LinkedBlockingDeque<>();
 
-    @Ignore
+    @Test
     public void testEmailTo() throws InterruptedException {
         this.users.addAll(Arrays.asList(new User("Duke", "duke@yandex.ru"), new User("Kate", "kate@yandex.ru"), new User("Tom", "tom@google.com")));
         EmailNotification em = new EmailNotification(this.users);
         em.start();
-        Thread.sleep(50);
+        em.close();
         assertThat(this.users.size(), is(0));
     }
 }
