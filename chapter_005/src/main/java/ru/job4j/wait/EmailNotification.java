@@ -84,5 +84,6 @@ public class EmailNotification {
                 e.printStackTrace();
             }
         }
+        System.out.println("The poll is empty");
     }
 }
