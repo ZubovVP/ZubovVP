@@ -7,6 +7,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var result = true;
+            if ($('#name').val() === $('#id').val() || $('#surname').val() === $('#id').val() || $('#description').val() === $('#id').val()) {
+                result = false;
+                alert('Id is not unique!');
+            } else if ($('#name').attr('title') === '') {
+                result = false;
+                alert('Please, fill your name');
+            } else if ($('#surname').val() === '') {
+                result = false;
+                alert('Please, fill your surname');
+            } else if ($('#description').val() === '') {
+                result = false;
+                alert('Please, fill description');
+            } else if ($('#id').val() === '') {
+                result = false;
+                alert('Please, fill id');
+            }
+            return result;
+        }
+    </script>
     <style>
         body {
             background-color: #00e6b8;
@@ -14,21 +36,21 @@
 
         h1 {
             color: #ffffff;
-            font-family: "Times New Roman",serif;
+            font-family: "Times New Roman", serif;
             text-align: center;
             font-size: 50px;
         }
 
         h2 {
             color: #000000;
-            font-family: "Times New Roman",serif;
+            font-family: "Times New Roman", serif;
             text-align: center;
-            font-size: 25px;
+            font-size: 40px;
         }
 
         p {
             color: #000000;
-            font-family: "Times New Roman",serif;
+            font-family: "Times New Roman", serif;
             text-align: left;
             font-size: 25px;
         }
@@ -41,7 +63,7 @@
     <p>This is some text.</p>
 </div>
 
-<form class="form-horizontal" action="/">
+<form class="form-horizontal" action="/index.html/">
     <div class="form-group">
         <label class="control-label col-sm-2" for="name">Name:</label>
         <div class="col-sm-10">
@@ -55,13 +77,19 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-2" >Sex:</label>
+        <label class="control-label col-sm-2" for="id">Id:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="id" placeholder="Enter name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Sex:</label>
         <div class="col-sm-10">
             <label>
-                <input type="radio"  name="sex" >
+                <input type="radio" required name="sex">
             </label> Male<br>
             <label>
-                <input type="radio"  name="sex" >
+                <input type="radio" required name="sex">
             </label> Female
         </div>
     </div>
@@ -73,7 +101,7 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
         </div>
     </div>
 </form>
