@@ -8,6 +8,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
+        function loadPersons() {
+            deletePersons();
+            $.ajax("http://localhost:8080/json", {
+                method: "GET",
+                complete: function (data) {
+                    console.log(JSON.parse(data.responseText));
+                    var users = JSON.parse(data.responseText);
+                    for (var i = 0; i < users.length; i++) {
+                        var nameU = users[i].name;
+                        var surnameU = users[i].surname;
+                        var idU = users[i].id;
+                        var sexU = users[i].sex;
+                        var descriptionU = users[i].description;
+                        $('#table tr:last').after('<tr><td>' + idU + '</td><td>' + nameU + '</td><td>' + surnameU + '</td><td>' + sexU + '<td>' + descriptionU + '</td></td></tr>');
+                    }
+                    console.log(users);
+                }
+            });
+        }
+
         function validate() {
             var result = true;
             if ($('#name').val() === $('#id').val() || $('#surname').val() === $('#id').val() || $('#description').val() === $('#id').val()) {
@@ -26,20 +46,39 @@
                 result = false;
                 alert('Please, fill id');
             }
+<<<<<<< HEAD
+            if (result) {
+                sendPerson();
+=======
             if (result === true) {
                 addRow();
+>>>>>>> origin/master
             }
             return result;
         }
 
-        function addRow() {
+        function sendPerson() {
             var id = $('#id').val();
             var name = $('#name').val();
             var surname = $('#surname').val();
             var sex = $("input:radio[name=sex]:checked").val();
             var description = $('#description').val();
-            $('#table tr:last').after('<tr><td>' + id + '</td><td>' + name + '</td><td>' + surname + '</td><td>' + sex + '<td>' + description + '</td></td></tr>');
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:8080/json",
+                data: {id: id, name: name, surname: surname, sex: sex, description: description},
+                dataType: 'application/json',
+                success: function (data) {
+                    console.log(JSON.parse(data.responseText));
+                }
+            });
+            loadPersons();
         }
+
+        function deletePersons() {
+            $("#table tr:gt(0)").remove();
+        }
+
     </script>
     <style>
         body {
@@ -72,7 +111,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="loadPersons()">
 
 <div class="container-fluid">
     <h1>My First Bootstrap Page</h1>
