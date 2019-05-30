@@ -33,7 +33,7 @@
             if ($('#name').val() === $('#id').val() || $('#surname').val() === $('#id').val() || $('#description').val() === $('#id').val()) {
                 result = false;
                 alert('Id is not unique!');
-            } else if ($('#name').val() === '') {
+            } else if ($('#name').attr('title') === '') {
                 result = false;
                 alert('Please, fill your name');
             } else if ($('#surname').val() === '') {
@@ -46,13 +46,8 @@
                 result = false;
                 alert('Please, fill id');
             }
-<<<<<<< HEAD
             if (result) {
                 sendPerson();
-=======
-            if (result === true) {
-                addRow();
->>>>>>> origin/master
             }
             return result;
         }
@@ -141,10 +136,10 @@
         <label class="control-label col-sm-2">Sex:</label>
         <div class="col-sm-10">
             <label>
-                <input type="radio" value="Male" name="sex" checked>
+                <input type="radio" value="Male" required name="sex">
             </label> Male<br>
             <label>
-                <input type="radio" value="Female" name="sex">
+                <input type="radio" value="Female" required name="sex">
             </label> Female
         </div>
     </div>
