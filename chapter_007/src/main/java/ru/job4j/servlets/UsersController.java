@@ -44,8 +44,8 @@ public class UsersController extends HttpServlet {
                 user.add(ValidateService.getInstance().findByLogin((String) session.getAttribute("login")));
                 req.setAttribute("users", user);
             }
+            req.getRequestDispatcher("WEB-INF/views/UsersViews.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("WEB-INF/views/UsersViews.jsp").forward(req, resp);
     }
 
     /**
