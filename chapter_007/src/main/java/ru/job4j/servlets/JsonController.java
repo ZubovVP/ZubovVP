@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.List;
 
 /**
  * Created by Intellij IDEA.
@@ -25,26 +25,27 @@ public class JsonController extends HttpServlet {
     /**
      * Get all users from storage.
      *
-     * @param req - request.
+     * @param req  - request.
      * @param resp - response.
      * @throws IOException
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/json");
         resp.addHeader("Access-Control-Allow-Origin", "*"); // Cros
-        ObjectMapper objectMapper = new ObjectMapper();
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        StringWriter users = new StringWriter();
-        objectMapper.writeValue(users, storage.getAllPersons());
-        writer.append(users.toString());
+        List<Person> products = storage.getAllPersons();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(products);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter writer = resp.getWriter();
+        writer.print(json);
         writer.flush();
     }
 
     /**
      * Put the user in the storage.
      *
-     * @param req - request.
+     * @param req  - request.
      * @param resp - response.
      * @throws IOException
      */

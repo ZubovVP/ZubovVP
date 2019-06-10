@@ -19,14 +19,14 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        if (request.getRequestURI().contains("/signin")) {
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if (request.getRequestURI().contains("/signin") || request.getRequestURI().contains("/json")) {
             chain.doFilter(servletRequest, servletResponse);
         } else {
             HttpSession session = request.getSession();
-                if (session.getAttribute("login") == null) {
-                    HttpServletResponse response = (HttpServletResponse) servletResponse;
-                    response.sendRedirect(String.format("%s/signin", request.getContextPath()));
-                    return;
+            if (session.getAttribute("login") == null) {
+                response.sendRedirect(String.format("%s/signin", request.getContextPath()));
+                return;
             }
             chain.doFilter(servletRequest, servletResponse);
         }

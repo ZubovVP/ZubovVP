@@ -10,22 +10,22 @@
     <script>
         function loadPersons() {
             deletePersons();
-            $.ajax("http://localhost:8080/json", {
-                method: "GET",
-                complete: function (data) {
-                    console.log(JSON.parse(data.responseText));
-                    var users = JSON.parse(data.responseText);
-                    for (var i = 0; i < users.length; i++) {
-                        var nameU = users[i].name;
-                        var surnameU = users[i].surname;
-                        var idU = users[i].id;
-                        var sexU = users[i].sex;
-                        var descriptionU = users[i].description;
-                        $('#table tr:last').after('<tr><td>' + idU + '</td><td>' + nameU + '</td><td>' + surnameU + '</td><td>' + sexU + '<td>' + descriptionU + '</td></td></tr>');
+            $.ajax('http://localhost:8080/json', {
+                    method: 'GET',
+                    complete: function (data) {
+                        var users = JSON.parse(data.responseText);
+                        for (var i = 0; i < users.length; i++) {
+                            var nameU = users[i].name;
+                            var surnameU = users[i].surname;
+                            var idU = users[i].id;
+                            var sexU = users[i].sex;
+                            var descriptionU = users[i].description;
+                            $('#table tr:last').after('<tr><td>' + idU + '</td><td>' + nameU + '</td><td>' + surnameU + '</td><td>' + sexU + '<td>' + descriptionU + '</td></td></tr>');
+                        }
+                        console.log(users);
                     }
-                    console.log(users);
                 }
-            });
+            );
         }
 
         function validate() {
@@ -60,20 +60,19 @@
             var description = $('#description').val();
             $.ajax({
                 type: 'POST',
-                url: "http://localhost:8080/json",
+                url: 'http://localhost:8080/json',
                 data: {id: id, name: name, surname: surname, sex: sex, description: description},
                 dataType: 'application/json',
                 success: function (data) {
                     console.log(JSON.parse(data.responseText));
                 }
             });
-            loadPersons();
+            setTimeout(function (){loadPersons();}, 50);
         }
 
         function deletePersons() {
             $("#table tr:gt(0)").remove();
         }
-
     </script>
     <style>
         body {
