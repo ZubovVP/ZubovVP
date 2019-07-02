@@ -10,9 +10,139 @@
 <html>
 <head>
     <title>Update</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var result = true;
+            if ($('#name').val() === '') {
+                result = false;
+                alert('Please, fill your name');
+            }
+            if ($('#login').val() === '') {
+                result = false;
+                alert('Please, fill your login');
+            }
+            if ($('#email').val() === '') {
+                result = false;
+                alert('Please, fill email');
+            }
+            if ($('#password').val() === '') {
+                result = false;
+                alert('Please, fill password');
+            }
+            if (result) {
+                sendPerson();
+            }
+            return result;
+        }
+
+        function sendPerson() {
+            var name = $('#name').val();
+            var login = $('#login').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var role = $('#role').val();
+            var id = $('#id').val();
+
+            $.ajax({
+                type: 'POST',
+                url: "${pageContext.servletContext.contextPath}/edit",
+                data: {name: name, login: login, email: email, password: password, role: role, id: id},
+                dataType: 'application/json',
+                success: function (data) {
+                    console.log(JSON.parse(data.responseText));
+                }
+            });
+        }
+    </script>
 </head>
-<table align="left" width="60%" border="1">
-    <tr>
+<body>
+<style type="text/css">
+    body {
+        margin: 0;
+        background-color: orange;
+    }
+
+    .display-4 {
+        text-align: center;
+    }
+
+    .navbar-brand img {
+        width: 40px;
+    }
+
+    .button {
+        width: 150px;
+        height: 40px;
+        border-radius: 20px;
+        background: #459DE5;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        position: relative;
+        left: 42%;
+        transform: translate(-42%, 0);
+    }
+
+    table {
+        border: black;
+        background-color: white;
+        margin: auto;
+        width: 60%;
+    }
+
+    .header_table {
+        color: black;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99ffff;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://www.bootstrap.com">
+            <img src="<c:url value="https://www.drupal.org/files/project-images/bootstrap-stack.png"/>"
+                 class="float-left">
+
+        </a>
+        <a class="navbar-brand" href="https://html.com">
+            <img src="<c:url value="https://cdn-images-1.medium.com/max/1200/1*MJ9Y4_tCTv99Gs_xZYlKrA.png"/>"
+                 class="float-left">
+        </a>
+        <a class="navbar-brand" href="https://www.w3.org/Style/CSS/">
+            <img src="<c:url value="http://codingwithalex.com/wp-content/uploads/2017/09/CSS-1200x1200.png"/>"
+                 class="float-left">
+        </a>
+
+        <a class="navbar-brand" href="https://www.javascript.com">
+            <img src="<c:url value="http://www.seanritter.com/assets/js-logo-d20abe9ebbeb5be6242dbf06660f22a115e2dbdaf9659276198cce9dbe7f69e4.png"/>"
+                 class="float-left">
+        </a>
+
+        <a class="navbar-brand" href="https://www.java.com/">
+            <img src="<c:url value="https://cdn.icon-icons.com/icons2/1381/PNG/512/java_93883.png"/>"
+                 class="float-left">
+        </a>
+        <form class="form-inline" action="${pageContext.servletContext.contextPath}/">
+            <button class="btn btn-success" type="submit">Home</button>
+        </form>
+    </div>
+</nav>
+<div class="display-4">
+    Correct user
+</div>
+<br>
+<table border="1">
+    <tr class="header_table">
         <th>Name</th>
         <th>Login</th>
         <th>Email</th>
@@ -21,23 +151,28 @@
             <th>Role</th>
         </c:if>
     </tr>
-    <form action="${pageContext.servletContext.contextPath}/edit" method="POST" id="myform"></form>
-    <td> name : <input type="text" name="name" value="<c:out value="${param.userName}"></c:out>" form="myform"></td>
-    <td> login : <input type="text" name="login" value="<c:out value="${param.login}"></c:out>" form="myform"></td>
-    <td> email : <input type="text" name="email" value="<c:out value="${param.email}"></c:out>" form="myform"></td>
-    <td> password : <input type="password" name="password" value="<c:out value="${param.password}"></c:out>"
-                           form="myform"></td>
-    <c:if test="${sessionScope.role == 'admin'}">
-        <td><select name="role" form="myform">
+    <form action="${pageContext.servletContext.contextPath}/" method="GET" onsubmit="return validate();">
+        <td> name : <input type="text" id="name" name="name" value="<c:out value="${param.userName}"></c:out>"></td>
+        <td> login : <input type="text" id="login" name="login" value="<c:out value="${param.login}"></c:out>"></td>
+        <td> email : <input type="text" id="email" name="email" value="<c:out value="${param.email}"></c:out>"></td>
+        <td> password : <input type="password" id="password" name="password"
+                               value="<c:out value="${param.password}"></c:out>"></td>
+        <c:if test="${sessionScope.role == 'admin'}">
+        <td><select name="role" id="role">
             <option value="viewer">viewer</option>
             <option value="admin">admin</option>
         </select></td>
-    </c:if>
-    <c:if test="${sessionScope.role != 'admin'}">
-        <input type="hidden" name="role" value="<c:out value="${param.role}"></c:out>" form="myform">
-    </c:if>
-    <input type="hidden" name="id" value="<c:out value="${param.id}"></c:out>" form="myform">
+        </c:if>
+        <c:if test="${sessionScope.role != 'admin'}">
+        <input type="hidden" name="role" value="<c:out value="${param.role}"></c:out>">
+        </c:if>
+        <input type="hidden" name="id" id="id" value="<c:out value="${param.id}"></c:out>">
 </table>
-<br><br><br><br>
-<input type="submit" name="Update" value="Update" form="myform">
+<br>
+<input type="submit" value="Cancel" class="button" style="background: #cc0000;" form="cancel">
+<input type="submit" class="button" value="Update">
+</form>
+<form action="${pageContext.servletContext.contextPath}/" method="GET" id="cancel">
+</form>
+</body>
 </html>
