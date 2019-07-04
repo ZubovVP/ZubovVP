@@ -21,7 +21,7 @@ public class SwitcherTest {
     public void testPlayShouldTrue() throws InterruptedException {
         System.setOut(new PrintStream(this.out));
         sw.play();
-        Thread.sleep(410);
+        Thread.sleep(450);
         String result = sw.getLine();
         String first = result.substring(0, 10);
         String second = result.substring(10);

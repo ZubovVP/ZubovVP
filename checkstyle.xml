@@ -4,7 +4,6 @@
         "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
-
     <!--Расширение файла должно быть java, properties, xml-->
     <property name="fileExtensions" value="java, properties, xml"/>
 
@@ -20,7 +19,6 @@
     <!-- </module> -->
 
     <module name="TreeWalker">
-
         <!-- Checks for Naming Conventions.                  -->
         <!-- See http://checkstyle.sf.net/config_naming.html -->
         <module name="ConstantName"/>
@@ -91,7 +89,7 @@
         <!--<module name="FinalParameters"/>-->
         <module name="TodoComment"/>
         <module name="UpperEll"/>
-
+        <module name="SuppressionCommentFilter"/>
     </module>
 
 </module>

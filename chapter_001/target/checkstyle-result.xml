@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<checkstyle version="6.11.2">
+<checkstyle version="8.19">
 <file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\AdditionArrays.java">
 </file>
 <file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\ArrayDuplicate.java">

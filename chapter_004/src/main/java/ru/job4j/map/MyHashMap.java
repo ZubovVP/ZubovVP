@@ -26,8 +26,8 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
     }
 
     /**
-     *  Constructor.
-     *  volume collection = 16.
+     * Constructor.
+     * volume collection = 16.
      */
     public MyHashMap() {
         this.table = new Entry[16];
@@ -38,7 +38,7 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
      *
      * @param key   - key.
      * @param value - value.
-     * @return  - boolean result.
+     * @return - boolean result.
      */
     @Override
     public boolean insert(K key, V value) {
@@ -86,7 +86,7 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
             this.table[position] = null;
             result = true;
             this.count--;
-            }
+        }
         return result;
     }
 
@@ -107,7 +107,7 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
      */
     private int calculatePosition(K key) {
         if (key == null) {
-            throw  new NoSuchElementException();
+            throw new NoSuchElementException();
         }
         return Math.abs(key.hashCode() % this.table.length - 1);
     }
@@ -174,13 +174,13 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
      * @param <V> - typ value.
      */
     private class Entry<K, V> {
-        private  K key;
+        private K key;
         private V value;
 
         /**
          * Constructor
          *
-         * @param key - key.
+         * @param key   - key.
          * @param value - value.
          */
         public Entry(K key, V value) {

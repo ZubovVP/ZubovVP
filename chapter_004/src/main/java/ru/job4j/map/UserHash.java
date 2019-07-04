@@ -20,4 +20,9 @@ public class UserHash extends User {
         result = 31 * result + (getBirthday() != null ? getBirthday().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }
