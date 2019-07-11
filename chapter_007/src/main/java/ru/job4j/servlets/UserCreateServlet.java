@@ -47,9 +47,9 @@ public class UserCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user = null;
         if (req.getParameter("role").equals("admin")) {
-            user = new Admin(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+            user = new Admin(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"), req.getParameter("country"), req.getParameter("city"));
         } else if (req.getParameter("role").equals("viewer")) {
-            user = new Viewer(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+            user = new Viewer(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"), req.getParameter("country"), req.getParameter("city"));
         }
         try {
             this.vs.add(user);

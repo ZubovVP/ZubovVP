@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class DBStoreTest {
     private DBStore db;
-    private User userTest = new Admin("Name", "Login", "Email", "TestPassword");
+    private User userTest = new Admin("Name", "Login", "Email", "TestPassword", "TestCountry", "TestCity");
 
     @Test
     public void getInstance() {
@@ -39,6 +39,7 @@ public class DBStoreTest {
         assertThat(usersTest.get(0).getName(), is(this.userTest.getName()));
         assertThat(usersTest.get(0).getLogin(), is(this.userTest.getLogin()));
         assertThat(usersTest.get(0).getEmail(), is(this.userTest.getEmail()));
+        assertThat(usersTest.get(0).getCity(), is(this.userTest.getCity()));
         this.db.delete(usersTest.get(0).getId());
     }
 
@@ -77,7 +78,7 @@ public class DBStoreTest {
         assertTrue(this.db.findAll().isEmpty());
         this.db.add(this.userTest);
         assertThat(this.db.findAll().size(), is(1));
-        this.db.add(new Admin("NameTest2", "LoginTest2", "EmailTest2", "TestPassword"));
+        this.db.add(new Admin("NameTest2", "LoginTest2", "EmailTest2", "TestPassword", "TestCountry2", "TestCity2"));
         assertThat(this.db.findAll().size(), is(2));
         for (User us : this.db.findAll()) {
             this.db.delete(us.getId());

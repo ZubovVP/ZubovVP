@@ -57,6 +57,8 @@ public class UserDeleteServletTest {
         when(this.req.getParameter("login")).thenReturn("Login");
         when(this.req.getParameter("email")).thenReturn("@root");
         when(this.req.getParameter("password")).thenReturn("123");
+        when(this.req.getParameter("country")).thenReturn("country");
+        when(this.req.getParameter("city")).thenReturn("city");
         new UserCreateServlet().doPost(this.req, this.resp);
         Iterator<User> itr = validate.findAll().iterator();
         assertThat(itr.next().getName(), is("Vitaly Zubov"));

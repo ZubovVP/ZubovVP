@@ -18,8 +18,8 @@ import static org.junit.Assert.*;
  */
 public class MemoryStoreTest {
     private MemoryStore memoryTest;
-    private User userTest1 = new Admin("TestName1", "TestLogin1", "TestEmail1", "TestPassword");
-    private User userTest2 = new Admin("TestName2", "TestLogin2", "TestEmail2", "TestPassword");
+    private User userTest1 = new Admin("TestName1", "TestLogin1", "TestEmail1", "TestPassword", "Country", "City");
+    private User userTest2 = new Admin("TestName2", "TestLogin2", "TestEmail2", "TestPassword", "Country", "City");
 
 
     @Before

@@ -38,6 +38,8 @@ public class UserUpdateServlet extends HttpServlet {
         req.setAttribute("email", req.getParameter("email"));
         req.setAttribute("password", req.getParameter("password"));
         req.setAttribute("role", req.getParameter("role"));
+        req.setAttribute("country", req.getParameter("country"));
+        req.setAttribute("city", req.getParameter("city"));
         req.getRequestDispatcher("WEB-INF/views/Update.jsp").forward(req, resp);
     }
 
@@ -52,9 +54,9 @@ public class UserUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User us = null;
         if (req.getParameter("role").equals("admin")) {
-            us = new Admin(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+            us = new Admin(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"), req.getParameter("country"), req.getParameter("city"));
         } else if (req.getParameter("role").equals("viewer")) {
-            us = new Viewer(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+            us = new Viewer(Integer.parseInt(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("password"), req.getParameter("country"), req.getParameter("city"));
         }
         try {
             this.vs.update(us);

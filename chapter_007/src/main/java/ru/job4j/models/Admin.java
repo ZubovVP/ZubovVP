@@ -7,20 +7,22 @@ import java.util.Date;
  */
 public class Admin extends User {
 
-    public Admin(String name, String login, String email, String password) {
-        super(name, login, email, password);
+    public Admin(String name, String login, String email, String password, String country, String city) {
+        super(name, login, email, password, country, city);
     }
-
-    public Admin(int id, String name, String login, String email, Date date, String password) {
-        super(id, name, login, email, date, password);
+    //CHECKSTYLE:OFF
+    public Admin(int id, String name, String login, String email, Date date, String password, String country, String city) {
+        super(id, name, login, email, date, password, country, city);
     }
+    //CHECKSTYLE:ON
 
-    public Admin(int id, String name, String login, String email, String password) {
-        super(id, name, login, email, password);
+    public Admin(int id, String name, String login, String email, String password, String country, String city) {
+        super(id, name, login, email, password, country, city);
     }
 
     /**
      * Get role.
+     *
      * @return - role.
      */
     @Override

@@ -118,7 +118,7 @@ public class ValidateService implements Store<User> {
      * @return - result.
      */
     private User checkUser(User user) {
-        if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
+        if (user.getName().isEmpty() || user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty() || user.getCountry().isEmpty() || user.getCity().isEmpty()) {
             throw new IncorrectDateException("Fields name, login, email must be filled");
         }
         user.setEmail(user.getEmail().toLowerCase());

@@ -7,20 +7,22 @@ import java.util.Date;
  */
 public class Viewer extends User {
 
-    public Viewer(String name, String login, String email, String password) {
-        super(name, login, email, password);
+    public Viewer(String name, String login, String email, String password, String country, String city) {
+        super(name, login, email, password, country, city);
     }
-
-    public Viewer(int id, String name, String login, String email, Date date, String password) {
-        super(id, name, login, email, date, password);
+    //CHECKSTYLE:OFF
+    public Viewer(int id, String name, String login, String email, Date date, String password, String country, String city) {
+        super(id, name, login, email, date, password, country, city);
     }
+    //CHECKSTYLE:ON
 
-    public Viewer(int id, String name, String login, String email, String password) {
-        super(id, name, login, email, password);
+    public Viewer(int id, String name, String login, String email, String password, String country, String city) {
+        super(id, name, login, email, password, country, city);
     }
 
     /**
      * Get role.
+     *
      * @return - role.
      */
     @Override

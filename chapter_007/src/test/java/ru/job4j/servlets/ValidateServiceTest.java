@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 public class ValidateServiceTest {
     private Store vs;
     private Store<User> db = DBStore.getInstance();
-    private User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword");
+    private User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword", "Country", "City");
 
     @Before
     public void start() {
@@ -53,35 +53,35 @@ public class ValidateServiceTest {
     @Test(expected = IncorrectDateException.class)
     public void addClearElement() {
         checkDB();
-        User userTest = new Admin("", "", "", "");
+        User userTest = new Admin("", "", "", "", "", "");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearName() {
         checkDB();
-        User userTest = new Admin("", "LoginTest", "EmailTest", "TestPassword");
+        User userTest = new Admin("", "LoginTest", "EmailTest", "TestPassword", "Country", "City");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearLogin() {
         checkDB();
-        User userTest = new Admin("NameTest", "", "EmailTest", "TestPassword");
+        User userTest = new Admin("NameTest", "", "EmailTest", "TestPassword", "Country", "City");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearEmail() {
         checkDB();
-        User userTest = new Admin("NameTest", "LoginTest", "", "TestPassword");
+        User userTest = new Admin("NameTest", "LoginTest", "", "TestPassword", "Country", "City");
         this.vs.add(userTest);
     }
 
     @Test(expected = IncorrectDateException.class)
     public void addElementWithClearPassword() {
         checkDB();
-        User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "");
+        User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "", "Country", "City");
         this.vs.add(userTest);
     }
 
@@ -93,9 +93,9 @@ public class ValidateServiceTest {
     @Test(expected = IncorrectDateException.class)
     public void updateElementWhithExistEmail() {
         checkDB();
-        User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword");
+        User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword", "Country", "City");
         this.vs.add(userTest);
-        User userTest2 = new Admin("NameTest1", "LoginTest1", "EmailTest1", "TestPassword");
+        User userTest2 = new Admin("NameTest1", "LoginTest1", "EmailTest1", "TestPassword", "Country", "City");
         this.vs.add(userTest2);
         userTest2 = (User) this.vs.findAll().get(1);
         userTest2.setEmail("EmailTest");
@@ -105,9 +105,9 @@ public class ValidateServiceTest {
     @Test(expected = IncorrectDateException.class)
     public void updateElementWithExistLogin() {
         checkDB();
-        User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword");
+        User userTest = new Admin("NameTest", "LoginTest", "EmailTest", "TestPassword", "Country", "City");
         this.vs.add(userTest);
-        User userTest2 = new Admin("NameTest1", "LoginTest1", "EmailTest1", "TestPassword");
+        User userTest2 = new Admin("NameTest1", "LoginTest1", "EmailTest1", "TestPassword", "Country", "City");
         this.vs.add(userTest2);
         userTest2 = (User) this.vs.findAll().get(1);
         userTest2.setLogin("LoginTest");
@@ -118,7 +118,7 @@ public class ValidateServiceTest {
     public void updateElementWithBusyLogin() {
         checkDB();
         this.vs.add(this.userTest);
-        User user2 = new Admin("NameTest", "LoginTest1", "EmailTest1", "TestPassword");
+        User user2 = new Admin("NameTest", "LoginTest1", "EmailTest1", "TestPassword", "Country", "City");
         this.vs.add(user2);
         user2 = (User) this.vs.findAll().get(1);
         user2.setLogin("LoginTest");
@@ -129,7 +129,7 @@ public class ValidateServiceTest {
     public void updateElementWithBusyEmail() {
         checkDB();
         this.vs.add(this.userTest);
-        User user2 = new Admin("NameTest", "LoginTest1", "EmailTest1", "TestPassword");
+        User user2 = new Admin("NameTest", "LoginTest1", "EmailTest1", "TestPassword", "Country", "City");
         this.vs.add(user2);
         user2 = (User) this.vs.findAll().get(1);
         user2.setEmail("EmailTest");

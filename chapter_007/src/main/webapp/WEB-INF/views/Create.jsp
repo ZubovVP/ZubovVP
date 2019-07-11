@@ -40,6 +40,14 @@
                 result = false;
                 alert('Please, fill password');
             }
+            if ($('#country').val() === '') {
+                result = false;
+                alert('Please, fill country');
+            }
+            if ($('#city').val() === '') {
+                result = false;
+                alert('Please, fill city');
+            }
             if (result) {
                 sendPerson();
             }
@@ -52,10 +60,12 @@
             var email = $('#email').val();
             var password = $('#password').val();
             var role = $('#role').val();
+            var country = $('#country').val();
+            var city = $('#city').val();
             $.ajax({
                 type: 'POST',
                 url: "${pageContext.servletContext.contextPath}/create",
-                data: {name: name, login: login, email: email, password: password, role: role},
+                data: {name: name, login: login, email: email, password: password, role: role, country: country, city: city},
                 dataType: 'application/json',
                 success: function (data) {
                     console.log(JSON.parse(data.responseText));
@@ -149,14 +159,16 @@
         <td>Email</td>
         <td>Password</td>
         <td>Role</td>
+        <td>Country</td>
+        <td>City</td>
     </tr>
     <form id="create" action="${pageContext.servletContext.contextPath}/" method="GET" onsubmit="return validate();">
         <td> name : <input type="text" id="name" name="name" placeholder="Your name"></td>
         <td> login : <input type="text" id="login" name="login" placeholder="Your login"></td>
         <td> email : <input type="text" id="email" name="email" placeholder="Your email"></td>
-        <td> password : <label>
-            <input type="password" id="password" name="password">
-        </label></td>
+        <td> password : <input type="password" id="password" name="password"></td>
+        <td> login : <input type="text" id="country" name="country" placeholder="Your country"></td>
+        <td> email : <input type="text" id="city" name="city" placeholder="Your city"></td>
         <td> role : <label>
             <select name="role" id="role">
                 <option value="viewer">viewer</option>

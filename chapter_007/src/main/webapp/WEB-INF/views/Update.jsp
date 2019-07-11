@@ -40,6 +40,14 @@
                 result = false;
                 alert('Please, fill password');
             }
+            if ($('#country').val() === '') {
+                result = false;
+                alert('Please, fill country');
+            }
+            if ($('#city').val() === '') {
+                result = false;
+                alert('Please, fill city');
+            }
             if (result) {
                 sendPerson();
             }
@@ -53,11 +61,14 @@
             var password = $('#password').val();
             var role = $('#role').val();
             var id = $('#id').val();
+            var country = $('#country').val();
+            var city = $('#city').val();
+
 
             $.ajax({
                 type: 'POST',
                 url: "${pageContext.servletContext.contextPath}/edit",
-                data: {name: name, login: login, email: email, password: password, role: role, id: id},
+                data: {name: name, login: login, email: email, password: password, role: role, id: id, country: country, city: city},
                 dataType: 'application/json',
                 success: function (data) {
                     console.log(JSON.parse(data.responseText));
@@ -147,6 +158,8 @@
         <th>Login</th>
         <th>Email</th>
         <th>Password</th>
+        <th>Country</th>
+        <th>City</th>
         <c:if test="${sessionScope.role == 'admin'}">
             <th>Role</th>
         </c:if>
@@ -157,6 +170,8 @@
         <td> email : <input type="text" id="email" name="email" value="<c:out value="${param.email}"></c:out>"></td>
         <td> password : <input type="password" id="password" name="password"
                                value="<c:out value="${param.password}"></c:out>"></td>
+        <td> country : <input type="text" id="country" name="country" value="<c:out value="${param.country}"></c:out>"></td>
+        <td> city : <input type="text" id="city" name="city" value="<c:out value="${param.city}"></c:out>"></td>
         <c:if test="${sessionScope.role == 'admin'}">
         <td><select name="role" id="role">
             <option value="viewer">viewer</option>

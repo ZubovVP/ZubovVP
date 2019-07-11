@@ -17,20 +17,23 @@ public abstract class User {
     private String email;
     private Date createDate;
     private String password;
-    private String role;
+    private String country;
+    private String city;
 
     /**
      * Constector.
      *
-     * @param name     - name.
-     * @param login    - login.
-     * @param email    - email.
+     * @param name  - name.
+     * @param login - login.
+     * @param email - email.
      */
-    public User(String name, String login, String email) {
+    public User(String name, String login, String email, String country, String city) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = new Date();
+        this.country = country;
+        this.city = city;
     }
 
     /**
@@ -41,48 +44,51 @@ public abstract class User {
      * @param email    - email.
      * @param password - password.
      */
-    public User(String name, String login, String email, String password) {
+    public User(String name, String login, String email, String password, String country, String city) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = new Date();
         this.password = password;
+        this.country = country;
+        this.city = city;
     }
 
     /**
      * Constructor.
      *
-     * @param id       - id.
-     * @param name     - name.
-     * @param login    - login.
-     * @param email    - email.
+     * @param id    - id.
+     * @param name  - name.
+     * @param login - login.
+     * @param email - email.
      */
-    public User(int id, String name, String login, String email) {
+    public User(int id, String name, String login, String email, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = new Date();
         this.password = "";
+        this.country = country;
+        this.city = city;
     }
 
     /**
      * Constructor.
      *
-     * @param id       - id.
-     * @param name     - name.
-     * @param login    - login.
-     * @param email    - email.
-     * @param date     - date.
+     * @param id    - id.
+     * @param name  - name.
+     * @param login - login.
+     * @param email - email.
+     * @param date  - date.
      */
-    public User(int id, String name, String login, String email, Date date) {
+    public User(int id, String name, String login, String email, Date date, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = date;
     }
-
     /**
      * Constructor.
      *
@@ -93,14 +99,18 @@ public abstract class User {
      * @param date     - date.
      * @param password - password.
      */
-    public User(int id, String name, String login, String email, Date date, String password) {
+    //CHECKSTYLE:OFF
+    public User(int id, String name, String login, String email, Date date, String password, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = date;
         this.password = password;
+        this.country = country;
+        this.city = city;
     }
+    //CHECKSTYLE:ON
 
     /**
      * Constructor.
@@ -111,12 +121,14 @@ public abstract class User {
      * @param email    - email.
      * @param password - password.
      */
-    public User(int id, String name, String login, String email, String password) {
+    public User(int id, String name, String login, String email, String password, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
+        this.country = country;
+        this.city = city;
     }
 
     public int getId() {
@@ -168,6 +180,22 @@ public abstract class User {
     }
 
     public abstract String getRole();
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     @Override
     public boolean equals(Object o) {

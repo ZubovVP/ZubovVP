@@ -96,6 +96,8 @@
             <th>Email</th>
             <th>Create time</th>
             <th>Role</th>
+            <th>Country</th>
+            <th>City</th>
         </tr>
         </thead>
         <tbody>
@@ -107,6 +109,8 @@
             <td align="left"><c:out value="${user.email}"></c:out></td>
             <td align="left"><c:out value="${user.createDate}"></c:out></td>
             <td align="left"><c:out value="${user.role}"></c:out></td>
+            <td align="left"><c:out value="${user.country}"></c:out></td>
+            <td align="left"><c:out value="${user.city}"></c:out></td>
             <div>
                 <td align="right" width="10%">
                     <form action="${pageContext.servletContext.contextPath}/edit" method="GET">
@@ -117,6 +121,8 @@
                         <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
                         <input type="hidden" name="password" value="<c:out value="${user.password}"></c:out>">
                         <input type="hidden" name="role" value="<c:out value="${user.role}"></c:out>">
+                        <input type="hidden" name="country" value="<c:out value="${user.country}"></c:out>">
+                        <input type="hidden" name="city" value="<c:out value="${user.city}"></c:out>">
                     </form>
                 </td>
                 <c:if test="${sessionScope.role == 'admin'}">
