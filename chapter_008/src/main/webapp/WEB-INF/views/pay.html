@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Pay ticket</title>
+    <script>
+        function getSeat() {
+            var query = window.location.href.split("=")[1];
+            var seat;
+            $.ajax("http://localhost:8080/hall", {
+                    method: 'GET', data: {id: query},
+                    dataType: 'application/json',
+                    complete: function (data) {
+                        seat = JSON.parse(data.responseText);
+                        console.log(seat);
+                        fillLine(seat);
+                    }
+                }
+            );
+        }
+
+        function fillLine(seat) {
+            var price;
+            if (seat.row === 1) {
+                price = 500;
+            } else if (seat.row === 2) {
+                price = 750;
+            } else {
+                price = 1000;
+            }
+            $('#headLine').append('<h3>Вы выбрали ряд ' + seat.row + ' место ' + seat.seat + ', Сумма : ' + price + ' рублей.</h3>');
+        }
+
+        function payTicket(userName, phone, idSeat) {
+            var id = idSeat;
+            var status = 'sold';
+            var userName = userName;
+            var phone = phone;
+
+            $.ajax("http://localhost:8080/hall", {
+                    method: 'POST', data: {id: id, status: status, userName: userName, phone: phone,},
+                    dataType: 'application/hall',
+                    complete: function (data) {
+                        console.log(seat);
+                    }
+                }
+            );
+            alert('pay');
+            window.location.href = 'http://localhost:8080';
+        }
+
+        function validate() {
+            var result = true;
+            if ($('#username').val() === '') {
+                result = false;
+                alert('Please, fill your name');
+            } else if ($('#phone').val() === '') {
+                result = false;
+                alert('Please, fill your phone');
+            }
+            if (result === true) {
+                payTicket($('#username').val(), $('#phone').val(), window.location.href.split("=")[1]);
+            }
+            return result;
+        }
+
+    </script>
+</head>
+<body onload="getSeat()">
+<div class="container">
+    <div class="row pt-3" id="headLine">
+        <h3>
+        </h3>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="username">ФИО</label>
+                <input type="text" class="form-control" id="username" placeholder="ФИО">
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
+            </div>
+            <button type="button" class="btn btn-success" onclick="validate()">Оплатить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

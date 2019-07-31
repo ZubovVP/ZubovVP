@@ -1,3 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.19">
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\AdditionArrays.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\ArrayDuplicate.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\BubbleSort.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\RotateArray.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\Turn.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\array\СheckDuplicate.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\Calculate.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\calculator\Calculator.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\calculator\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\condition\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\condition\Point.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\condition\Triangle.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\loop\Board.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\loop\Counter.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\loop\Factorial.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\loop\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\loop\Paint.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\max\Max.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\max\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\main\java\ru\job4j\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\AdditionArraysTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\ArrayDuplicatesTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\BubbleSortTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\CheckDuplicateTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\RotateArrayTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\array\TurnTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\CalculateTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\calculator\CalculatorTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\calculator\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\condition\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\condition\PointTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\condition\TriangleTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\loop\BoardTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\loop\CounterTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\loop\FactorialTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\loop\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\loop\PaintTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\max\MaxTest.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\max\package-info.java">
+</file>
+<file name="C:\projects\ZubovVP\chapter_001\src\test\java\ru\job4j\package-info.java">
+</file>
 </checkstyle>

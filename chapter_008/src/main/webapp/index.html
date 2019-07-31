@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 100000);
+
+        function payTicket() {
+            var id = $('input[name=place]:checked').val();
+            window.location.href = 'http://localhost:63342/ZubovVP/chapter_008/src/main/webapp/WEB-INF/views/pay.html?id=' + id;
+        }
+
+        function validate() {
+            var result = true;
+            var value = $('input[name=place]:checked');
+            if (value.val() === undefined) {
+                alert("Please, chose any seat!");
+                result = false;
+            } else {
+                reserveSeat(value.val());
+            }
+
+            return result;
+        }
+
+        function reserveSeat(value) {
+            var id = value;
+            var status = "reserve";
+            $.ajax("http://localhost:8080/hall", {
+                    method: 'POST', data: {id: id, status: status},
+                    dataType: 'application/json',
+                    complete: function (data) {
+                        payTicket();
+                        console.log(seat);
+                    }
+                }
+            );
+
+        }
+
+        function loadPersons() {
+            $.ajax("http://localhost:8080/j", {
+                    method: 'GET',
+                    complete: function (data) {
+                        var seats = JSON.parse(data.responseText);
+                        var fillTable;
+                        for (var i = 0; i < seats.length; i++) {
+                            var status = seats[i].status;
+                            var row = seats[i].row;
+                            var seat = seats[i].seat;
+                            var idSeat = seats[i].id;
+
+                            if (seat === 1) {
+                                fillTable += "<tr><th>Ряд " + row + "</th>";
+                            }
+                            if (status === "reserve") {
+                                fillTable += '<td>' + 'Ряд ' + row + ', Место ' + seat + ' (Зарезервировано) ' + '</td>';
+                            } else if (status === "sold") {
+                                fillTable += '<td>' + 'Ряд ' + row + ', Место ' + seat + ' (Куплено) ' + '</td>';
+                            } else {
+                                fillTable += '<td><input type="radio" name="place" id="seat" value=' + idSeat + '>' + ' Ряд ' + row + ', Место ' + seat + '</td>';
+                            }
+                            if (seat === 3) {
+                                fillTable += '</tr>';
+                            }
+
+                        }
+                        $('#table tr:last').after(fillTable);
+                        console.log(seats);
+                    }
+                }
+            );
+        }
+    </script>
+</head>
+<body onload="loadPersons()">
+<div class="container">
+    <div class="row pt-3">
+        <h4>
+            Бронирование месте на сеанс
+        </h4>
+        <table class="table table-bordered" id="table">
+            <thead>
+            <tr>
+                <th style="width: 120px;">Ряд / Место</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="row float-right">
+        <button type="button" class="btn btn-success" onclick="return validate();">Оплатить</button>
+    </div>
+</div>
+</body>
+</html>
