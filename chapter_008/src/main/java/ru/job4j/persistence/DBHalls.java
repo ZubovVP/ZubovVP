@@ -1,4 +1,4 @@
-package ru.job4j.service;
+package ru.job4j.persistence;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;

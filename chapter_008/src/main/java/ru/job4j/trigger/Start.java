@@ -4,7 +4,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.job4j.persistence.Persistence;
+import ru.job4j.service.Service;
 
 /**
  * Start.
@@ -23,7 +23,7 @@ public class Start implements Job {
      */
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
-        Persistence persistence = Persistence.getInstance();
+        Service persistence = Service.getInstance();
         LOG.info("--------Delete all reserve tickets--------");
         LOG.info("--------START--------");
         persistence.deleteReserve();

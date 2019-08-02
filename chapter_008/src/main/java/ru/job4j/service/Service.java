@@ -1,9 +1,9 @@
-package ru.job4j.persistence;
+package ru.job4j.service;
 
 import ru.job4j.models.Account;
 import ru.job4j.models.Seat;
-import ru.job4j.service.DBAccounts;
-import ru.job4j.service.DBHalls;
+import ru.job4j.persistence.DBAccounts;
+import ru.job4j.persistence.DBHalls;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,19 +15,19 @@ import java.util.List;
  * Version: $Id$.
  * Date: 15.07.2019.
  */
-public class Persistence {
-    private static final Persistence INSTANCE = new Persistence();
+public class Service implements Actions<Seat> {
+    private static final Service INSTANCE = new Service();
     private static DBAccounts dbAccounts = DBAccounts.getInstance();
     private static DBHalls dbHalls = DBHalls.getInstance();
 
-    public static Persistence getInstance() {
+    public static Service getInstance() {
         return INSTANCE;
     }
 
     /**
      * Constructor.
      */
-    private Persistence() {
+    private Service() {
     }
 
     /**
@@ -35,6 +35,7 @@ public class Persistence {
      *
      * @return List of seats.
      */
+    @Override
     public List<Seat> getSeats() {
         List<Seat> result = dbHalls.getPlaces();
         Collections.sort(result);
@@ -47,10 +48,12 @@ public class Persistence {
      * @param id - id of seat.
      * @return - seat.
      */
+    @Override
     public Seat getSeat(int id) {
         return dbHalls.getSeat(id);
     }
 
+    @Override
     public void reserveSeat(int id, String status) {
         Seat seat = dbHalls.getSeat(id);
         seat.setStatus(status);
@@ -65,6 +68,7 @@ public class Persistence {
      * @param userName - userName.
      * @param phone    - phone of user.
      */
+    @Override
     public void paySeat(int id, String status, String userName, String phone) {
         Account account = checkAccount(phone);
         if (account == null) {
@@ -80,6 +84,7 @@ public class Persistence {
     /**
      * Delete status reserve from database.
      */
+    @Override
     public void deleteReserve() {
         dbHalls.deleteReserve();
     }

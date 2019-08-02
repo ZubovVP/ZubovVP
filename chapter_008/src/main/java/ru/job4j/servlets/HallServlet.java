@@ -2,7 +2,7 @@ package ru.job4j.servlets;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import ru.job4j.models.Seat;
-import ru.job4j.persistence.Persistence;
+import ru.job4j.service.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * Created by Intellij IDEA.
@@ -20,7 +19,7 @@ import java.io.StringWriter;
  * Date: 14.07.2019.
  */
 public class HallServlet extends HttpServlet {
-    private Persistence persistence = Persistence.getInstance();
+    private Service persistence = Service.getInstance();
 
 
     @Override

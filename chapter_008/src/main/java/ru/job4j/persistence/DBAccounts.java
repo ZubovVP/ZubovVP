@@ -1,4 +1,4 @@
-package ru.job4j.service;
+package ru.job4j.persistence;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +18,7 @@ import java.util.Properties;
  * Version: $Id$.
  * Date: 15.07.2019.
  */
-public class DBAccounts {
+public class DBAccounts  {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DBAccounts INSTANCE = new DBAccounts();
     private static final Logger LOGGER = LogManager.getLogger(DBAccounts.class.getName());
@@ -156,6 +156,9 @@ public class DBAccounts {
         return accounts;
     }
 
+    /**
+     * Clear all elements from table.
+     */
     public void clearAll() {
         checkTable();
         try (Connection conn = SOURCE.getConnection();
@@ -163,7 +166,7 @@ public class DBAccounts {
             DBHalls.getInstance().clearAll();
             st.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Failed to clearAll.");
+            LOGGER.error("Failed to clear all eleme.");
         }
     }
 

@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.models.Account;
 import ru.job4j.models.Seat;
+import ru.job4j.persistence.DBAccounts;
+import ru.job4j.persistence.DBHalls;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;

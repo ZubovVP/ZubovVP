@@ -1,11 +1,10 @@
 package ru.job4j.servlets;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import ru.job4j.service.DBAccounts;
-import ru.job4j.service.DBHalls;
+import ru.job4j.persistence.DBAccounts;
+import ru.job4j.persistence.DBHalls;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

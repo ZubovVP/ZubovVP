@@ -2,7 +2,7 @@ package ru.job4j.servlets;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import ru.job4j.models.Seat;
-import ru.job4j.persistence.Persistence;
+import ru.job4j.service.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +20,7 @@ import java.util.List;
  * Date: 19.07.2019.
  */
 public class Controller extends HttpServlet {
-    private Persistence persistence = Persistence.getInstance();
+    private Service persistence = Service.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

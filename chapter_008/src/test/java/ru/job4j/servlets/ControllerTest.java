@@ -1,15 +1,11 @@
 package ru.job4j.servlets;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import ru.job4j.models.Seat;
-import ru.job4j.persistence.Persistence;
-import ru.job4j.service.DBAccounts;
-import ru.job4j.service.DBHalls;
+import ru.job4j.service.Service;
+import ru.job4j.persistence.DBAccounts;
+import ru.job4j.persistence.DBHalls;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +27,7 @@ import static org.mockito.Mockito.when;
  * Date: 01.08.2019.
  */
 public class ControllerTest {
-    private Persistence persistence = Persistence.getInstance();
+    private Service persistence = Service.getInstance();
 
     @After
     public void finish() {

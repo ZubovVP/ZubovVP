@@ -5,8 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.models.Account;
 import ru.job4j.models.Seat;
-import ru.job4j.service.DBAccounts;
-import ru.job4j.service.DBHalls;
+import ru.job4j.service.Service;
 
 import java.util.List;
 
@@ -21,11 +20,11 @@ import static org.junit.Assert.*;
  * Date: 31.07.2019.
  */
 public class PersistenceTest {
-    private Persistence persistence;
+    private Service persistence;
 
     @Before
     public void start() {
-        persistence = Persistence.getInstance();
+        persistence = Service.getInstance();
     }
 
     @After
