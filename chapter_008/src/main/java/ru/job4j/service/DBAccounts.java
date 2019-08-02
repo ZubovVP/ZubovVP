@@ -157,6 +157,20 @@ public class DBAccounts {
     }
 
     /**
+     * Clear all elements from table.
+     */
+    public void clearAll() {
+        checkTable();
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("DELETE FROM accounts")) {
+            DBHalls.getInstance().clearAll();
+            st.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to clear all elements.");
+        }
+    }
+
+    /**
      * Check table existence.
      */
     public void checkTable() {
@@ -172,7 +186,7 @@ public class DBAccounts {
     private void createTable() {
         try (Connection conn = SOURCE.getConnection()) {
             DatabaseMetaData dbm = conn.getMetaData();
-            ResultSet rs = dbm.getTables(null, null, "entry", null);
+            ResultSet rs = dbm.getTables(null, null, "accounts", null);
             if (!rs.next()) {
                 PreparedStatement st = conn.prepareStatement(DBAccounts.CREATE_TABLE);
                 st.executeUpdate();

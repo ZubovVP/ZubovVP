@@ -78,9 +78,8 @@ public class DBHalls {
      * Reserve seat in the database.
      *
      * @param seat - seat.
-     * @return - result.
      */
-    public boolean reserve(Seat seat) {
+    public void reserve(Seat seat) {
         checkTable();
         String query = null;
         boolean result = false;
@@ -103,7 +102,6 @@ public class DBHalls {
         } catch (SQLException e) {
             LOGGER.error("Failed to reserve seat. Row = {}, Seat = {}.", seat.getRow(), seat.getSeat());
         }
-        return result;
     }
 
     /**
@@ -156,6 +154,17 @@ public class DBHalls {
         }
     }
 
+    public void clearAll() {
+        checkTable();
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("UPDATE halls SET status= ?, id_account = null")) {
+            st.setString(1, "free");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to clearAll.");
+        }
+    }
+
     /**
      * Check table existence.
      */
@@ -173,7 +182,7 @@ public class DBHalls {
         dbAccounts.checkTable();
         try (Connection conn = SOURCE.getConnection()) {
             DatabaseMetaData dbm = conn.getMetaData();
-            ResultSet rs = dbm.getTables(null, null, "entry", null);
+            ResultSet rs = dbm.getTables(null, null, "halls", null);
             if (!rs.next()) {
                 PreparedStatement st1 = conn.prepareStatement(DBHalls.CREATE_TABLE);
                 st1.executeUpdate();

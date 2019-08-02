@@ -42,14 +42,13 @@
             var phone = phone;
 
             $.ajax("http://localhost:8080/hall", {
-                    method: 'POST', data: {id: id, status: status, userName: userName, phone: phone,},
+                    method: 'POST', data: {id: id, status: status, userName: userName, phone: phone},
                     dataType: 'application/hall',
                     complete: function (data) {
                         console.log(seat);
                     }
                 }
             );
-            alert('pay');
             window.location.href = 'http://localhost:8080';
         }
 

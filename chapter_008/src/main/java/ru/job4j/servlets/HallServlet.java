@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * Created by Intellij IDEA.
@@ -46,5 +47,6 @@ public class HallServlet extends HttpServlet {
         } else {
             persistence.paySeat(id, status, req.getParameter("userName"), req.getParameter("phone"));
         }
+        doGet(req, resp);
     }
 }

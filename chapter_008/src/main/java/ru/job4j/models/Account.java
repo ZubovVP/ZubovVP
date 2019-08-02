@@ -10,9 +10,18 @@ import java.util.Objects;
  * Date: 15.07.2019.
  */
 public class Account {
-    private final int id;
-    private final String name;
-    private final String phone;
+    private int id;
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    private String phone;
 
     public Account(int id, String name, String phone) {
         this.id = id;
