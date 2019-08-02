@@ -279,12 +279,12 @@ public class DBStore implements Store<User> {
      */
     private void checkTable() {
         if (!createTable1) {
-            createTable(CREATE_TABLE1);
+            createTable(CREATE_TABLE1, "users");
             createTable1 = true;
         }
 
         if (!createTable2) {
-            createTable(CREATE_TABLE2);
+            createTable(CREATE_TABLE2, "places");
             createTable2 = true;
         }
     }
@@ -294,10 +294,10 @@ public class DBStore implements Store<User> {
      *
      * @param textCreate - SQL command.
      */
-    private void createTable(String textCreate) {
+    private void createTable(String textCreate, String tableName) {
         try (Connection conn = SOURCE.getConnection()) {
             DatabaseMetaData dbm = conn.getMetaData();
-            ResultSet rs = dbm.getTables(null, null, "entry", null);
+            ResultSet rs = dbm.getTables(null, null, tableName, null);
             if (!rs.next()) {
                 PreparedStatement st = conn.prepareStatement(textCreate);
                 st.executeUpdate();
@@ -321,9 +321,5 @@ public class DBStore implements Store<User> {
             LOGGER.error("Failed to find login. Login = {}.", login);
         }
         return id;
-    }
-
-    public static void main(String[] args) {
-        new DBStore().add(new Admin("Duke1", "Duke1", "duke-ruller1@", "123", "aaa", "aaa"));
     }
 }
