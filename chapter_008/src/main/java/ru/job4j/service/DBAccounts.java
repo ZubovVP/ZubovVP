@@ -156,9 +156,6 @@ public class DBAccounts {
         return accounts;
     }
 
-    /**
-     * Clear all elements from table.
-     */
     public void clearAll() {
         checkTable();
         try (Connection conn = SOURCE.getConnection();
@@ -166,7 +163,7 @@ public class DBAccounts {
             DBHalls.getInstance().clearAll();
             st.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Failed to clear all elements.");
+            LOGGER.error("Failed to clearAll.");
         }
     }
 
