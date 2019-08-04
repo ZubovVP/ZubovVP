@@ -21,11 +21,13 @@ public abstract class User {
     private String city;
 
     /**
-     * Constector.
+     * Constructor.
      *
-     * @param name  - name.
-     * @param login - login.
-     * @param email - email.
+     * @param name    - name.
+     * @param login   - login.
+     * @param email   - email.
+     * @param country - country.
+     * @param city    - city.
      */
     public User(String name, String login, String email, String country, String city) {
         this.name = name;
@@ -37,58 +39,51 @@ public abstract class User {
     }
 
     /**
-     * Constector.
+     * Constructor.
      *
      * @param name     - name.
      * @param login    - login.
      * @param email    - email.
      * @param password - password.
+     * @param country  - country.
+     * @param city     - city.
      */
     public User(String name, String login, String email, String password, String country, String city) {
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = new Date();
+        this(name, login, email, country, city);
         this.password = password;
-        this.country = country;
-        this.city = city;
     }
 
     /**
      * Constructor.
      *
-     * @param id    - id.
-     * @param name  - name.
-     * @param login - login.
-     * @param email - email.
+     * @param id      - id.
+     * @param name    - name.
+     * @param login   - login.
+     * @param email   - email.
+     * @param country - country.
+     * @param city    - city.
      */
     public User(int id, String name, String login, String email, String country, String city) {
+        this(name, login, email, country, city);
         this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = new Date();
-        this.password = "";
-        this.country = country;
-        this.city = city;
     }
 
     /**
      * Constructor.
      *
-     * @param id    - id.
-     * @param name  - name.
-     * @param login - login.
-     * @param email - email.
-     * @param date  - date.
+     * @param id      - id.
+     * @param name    - name.
+     * @param login   - login.
+     * @param email   - email.
+     * @param date    - date.
+     * @param country - country.
+     * @param city    - city.
      */
     public User(int id, String name, String login, String email, Date date, String country, String city) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
+        this(id, name, login, email, country, city);
         this.createDate = date;
     }
+
     /**
      * Constructor.
      *
@@ -101,14 +96,8 @@ public abstract class User {
      */
     //CHECKSTYLE:OFF
     public User(int id, String name, String login, String email, Date date, String password, String country, String city) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = date;
+        this(id, name, login, email, date, country, city);
         this.password = password;
-        this.country = country;
-        this.city = city;
     }
     //CHECKSTYLE:ON
 
@@ -120,15 +109,12 @@ public abstract class User {
      * @param login    - login.
      * @param email    - email.
      * @param password - password.
+     * @param country  - country.
+     * @param city     - city.
      */
     public User(int id, String name, String login, String email, String password, String country, String city) {
+        this(name, login, email, password, country, city);
         this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.country = country;
-        this.city = city;
     }
 
     public int getId() {
