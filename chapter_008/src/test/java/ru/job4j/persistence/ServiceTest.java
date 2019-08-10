@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  * Version: $Id$.
  * Date: 31.07.2019.
  */
-public class PersistenceTest {
+public class ServiceTest {
     private Service persistence;
 
     @Before
@@ -35,7 +35,8 @@ public class PersistenceTest {
 
     @Test
     public void getInstance() {
-        assertThat(this.persistence.getClass().getSimpleName(), is("Persistence"));
+        System.out.println(this.persistence.getClass().getSimpleName());
+        assertThat(this.persistence.getClass().getSimpleName(), is("Service"));
     }
 
     @Test

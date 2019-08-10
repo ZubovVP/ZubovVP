@@ -24,9 +24,8 @@ public class Account {
     private String phone;
 
     public Account(int id, String name, String phone) {
+        this(name, phone);
         this.id = id;
-        this.name = name;
-        this.phone = phone;
     }
 
     public Account(String name, String phone) {

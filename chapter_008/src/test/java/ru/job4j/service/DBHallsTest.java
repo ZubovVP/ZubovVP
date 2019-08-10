@@ -34,7 +34,6 @@ public class DBHallsTest {
         this.dbAccounts.clearAll();
     }
 
-    //work
     @Test
     public void getInstance() {
         assertThat(dbHalls.getClass().getSimpleName(), is("DBHalls"));
@@ -48,7 +47,8 @@ public class DBHallsTest {
     @Test
     public void reserveSeatAndCheck() {
         boolean result = false;
-        Seat seat = new Seat(1, 1, "reserve", this.account.getId());
+        Seat seat = dbHalls.getSeat(1);
+        seat.setStatus("reserve");
         for (Seat seats : this.dbHalls.getPlaces()) {
             if (seats.equals(seat)) {
                 result = true;
@@ -56,9 +56,9 @@ public class DBHallsTest {
             }
         }
         assertThat(result, is(false));
-        this.dbHalls.reserve(seat);
+        this.dbHalls.reserve(seat.getId());
         for (Seat seats2 : this.dbHalls.getPlaces()) {
-            if (seats2.getRow() == seat.getRow() && seats2.getSeat() == seat.getSeat()) {
+            if (seats2.getRow() == seat.getRow() && seats2.getSeat() == seat.getSeat() && seats2.getStatus().equals(seat.getStatus())) {
                 result = true;
                 return;
             }
@@ -71,7 +71,9 @@ public class DBHallsTest {
     public void soldSeatAndCheck() {
         this.account = dbAccounts.add(this.account);
         boolean result = false;
-        Seat seat = new Seat(1, 1, "sold", this.account.getId());
+        Seat seat = dbHalls.getSeat(1);
+        seat.setIdUser(this.account.getId());
+        seat.setStatus("sold");
         for (Seat seats : this.dbHalls.getPlaces()) {
             if (seats.equals(seat)) {
                 result = true;
@@ -79,9 +81,9 @@ public class DBHallsTest {
             }
         }
         assertThat(result, is(false));
-        this.dbHalls.reserve(seat);
+        this.dbHalls.sold(seat.getId(), seat.getIdUser());
         for (Seat seats2 : this.dbHalls.getPlaces()) {
-            if (seats2.equals(seat)) {
+            if (seats2.getRow() == seat.getRow() && seats2.getSeat() == seat.getSeat() && seats2.getStatus().equals(seat.getStatus())) {
                 result = true;
                 return;
             }
@@ -105,7 +107,7 @@ public class DBHallsTest {
     @Test
     public void deleteReserveAndCheck() {
         boolean result = false;
-        this.dbHalls.reserve(new Seat(1, 1, "reserve", 0));
+        this.dbHalls.reserve(2);
         for (Seat seat : this.dbHalls.getPlaces()) {
             if (seat.getStatus().equals("reserve")) {
                 result = true;
@@ -123,7 +125,7 @@ public class DBHallsTest {
             assertTrue(result);
         }
 
-        this.dbHalls.reserve(new Seat(1, 1, "sold", 0));
+        this.dbHalls.sold(2, this.account.getId());
         for (Seat seat : this.dbHalls.getPlaces()) {
             if (seat.getStatus().equals("sold")) {
                 result = false;

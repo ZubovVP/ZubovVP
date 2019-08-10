@@ -55,9 +55,7 @@ public class Service implements Actions<Seat> {
 
     @Override
     public void reserveSeat(int id, String status) {
-        Seat seat = dbHalls.getSeat(id);
-        seat.setStatus(status);
-        dbHalls.reserve(seat);
+        dbHalls.reserve(id);
     }
 
     /**
@@ -75,10 +73,7 @@ public class Service implements Actions<Seat> {
             account = new Account(userName, phone);
             account = dbAccounts.add(account);
         }
-        Seat seat = dbHalls.getSeat(id);
-        seat.setStatus(status);
-        seat.setIdUser(account.getId());
-        dbHalls.reserve(seat);
+        dbHalls.sold(id, account.getId());
     }
 
     /**

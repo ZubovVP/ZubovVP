@@ -75,34 +75,42 @@ public class DBHalls {
     }
 
     /**
-     * Reserve seat in the database.
+     * Reserve a seat.
      *
-     * @param seat - seat.
+     * @param id - id of seat.
      */
-    public void reserve(Seat seat) {
+       public void reserve(int id) {
         checkTable();
-        String query = null;
-        boolean result = false;
-        int step = 1;
-        if (seat.getStatus().equals("reserve")) {
-            query = "UPDATE halls SET status= ? WHERE row = ? AND seat = ?";
-        } else if (seat.getStatus().equals("sold")) {
-            query = "UPDATE halls SET status= ?, id_account = ? WHERE row = ? AND seat = ?";
-        }
         try (Connection conn = SOURCE.getConnection();
-             PreparedStatement st = conn.prepareStatement(query)) {
-            st.setString(step++, seat.getStatus());
-            if (seat.getStatus().equals("sold")) {
-                st.setInt(step++, seat.getIdUser());
-            }
-            st.setInt(step++, seat.getRow());
-            st.setInt(step++, seat.getSeat());
+             PreparedStatement st = conn.prepareStatement("UPDATE halls SET status= ? WHERE id = ?")) {
+            st.setString(1, "reserve");
+            st.setInt(2, id);
             st.executeUpdate();
-            result = true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to reserve seat. Row = {}, Seat = {}.", seat.getRow(), seat.getSeat());
+            LOGGER.error("Failed to reserve seat.");
         }
     }
+
+
+    /**
+     * Pay a seat.
+     *
+     * @param idSeat - id of a seat.
+     * @param idAccount - id of an account.
+     */
+    public void sold(int idSeat, int idAccount) {
+        checkTable();
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st = conn.prepareStatement("UPDATE halls SET status= ?, id_account = ? WHERE id = ?")) {
+            st.setString(1, "sold");
+            st.setInt(2, idAccount);
+            st.setInt(3, idSeat);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to sold seat.");
+        }
+    }
+
 
     /**
      * Get seat.

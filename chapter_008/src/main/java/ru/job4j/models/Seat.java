@@ -10,7 +10,7 @@ import java.util.Objects;
  * Date: 15.07.2019.
  */
 public class Seat implements Comparable<Seat> {
-    private final int id;
+    private int id;
     private int idUser;
     private final int row;
     private final int seat;
@@ -37,11 +37,8 @@ public class Seat implements Comparable<Seat> {
     }
 
     public Seat(int id, int row, int seat, String status, int idUser) {
+        this(row, seat, status, idUser);
         this.id = id;
-        this.idUser = idUser;
-        this.row = row;
-        this.seat = seat;
-        this.status = status;
     }
 
     public int getIdUser() {
