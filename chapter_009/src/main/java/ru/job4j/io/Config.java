@@ -65,12 +65,4 @@ public class Config {
         }
         return out.toString();
     }
-
-    public static void main(String[] args) {
-        Config con = new Config("C:\\projects\\ZubovVP\\chapter_009\\src\\main\\java\\ru\\job4j\\app.properties");
-        //this.getClass().getResource("/img.png")
-        con.load();
-//        System.out.println(con.toString());
-        System.out.println(con.value("hibernate.connection.password"));
-    }
 }
