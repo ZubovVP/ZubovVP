@@ -35,8 +35,8 @@ public class Config {
             String line = reader.readLine();
             while (line != null) {
                 if (!line.equals("") && !line.contains("##")) {
-                    String[] data = line.split("=");
-                    this.values.put(data[0], data[1]);
+                    String[] lineSep = line.split("=");
+                    this.values.put(lineSep[0], lineSep[1]);
                 }
                 line = reader.readLine();
             }

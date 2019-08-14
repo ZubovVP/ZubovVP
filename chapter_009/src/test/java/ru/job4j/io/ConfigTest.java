@@ -1,7 +1,12 @@
 package ru.job4j.io;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -15,13 +20,39 @@ import static org.junit.Assert.*;
  * Date: 12.08.2019.
  */
 public class ConfigTest {
+    private String path = "C:\\projects\\ZubovVP\\chapter_009\\src\\main\\java\\ru\\job4j\\app.properties";
+    private File file;
     private Config config;
 
     @Before
     public void start() {
-        this.config = new Config("C:\\projects\\ZubovVP\\chapter_009\\src\\main\\java\\ru\\job4j\\app.properties");
+        this.file = new File(this.path);
+        StringBuilder sb = new StringBuilder();
+        sb.append("## PostgreSQL").append("\n");
+        sb.append("\n");
+        sb.append("hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect").append("\n");
+        sb.append("hibernate.connection.url=jdbc:postgresql://127.0.0.1:5432/trackstudio").append("\n");
+        sb.append("hibernate.connection.driver_class=org.postgresql.Driver").append("\n");
+        sb.append("hibernate.connection.username=postgres").append("\n");
+        sb.append("hibernate.connection.password=password").append("\n");
+        try (FileWriter writer = new FileWriter(this.path, false)) {
+            file.createNewFile();
+            writer.write(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.config = new Config(this.path);
     }
 
+    @After
+    public void finish() {
+        this.file.delete();
+    }
+
+    /**
+     * Check value after load file.
+     */
     @Test
     public void loadFileInTheConfig() {
         String result = this.config.value("hibernate.dialect");
@@ -31,6 +62,9 @@ public class ConfigTest {
         assertNotNull(result);
     }
 
+    /**
+     * Check all values in the file.
+     */
     @Test
     public void checkValuesInTheConfig() {
         this.config.load();
