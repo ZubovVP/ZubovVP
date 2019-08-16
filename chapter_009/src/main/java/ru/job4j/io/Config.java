@@ -16,6 +16,7 @@ public class Config {
     private final String path;
     private final Map<String, String> values = new HashMap<>();
 
+
     /**
      * Constructor.
      *

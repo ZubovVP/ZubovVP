@@ -20,13 +20,15 @@ import static org.junit.Assert.*;
  * Date: 12.08.2019.
  */
 public class ConfigTest {
-    private String path = "C:\\projects\\ZubovVP\\chapter_009\\src\\main\\java\\ru\\job4j\\app.properties";
+    private File folder;
     private File file;
     private Config config;
 
     @Before
     public void start() {
-        this.file = new File(this.path);
+        this.folder = new File(System.getProperty("user.dir") + "/src/main/java/ru/job4j/io/TestConfig");
+        folder.mkdir();
+        this.file = new File(System.getProperty("user.dir") + "/src/main/java/ru/job4j/io/TestConfig/app.properties");
         StringBuilder sb = new StringBuilder();
         sb.append("## PostgreSQL").append("\n");
         sb.append("\n");
@@ -35,19 +37,19 @@ public class ConfigTest {
         sb.append("hibernate.connection.driver_class=org.postgresql.Driver").append("\n");
         sb.append("hibernate.connection.username=postgres").append("\n");
         sb.append("hibernate.connection.password=password").append("\n");
-        try (FileWriter writer = new FileWriter(this.path, false)) {
-            file.createNewFile();
+        try (FileWriter writer = new FileWriter(this.file.getPath(), false)) {
+            this.file.createNewFile();
             writer.write(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.config = new Config(this.path);
+        this.config = new Config(this.file.getPath());
     }
 
     @After
     public void finish() {
         this.file.delete();
+        this.folder.delete();
     }
 
     /**
