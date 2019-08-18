@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  * Version: $Id$.
  * Date: 13.08.2019.
  */
-public class AnalizyTest {
-    private File source = new File("C:\\projects\\ZubovVP\\chapter_009\\src\\test\\java\\ru\\job4j\\io\\file.txt");
-    private File target = new File("C:\\projects\\ZubovVP\\chapter_009\\src\\test\\java\\ru\\job4j\\io\\result.txt");
+public class AnalysisTest {
+    private File source = new File(System.getProperty("user.dir") + "/src/test/java/ru/job4j/io/file.txt");
+    private File target = new File(System.getProperty("user.dir") + "/src/test/java/ru/job4j/io/result.txt");
 
     @Before
     public void start() {
@@ -45,7 +45,7 @@ public class AnalizyTest {
 
     @Test
     public void unavailable() {
-        Analizy analizy = new Analizy();
+        Analysis analizy = new Analysis();
         analizy.unavailable(this.source.getPath(), this.target.getPath());
         try (
                 FileReader fr = new FileReader(this.target);
