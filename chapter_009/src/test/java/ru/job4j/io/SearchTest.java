@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  * Date: 14.08.2019.
  */
 public class SearchTest {
-    String folder = "Test";
+    private String folder = "Test";
 
     @Before
     public void setUp() throws Exception {
@@ -87,12 +87,31 @@ public class SearchTest {
         assertThat(search.find(file.getAbsolutePath(), exts).size(), is(0));
     }
 
+    @Test
+    public void expTest() {
+        File file = new File(System.getProperty("java.io.tmpdir"), folder);
+        Search search = new Search();
+        List<String> exts = new ArrayList<>();
+        exts.add("xml");
+        List<File> result = search.find(file.getAbsolutePath(), exts);
+        for (File file1 : result) {
+            String exp = file1.getAbsolutePath().split("\\.")[1];
+            assertThat(exp, is("xml"));
+        }
+        exts.clear();
+        exts.add("text");
+        result = search.find(file.getAbsolutePath(), exts);
+        for (File file1 : result) {
+            String exp = file1.getAbsolutePath().split("\\.")[1];
+            assertThat(exp, is("text"));
+        }
+    }
 
-    private static void deleteDirectory(File dir) {
+    private void deleteDirectory(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                File f = new File(dir, children[i]);
+            for (String child : children) {
+                File f = new File(dir, child);
                 deleteDirectory(f);
             }
             dir.delete();
