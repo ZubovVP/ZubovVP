@@ -2,7 +2,9 @@
 language: java
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
-
+install: true
+script:
+  - mvn install
 services:
   - postgresql
 
