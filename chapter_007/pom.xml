@@ -8,20 +8,9 @@
         <version>2.0</version>
     </parent>
     <packaging>war</packaging>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>12</source>
-                    <target>12</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>chapter_007</artifactId>
+
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -102,8 +91,6 @@
             <artifactId>json</artifactId>
             <version>20180813</version>
         </dependency>
-
-
 
     </dependencies>
 </project>

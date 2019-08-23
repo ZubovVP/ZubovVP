@@ -28,6 +28,7 @@ import static org.mockito.Mockito.when;
  * Version: $Id$.
  * Date: 19.03.2019.
  */
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.*", "com.sun.org.apache.xalan.*"})
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ValidateService.class)
 public class UserDeleteServletTest {

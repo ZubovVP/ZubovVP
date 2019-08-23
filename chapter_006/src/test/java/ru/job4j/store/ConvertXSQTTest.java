@@ -49,7 +49,7 @@ public class ConvertXSQTTest {
             File dist = new File(get("Result_XML_XSLT"));
             convertXSQT.convert(source, dist, scheme);
             String result1 = new String(Files.readAllBytes(Paths.get(get("Result_XML_XSLT"))));
-            String expectation1 = String.format("%s\r\n%s\r\n%s\r\n", "<entries>", "<entry field=\"1\"/>", "</entries>");
+            String expectation1 = String.format("%s\r\n%s\r\n%s\r\n", "<entries>", "    <entry field=\"1\"/>", "</entries>");
             assertThat(result1, is(expectation1));
 
             storeSQL.generate(5);
@@ -60,7 +60,7 @@ public class ConvertXSQTTest {
             dist = new File(get("Result_XML_XSLT"));
             convertXSQT.convert(source, dist, scheme);
             String result2 = new String(Files.readAllBytes(Paths.get(get("Result_XML_XSLT"))));
-            String expectation2 = String.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n", "<entries>", "<entry field=\"1\"/>", "<entry field=\"2\"/>", "<entry field=\"3\"/>", "<entry field=\"4\"/>", "<entry field=\"5\"/>", "</entries>");
+            String expectation2 = String.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n", "<entries>", "    <entry field=\"1\"/>", "    <entry field=\"2\"/>", "    <entry field=\"3\"/>", "    <entry field=\"4\"/>", "    <entry field=\"5\"/>", "</entries>");
             assertThat(result2, is(expectation2));
         } catch (Exception e) {
             e.printStackTrace();
