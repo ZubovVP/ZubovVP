@@ -115,7 +115,7 @@
         </a>
 
         <a class="navbar-brand" href="https://www.java.com/">
-            <img src="<c:url value="https://cdn.icon-icons.com/icons2/1381/PNG/512/java_93883.png"/>"
+            <img src="<c:url value="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/1284113/original/b39d9f8fd959132ec77dcd14a4df26b9620b34ba/code-java-program-fix-errors-and-do-your-assignments-and-projects.png"/>"
                  class="float-left">
         </a>
     </div>

@@ -135,7 +135,7 @@
         </a>
 
         <a class="navbar-brand" href="https://www.javascript.com">
-            <img src="<c:url value="http://www.seanritter.com/assets/js-logo-d20abe9ebbeb5be6242dbf06660f22a115e2dbdaf9659276198cce9dbe7f69e4.png"/>"
+            <img src="<c:url value="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/1284113/original/b39d9f8fd959132ec77dcd14a4df26b9620b34ba/code-java-program-fix-errors-and-do-your-assignments-and-projects.png"/>"
                  class="float-left">
         </a>
 
