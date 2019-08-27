@@ -18,7 +18,7 @@ import java.util.Properties;
  * Version: $Id$.
  * Date: 15.07.2019.
  */
-public class DBAccounts  {
+public class DBAccounts {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DBAccounts INSTANCE = new DBAccounts();
     private static final Logger LOGGER = LogManager.getLogger(DBAccounts.class.getName());
@@ -193,6 +193,17 @@ public class DBAccounts  {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Close connections.
+     */
+    public void close() {
+        try {
+            SOURCE.close();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to close BasicDataSource");
         }
     }
 }

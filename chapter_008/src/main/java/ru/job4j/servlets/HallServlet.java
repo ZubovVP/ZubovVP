@@ -5,6 +5,7 @@ import ru.job4j.models.Seat;
 import ru.job4j.service.Service;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,15 +38,20 @@ public class HallServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.addHeader("Access-Control-Allow-Origin", "*"); // Cros
         int id = Integer.parseInt(req.getParameter("id"));
         String status = req.getParameter("status");
+        boolean result = true;
         if (req.getParameter("userName") == null && req.getParameter("phone") == null) {
-            persistence.reserveSeat(id, status);
+            result = persistence.reserveSeat(id, status);
         } else {
             persistence.paySeat(id, status, req.getParameter("userName"), req.getParameter("phone"));
         }
-        doGet(req, resp);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter writer = resp.getWriter();
+        writer.print(result);
+        writer.flush();
     }
 }

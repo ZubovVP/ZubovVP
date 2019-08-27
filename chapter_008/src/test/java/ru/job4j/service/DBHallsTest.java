@@ -68,6 +68,18 @@ public class DBHallsTest {
     }
 
     @Test
+    public void reserveAlreadyReservedSeat() {
+        boolean result = false;
+        Seat seat = dbHalls.getSeat(1);
+        seat.setStatus("reserve");
+        result = this.dbHalls.reserve(seat.getId());
+        assertThat(result, is(true));
+        result = this.dbHalls.reserve(seat.getId());
+        assertThat(result, is(false));
+        this.dbHalls.deleteReserve();
+    }
+
+    @Test
     public void soldSeatAndCheck() {
         this.account = dbAccounts.add(this.account);
         boolean result = false;

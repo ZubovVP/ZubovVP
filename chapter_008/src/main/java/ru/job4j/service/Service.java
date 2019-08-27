@@ -54,8 +54,8 @@ public class Service implements Actions<Seat> {
     }
 
     @Override
-    public void reserveSeat(int id, String status) {
-        dbHalls.reserve(id);
+    public boolean reserveSeat(int id, String status) {
+        return dbHalls.reserve(id);
     }
 
     /**
@@ -82,6 +82,16 @@ public class Service implements Actions<Seat> {
     @Override
     public void deleteReserve() {
         dbHalls.deleteReserve();
+    }
+
+
+    /**
+     * Close connections.
+     */
+    @Override
+    public void close() {
+        dbAccounts.close();
+        dbHalls.close();
     }
 
     /**

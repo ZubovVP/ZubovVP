@@ -34,4 +34,10 @@ public class Controller extends HttpServlet {
         writer.print(json);
         writer.flush();
     }
+
+    @Override
+    public void destroy() {
+        this.persistence.close();
+        super.destroy();
+    }
 }

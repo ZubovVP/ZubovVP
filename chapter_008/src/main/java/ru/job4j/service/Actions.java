@@ -16,9 +16,11 @@ public interface Actions<S> {
 
     Seat getSeat(int id);
 
-    void reserveSeat(int id, String status);
+    boolean reserveSeat(int id, String status);
 
     void paySeat(int id, String status, String userName, String phone);
 
     void deleteReserve();
+
+    void close();
 }

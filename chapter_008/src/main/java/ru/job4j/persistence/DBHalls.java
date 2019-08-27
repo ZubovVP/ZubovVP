@@ -79,23 +79,31 @@ public class DBHalls {
      *
      * @param id - id of seat.
      */
-       public void reserve(int id) {
+    public boolean reserve(int id) {
+        boolean result = false;
         checkTable();
-        try (Connection conn = SOURCE.getConnection();
-             PreparedStatement st = conn.prepareStatement("UPDATE halls SET status= ? WHERE id = ?")) {
-            st.setString(1, "reserve");
-            st.setInt(2, id);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Failed to reserve seat.");
+        //При редактировании запроса на UPDATE halls SET status= 'reserve' WHERE status != 'reserve' у нас бд не ругеатся и сложно понять
+        // был зарезервировано место или нет, пришлось использовать 2 запроса
+        Seat seat = getSeat(id);
+        if (seat.getStatus().equals("free")) {
+            try (Connection conn = SOURCE.getConnection();
+                 PreparedStatement st = conn.prepareStatement("UPDATE halls SET status= ? WHERE id = ?")) {
+                st.setString(1, "reserve");
+                st.setInt(2, id);
+                st.executeUpdate();
+                result = true;
+            } catch (SQLException e) {
+                LOGGER.error("Failed to reserve seat.");
+            }
         }
+        return result;
     }
 
 
     /**
      * Pay a seat.
      *
-     * @param idSeat - id of a seat.
+     * @param idSeat    - id of a seat.
      * @param idAccount - id of an account.
      */
     public void sold(int idSeat, int idAccount) {
@@ -214,6 +222,17 @@ public class DBHalls {
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to fill table.");
+        }
+    }
+
+    /**
+     * Close connections.
+     */
+    public void close() {
+        try {
+            SOURCE.close();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to close BasicDataSource");
         }
     }
 }

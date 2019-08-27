@@ -30,6 +30,7 @@
             return result;
         }
 
+        //резервирем место
         function reserveSeat(value) {
             var id = value;
             var status = "reserve";
@@ -37,7 +38,13 @@
                     method: 'POST', data: {id: id, status: status},
                     dataType: 'application/json',
                     complete: function (data) {
-                        payTicket();
+                        var result = JSON.parse(data.responseText);
+                        if(result === true) {
+                            payTicket();
+                        } else {
+                            alert("The place was blocked, chose a new place");
+                            location.reload();
+                        }
                         console.log(seat);
                     }
                 }
@@ -45,7 +52,7 @@
 
         }
 
-        function loadPersons() {
+        function loadSeats() {
             $.ajax("http://localhost:8080/j", {
                     method: 'GET',
                     complete: function (data) {
@@ -81,7 +88,7 @@
 
     </script>
 </head>
-<body onload="loadPersons()">
+<body onload="loadSeats()">
 <div class="container">
     <div class="row pt-3">
         <h4>
