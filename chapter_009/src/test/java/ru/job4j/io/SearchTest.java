@@ -20,11 +20,12 @@ import static org.junit.Assert.*;
  */
 public class SearchTest {
     private String folder = "Test";
+    private File file = new File(System.getProperty("java.io.tmpdir"), folder);
+
 
     @Before
     public void setUp() throws Exception {
-        File file = new File(System.getProperty("java.io.tmpdir"), folder);
-        file.mkdir();
+        this.file.mkdir();
         for (int x = 0; x < 5; x++) {
             StringBuilder sb = new StringBuilder();
             sb.append("Test");
@@ -64,43 +65,50 @@ public class SearchTest {
 
     @After
     public void tearDown() {
-        File file = new File(System.getProperty("java.io.tmpdir"), folder);
-        deleteDirectory(file);
+        deleteDirectory(this.file);
     }
 
     @Test
     public void findTest() {
-        File file = new File(System.getProperty("java.io.tmpdir"), folder);
+        Search search = new Search();
+        List<File> files = search.find(this.file.getAbsolutePath());
+        assertThat(files.size(), is(9));
+    }
+
+    @Test
+    public void checkTest() {
         Search search = new Search();
         List<String> exts = new ArrayList<>();
+        List<File> files = search.find(this.file.getAbsolutePath());
         exts.add("xml");
-        assertThat(search.find(file.getAbsolutePath(), exts).size(), is(2));
+        assertThat(search.check(files, exts).size(), is(2));
         exts.add("txt");
-        assertThat(search.find(file.getAbsolutePath(), exts).size(), is(7));
+        assertThat(search.check(files, exts).size(), is(7));
         exts.remove("xml");
-        assertThat(search.find(file.getAbsolutePath(), exts).size(), is(5));
+        assertThat(search.check(files, exts).size(), is(5));
         exts.add("word");
-        assertThat(search.find(file.getAbsolutePath(), exts).size(), is(7));
+        assertThat(search.check(files, exts).size(), is(7));
         exts.add("xml");
-        assertThat(search.find(file.getAbsolutePath(), exts).size(), is(9));
+        assertThat(search.check(files, exts).size(), is(9));
         exts.clear();
-        assertThat(search.find(file.getAbsolutePath(), exts).size(), is(0));
+        assertThat(search.check(files, exts).size(), is(0));
+
     }
 
     @Test
     public void expTest() {
-        File file = new File(System.getProperty("java.io.tmpdir"), folder);
         Search search = new Search();
         List<String> exts = new ArrayList<>();
         exts.add("xml");
-        List<File> result = search.find(file.getAbsolutePath(), exts);
+        List<File> files = search.find(this.file.getAbsolutePath());
+        List<File> result = search.check(files, exts);
         for (File file1 : result) {
             String exp = file1.getAbsolutePath().split("\\.")[1];
             assertThat(exp, is("xml"));
         }
         exts.clear();
         exts.add("text");
-        result = search.find(file.getAbsolutePath(), exts);
+        result = search.check(files, exts);
         for (File file1 : result) {
             String exp = file1.getAbsolutePath().split("\\.")[1];
             assertThat(exp, is("text"));
@@ -120,3 +128,4 @@ public class SearchTest {
         }
     }
 }
+
