@@ -6,7 +6,6 @@ import org.junit.Test;
 import ru.job4j.persistence.DBAccounts;
 import ru.job4j.persistence.DBHalls;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,7 +55,7 @@ public class HallServletTest {
     }
 
     @Test
-    public void testDoPost() throws ServletException, IOException {
+    public void testDoPost() throws IOException {
         this.req = mock(HttpServletRequest.class);
         this.resp = mock(HttpServletResponse.class);
         when(this.req.getParameter("id")).thenReturn("1");
@@ -71,15 +70,11 @@ public class HallServletTest {
         }
         new HallServlet().doPost(req, resp);
         printWriter.flush();
-        assertTrue(stringWriter.toString().contains("\"id\":1"));
-        assertTrue(stringWriter.toString().contains("\"idUser\":0"));
-        assertTrue(stringWriter.toString().contains("\"row\":1"));
-        assertTrue(stringWriter.toString().contains("\"seat\":1"));
-        assertTrue(stringWriter.toString().contains("\"status\":\"reserve\""));
+        assertTrue(stringWriter.toString().contains("true"));
     }
 
     @Test
-    public void testDoPost1() throws ServletException, IOException {
+    public void testDoPost1() throws IOException {
         this.req = mock(HttpServletRequest.class);
         this.resp = mock(HttpServletResponse.class);
         when(this.req.getParameter("id")).thenReturn("1");

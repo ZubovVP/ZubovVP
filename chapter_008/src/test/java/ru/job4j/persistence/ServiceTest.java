@@ -35,7 +35,6 @@ public class ServiceTest {
 
     @Test
     public void getInstance() {
-        System.out.println(this.persistence.getClass().getSimpleName());
         assertThat(this.persistence.getClass().getSimpleName(), is("Service"));
     }
 

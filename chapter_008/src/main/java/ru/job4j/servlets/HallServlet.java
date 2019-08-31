@@ -47,6 +47,8 @@ public class HallServlet extends HttpServlet {
             result = persistence.reserveSeat(id, status);
         } else {
             persistence.paySeat(id, status, req.getParameter("userName"), req.getParameter("phone"));
+            doGet(req, resp);
+            return;
         }
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
