@@ -59,7 +59,9 @@ public class Config {
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
-        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
+        try (FileReader fr = new FileReader(this.path);
+             BufferedReader read = new BufferedReader(fr)) {
+            fr.close();
             read.lines().forEach(out::add);
         } catch (Exception e) {
             e.printStackTrace();
