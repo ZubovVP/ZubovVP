@@ -1,9 +1,6 @@
 package ru.job4j.chat;
 
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import java.io.*;
 import java.util.*;
 
@@ -14,29 +11,18 @@ import java.util.*;
  * Version: $Id$.
  * Date: 27.08.2019.
  */
-@ThreadSafe
 public class Chat {
-    @GuardedBy("this")
-    private List<String> phrases;
+    private List<String> phrases = new ArrayList<>();
     private Random random = new Random();
 
+    /**
+     * Start chat.
+     */
     public void start() {
         boolean flag = true;
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                read();
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-
+        readPhrases();
+        try (InputStreamReader is = new InputStreamReader(System.in);
+             BufferedReader reader = new BufferedReader(is)) {
             String line = reader.readLine();
             while (!line.equals("закончить")) {
                 if (line.equals("стоп")) {
@@ -44,7 +30,7 @@ public class Chat {
                 }
                 if (flag || line.equals("старт")) {
                     int index = random.nextInt(phrases.size());
-                    System.out.println(this.phrases.get(index));
+                    System.out.println(phrases.get(index));
                     flag = true;
                 }
 
@@ -55,21 +41,22 @@ public class Chat {
         }
     }
 
-    private void read() {
-        List<String> result = Collections.synchronizedList(new ArrayList<>());
+    /**
+     * Load phrases from document.
+     */
+    private void readPhrases() {
+        String way = String.format("%s%s", System.getProperty("user.dir"), "\\src\\main\\java\\ru\\job4j\\chat\\phrases.txt");
         try (
-                FileReader fr = new FileReader(new File("C:\\projects\\ZubovVP\\chapter_009\\src\\main\\java\\ru\\job4j\\chat\\phrases"));
+                FileReader fr = new FileReader(new File(way));
                 BufferedReader reader = new BufferedReader(fr)) {
-
             String line = reader.readLine();
             while (line != null) {
-                result.add(line);
+                this.phrases.add(line);
                 line = reader.readLine();
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.phrases = result;
     }
 }
