@@ -26,7 +26,7 @@ public class Args {
      *             1) source directory;
      *             2) exclude;
      *             3) target eay.
-     * @throws Exception
+     * @throws Exception - Exception.
      */
     public static void main(String[] args) throws Exception {
         String directory = null;

@@ -20,13 +20,15 @@ public class ArgsTest {
 
     @Test
     public void testArchive() {
-        String[] arguments = new String[]{"java", "-jar", "pack.jar", "-d", "C:\\projects\\ZubovVP\\chapter_009", "-e", "*.java", "-o", "project.zip"};
+        String source = System.getProperty("user.dir");
+
+        String[] arguments = new String[]{"java", "-jar", "pack.jar", "-d", source, "-e", "*.java", "-o", "project.zip"};
         try {
             Args.main(arguments);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String way = String.format("%s%s%s", System.getProperty("user.dir"), "\\", "project.zip");
+        String way = String.format("%s%s%s", source, "\\", "project.zip");
         try (ZipInputStream zin = new ZipInputStream(new FileInputStream(way))) {
             ZipEntry entry;
             while ((entry = zin.getNextEntry()) != null) {
@@ -36,7 +38,6 @@ public class ArgsTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        File file = new File(way);
-        file.delete();
+        new File(way).delete();
     }
 }
