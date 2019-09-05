@@ -14,7 +14,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * Date: 19.08.2019.
  */
 public class Args {
-    private final ArrayBlockingQueue<File> files = new ArrayBlockingQueue<>(10);
+    private final ArrayBlockingQueue<File> files = new ArrayBlockingQueue<>(50);
     private final List<File> finalList = new ArrayList<>();
     private boolean flag = true;
 
@@ -63,6 +63,8 @@ public class Args {
             thread1.join();
             thread2.join();
             arg.output(output);
+        } else {
+            throw new Exception("Parameters not found");
         }
     }
 
@@ -97,7 +99,8 @@ public class Args {
      * @param output - target way.
      */
     private void output(String output) {
-        new Zip().pack(finalList, new File(System.getProperty("user.dir") + "\\" + output));
+        String way = String.format("%s%s%s", System.getProperty("user.dir"), "\\", output);
+        new Zip().pack(finalList, new File(way));
     }
 
     /**
