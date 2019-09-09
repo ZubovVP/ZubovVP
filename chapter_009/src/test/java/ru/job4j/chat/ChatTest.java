@@ -20,15 +20,11 @@ import static org.junit.Assert.assertTrue;
  * Date: 28.08.2019.
  */
 public class ChatTest {
-    private ByteArrayOutputStream out;
-    private final PrintStream stdout = System.out;
     private File file = new File(String.format("%s%s", System.getProperty("user.dir"), "\\src\\main\\java\\ru\\job4j\\chat\\answers.txt"));
     private StringBuilder questions = new StringBuilder();
 
     @Before
     public void prepareOutputStream() {
-        this.out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(this.out));
         this.questions.append("стоп\n");
         this.questions.append("Как дела?\n");
         this.questions.append("Как день прошёл?\n");
@@ -42,9 +38,7 @@ public class ChatTest {
     }
 
     @After
-    public void backOutput() throws IOException {
-        System.setOut(this.stdout);
-        this.out.close();
+    public void backOutput() {
         this.file.delete();
     }
 
