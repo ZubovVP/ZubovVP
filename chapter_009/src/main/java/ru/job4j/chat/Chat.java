@@ -14,28 +14,41 @@ import java.util.*;
 public class Chat {
     private List<String> phrases = new ArrayList<>();
     private Random random = new Random();
+    private static final String STOP = "стоп";
+    private static final String FINISH = "закончить";
+    private static final String START = "старт";
+    private File log;
+
+    public Chat(File log) {
+        this.log = log;
+    }
 
     /**
      * Start chat.
      */
     public void start() {
         boolean flag = true;
+        checkLog(this.log);
         readPhrases();
         try (InputStreamReader is = new InputStreamReader(System.in);
-             BufferedReader reader = new BufferedReader(is)) {
+             BufferedReader reader = new BufferedReader(is);
+             PrintWriter writer = new PrintWriter(this.log)) {
             String line = reader.readLine();
-            while (!line.equals("закончить")) {
-                if (line.equals("стоп")) {
+            while (!line.equals(FINISH)) {
+                writer.write("You : " + line + "\n");
+                if (line.equals(STOP)) {
                     flag = false;
                 }
-                if (flag || line.equals("старт")) {
+                if (flag || line.equals(START)) {
                     int index = random.nextInt(phrases.size());
-                    System.out.println(phrases.get(index));
+                    String answer = phrases.get(index);
+                    System.out.println(answer);
+                    writer.write("Bot : " + answer + "\n");
                     flag = true;
                 }
-
                 line = reader.readLine();
             }
+            writer.write("You : " + line + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,9 +67,23 @@ public class Chat {
                 this.phrases.add(line);
                 line = reader.readLine();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Check for file exsist.
+     *
+     * @param log - file.
+     */
+    private void checkLog(File log) {
+        if (!log.exists()) {
+            try {
+                log.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
