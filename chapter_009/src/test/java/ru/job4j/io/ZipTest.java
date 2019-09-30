@@ -16,15 +16,14 @@ import static org.junit.Assert.*;
  * Version: $Id$.
  * Date: 05.09.2019.
  */
-public class ArgsTest {
+public class ZipTest {
 
     @Test
     public void testArchive() {
         String source = System.getProperty("user.dir");
-
         String[] arguments = new String[]{"java", "-jar", "pack.jar", "-d", source, "-e", "*.java", "-o", "project.zip"};
         try {
-            Args.main(arguments);
+            Zip.main(arguments);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,5 +38,18 @@ public class ArgsTest {
             e.printStackTrace();
         }
         new File(way).delete();
+    }
+
+    @Test(expected = Exception.class)
+    public void checkExceptionDeleteSource() throws Exception {
+        String[] arguments = new String[]{"java", "-jar", "pack.jar", "-e", "*.java", "-o", "project.zip"};
+        Zip.main(arguments);
+    }
+
+    @Test(expected = Exception.class)
+    public void checkExceptionDeleteTarget() throws Exception {
+        String source = System.getProperty("user.dir");
+        String[] arguments = new String[]{"java", "-jar", "pack.jar", "-d", source, "-e", "*.java"};
+        Zip.main(arguments);
     }
 }
