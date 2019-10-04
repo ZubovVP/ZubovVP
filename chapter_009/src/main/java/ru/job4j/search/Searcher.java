@@ -30,10 +30,8 @@ public class Searcher {
                 directory = args[x + 1];
             } else if (args[x].equals("-n")) {
                 nameFile = args[x + 1];
-                //CHECKSTYLE:OFF
             } else if (args[x].equals("-m")) {
-                //непонятно чего искать по макс?
-                //CHECKSTYLE:ON
+                nameFile = args[x + 1];
             } else if (args[x].equals("-f")) {
                 nameFile = args[x + 1];
             } else if (args[x].equals("-o")) {
@@ -75,22 +73,40 @@ public class Searcher {
     private List<File> filter(List<File> files, String name) {
         List<File> result = new ArrayList<>();
         char[] nameChar = name.split("\\.")[0].toCharArray();
-        String ext = name.split("\\.")[1];
+        char[] extChar = name.split("\\.")[1].toCharArray();
         for (File file : files) {
-            if (file.getName().endsWith(ext)) {
-                char[] nameFile = file.getName().split("\\.")[0].toCharArray();
-                for (int x = 0; x < nameChar.length; x++) {
-                    if (nameChar[x] == '?') {
-                        continue;
-                    }
-                    if (nameChar[x] == '*' || x == nameFile.length - 1) {
+            if (file.getName().lastIndexOf(".") != -1 && file.getName().lastIndexOf(".") != 0) {
+                if (check(file.getName().split("\\.")[1].toCharArray(), extChar)) {
+
+                    if (check(file.getName().split("\\.")[0].toCharArray(), nameChar)) {
                         result.add(file);
-                        break;
-                    }
-                    if (nameChar[x] != nameFile[x]) {
-                        break;
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * Check the same nameFile with ext.
+     *
+     * @param nameFile - nameFile.
+     * @param ext      - ext.
+     * @return - result.
+     */
+    private boolean check(char[] nameFile, char[] ext) {
+        boolean result = false;
+        for (int x = 0; x < ext.length; x++) {
+            if (ext[x] == '?' && x != nameFile.length - 1) {
+                continue;
+            }
+            if ((x == ext.length - 1 && ext.length == nameFile.length) || ext[x] == '*') {
+                result = true;
+                break;
+            }
+            if (ext[x] != nameFile[x]) {
+                break;
             }
         }
         return result;

@@ -64,6 +64,24 @@ public class SearcherTest {
         file.delete();
     }
 
+    @Test
+    public void testWithMaskExt() throws Exception {
+        String nameFile = "TestSearcher.???";
+        this.start(this.source, nameFile, this.target);
+        File file = new File(target + "\\" + "TestSearcher.txt");
+        this.check(file);
+        file.delete();
+    }
+
+    @Test
+    public void testWithMaskExt2() throws Exception {
+        String nameFile = "TestSearcher.*";
+        this.start(this.source, nameFile, this.target);
+        File file = new File(target + "\\" + "TestSearcher.txt");
+        this.check(file);
+        file.delete();
+    }
+
     @Test(expected = Exception.class)
     public void nullDerectory() throws Exception {
         String nameFile = "T?s?S?a*.txt";
