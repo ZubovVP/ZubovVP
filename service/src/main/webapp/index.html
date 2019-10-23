@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 100000);
+
+        function deleteElements() {
+            $("#table tr:gt(0)").remove();
+        }
+
+        function loadActions() {
+            $.ajax("http://localhost:8080/service", {
+                    method: 'GET',
+                    complete: function (data) {
+                        var jobs = JSON.parse(data.responseText);
+                        for (var i = 1; i <= jobs.length; i++) {
+                            var id = jobs[i - 1].id;
+                            var device = jobs[i - 1].device;
+                            var user = jobs[i - 1].user;
+                            var type = jobs[i - 1].type;
+                            var amount = jobs[i - 1].amount;
+                            var date = jobs[i - 1].date;
+                            $('#table tr:last').after('<tr><td>' + i + '</td><td>' + id + '</td><td>' + device + '</td><td>' + user + '</td><td>' + type + '<td>' + amount + '</td><td>' + date + '</td></tr>');
+                        }
+                        console.log(jobs);
+                    }
+                }
+            );
+        }
+
+        function findBy() {
+            var name = document.getElementById('findBy').value;
+            var action = document.getElementById('action').value;
+            if (name === '') {
+                alert("Please, write correct value");
+            } else {
+                deleteElements();
+                $.ajax("http://localhost:8080/service", {
+                        method: 'GET', data: {action: action, name: name},
+                        complete: function (data) {
+                            var jobs = JSON.parse(data.responseText);
+                            for (var i = 1; i <= jobs.length; i++) {
+                                var id = jobs[i - 1].id;
+                                var device = jobs[i - 1].device;
+                                var user = jobs[i - 1].user;
+                                var type = jobs[i - 1].type;
+                                var amount = jobs[i - 1].amount;
+                                var date = jobs[i - 1].date;
+                                $('#table tr:last').after('<tr><td>' + i + '</td><td>' + id + '</td><td>' + device + '</td><td>' + user + '</td><td>' + type + '<td>' + amount + '</td><td>' + date + '</td></tr>');
+                            }
+                            console.log(jobs);
+                        }
+                    }
+                );
+            }
+        }
+        function createAction() {
+            window.location.href = 'http://localhost:63342/ZubovVP/service/src/main/webapp/WEB-INF/views/creatAction.html';
+        }
+
+    </script>
+</head>
+<body onload="loadActions()">
+<div class="container">
+    <div class="row pt-3">
+        <br>
+        <h2 style="text-align: center">
+            List of operations
+        </h2>
+        <br>
+        <table class="table table-bordered" id="table" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 20px;">№</th>
+                <th style=" text-align: center">Id</th>
+                <th style=" text-align: center">Device</th>
+                <th style=" text-align: center">User</th>
+                <th style=" text-align: center">Type</th>
+                <th style=" text-align: center">Amount</th>
+                <th style=" text-align: center">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <b>Find by : </b>
+        <select id="action" name="action" style="height: 26px">
+            <option value="findByUser">user</option>
+            <option value="findByDevice">device</option>
+            <option value="findByType">type</option>
+        </select>
+        <input type='text' id='findBy' name='findBy'>
+        <input type="submit" value="FindBy" class="btn btn-success" onclick="return findBy();"><br><br>
+        <input type="submit" value="Create action" class="btn btn-success" onclick="return createAction();">
+    </div>
+    <div class="row pt-3">
+        <br><form name="clearAll" method="POST" action='http://localhost:8080/clear'>
+            <input type="submit" value="Clear all" class="btn btn-success" style="width: 110px">
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Create action</title>
+    <style>
+        h2 {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function createAction(userName, device, amount, type) {
+            var username = userName;
+            var device = device;
+            var amount = amount;
+            var type = type;
+            $.ajax("http://localhost:8080/service", {
+                    method: 'POST', data: {device: device, username: username, type: type, amount: amount},
+                    dataType: 'application/json',
+                    complete: function (data) {
+                        console.log('created action complete');
+                    }
+                }
+            );
+            setTimeout(redirectMainPage, 1000);
+        }
+
+        function redirectMainPage() {
+            window.location.href = 'http://localhost:63342/ZubovVP/service/src/main/webapp/index.html';
+
+        }
+
+        function validate() {
+            var result = true;
+            if ($('#userName').val() === '') {
+                result = false;
+                alert('Please, fill Username');
+            } else if ($('#device').val() === '') {
+                result = false;
+                alert('Please, fill  device');
+            } else if ($('#amount').val() === '' || $('#amount').val() < 1) {
+                result = false;
+                alert('Please, fill amount or write correct amount');
+            }
+            if (result === true) {
+                createAction($('#userName').val(), $('#device').val(), $('#amount').val(), $('#type').val());
+            }
+            return result;
+        }
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row pt-3" id="headLine">
+        <h2>
+            Create action
+        </h2>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="device">Device</label>
+                <input type="text" class="form-control" id="device" placeholder="Device">
+            </div>
+            <div class="form-group">
+                <label for="userName">UserName</label>
+                <input type="text" class="form-control" id="userName" placeholder="UserName">
+            </div>
+            <div class="form-group">
+                <label for="device">Type : &nbsp;</label>
+                <select id="type" name="action" style="height: 26px; width: 70px; text-align-last: center;">
+                    <option value="print">print</option>
+                    <option value="scan">scan</option>
+                    <option value="fax">fax</option>
+                    <option value="copy">copy</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="userName">Amount</label>
+                <input type="number" class="form-control" id="amount" placeholder="Amount">
+            </div>
+            <button type="button" class="btn btn-success" onclick="validate()">Create</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

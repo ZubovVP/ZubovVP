@@ -17,6 +17,8 @@ before_install:
   - psql -c "CREATE DATABASE shop_db;" -U postgres
   - psql -c "CREATE DATABASE offers_db;" -U postgres
   - psql -c "CREATE DATABASE cinema;" -U postgres
+  - psql -c "CREATE DATABASE service;" -U postgres
+
 
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
