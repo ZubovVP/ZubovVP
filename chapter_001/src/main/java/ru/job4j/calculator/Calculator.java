@@ -1,4 +1,5 @@
 package ru.job4j.calculator;
+
 /**
  * Calculator.
  *
@@ -7,47 +8,62 @@ package ru.job4j.calculator;
  * @since 0.1.
  */
 public class Calculator {
-	 /**
+    /**
      * Программа позволяет производить вычисления на двумя числами.
+     *
      * @param first - перое число
-	 * @param second - второе число
-	 * @return result - вывод результат вычисления
+     * @param second - второе число
+     * @return result - вывод результат вычисления
      */
     private double result;
-	 /**
+
+    /**
      * Метод позволяет производить сложение на двумя числами.
-     * @param first - перое число
-	 * @param second - второе число
+     *
+     * @param first  - перое число
+     * @param second - второе число
      */
-    public void add(double first, double second) {
+    public double add(double first, double second) {
         this.result = first + second;
+        return this.result;
     }
-	 /**
+
+    /**
      * Метод позволяет производить вычитание на двумя числами.
-     * @param first - перое число
-	 * @param second - второе число
+     *
+     * @param first  - перое число
+     * @param second - второе число
      */
-	public void subtract(double first, double second) {
-		this.result = first - second;
-	}
-	 /**
+    public double subtract(double first, double second) {
+        this.result = first - second;
+        return this.result;
+    }
+
+    /**
      * Метод позволяет производить деление на двумя числами.
-     * @param first - перое число
-	 * @param second - второе число
+     *
+     * @param first  - перое число
+     * @param second - второе число
      */
-    public void div(double first, double second) {
-		this.result = first / second;
-	}
-	 /**
+    public double div(double first, double second) {
+        this.result = first / second;
+        return this.result;
+    }
+
+    /**
      * Метод позволяет производить умножение на двумя числами.
-     * @param first - перое число
-	 * @param second - второе число
+     *
+     * @param first  - перое число
+     * @param second - второе число
      */
-	public void multiple(double first, double second) {
-		this.result = first * second;
-	}
-	 /**
+    public double multiple(double first, double second) {
+        this.result = first * second;
+        return this.result;
+    }
+
+    /**
      * Метод позволяет выводит результат вычисления.
+     *
      * @return result - вывод результата вычисление
      */
     public double getResult() {
