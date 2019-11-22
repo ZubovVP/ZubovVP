@@ -13,7 +13,7 @@ import java.util.Scanner;
  * Date: 08.11.2019.
  */
 public class InteractCalc {
-    private Calculator calc;
+    private Actions calc;
     private double lastResult;
     private Scanner scanner;
     private OutputStream out;
@@ -21,9 +21,9 @@ public class InteractCalc {
     /**
      * Default constructor.
      */
-    public InteractCalc() {
+    public InteractCalc(Actions calculator) {
         this.scanner = new Scanner(System.in);
-        this.calc = new Calculator();
+        this.calc = calculator;
     }
 
 
@@ -33,9 +33,9 @@ public class InteractCalc {
      * @param in  - InputStream.
      * @param out - OutputStream.
      */
-    public InteractCalc(InputStream in, PrintStream out) {
+    public InteractCalc(Actions calculator, InputStream in, PrintStream out) {
         this.scanner = new Scanner(in);
-        this.calc = new Calculator();
+        this.calc = calculator;
         this.out = out;
     }
 
@@ -61,8 +61,8 @@ public class InteractCalc {
             } else {
                 write("\nPlease, write first value : ");
                 first = this.scanner.nextDouble();
-
             }
+
             this.write("\nPlease, write operator : ");
             operator = this.scanner.next();
             this.write("\nPlease, write second value : ");
@@ -75,6 +75,22 @@ public class InteractCalc {
                 result = this.calc.multiple(first, second);
             } else if (operator.equals("/")) {
                 result = this.calc.div(first, second);
+            } else if (operator.equals("cos")) {
+                result = this.calc.cos(second);
+            } else if (operator.equals("sin")) {
+                result = this.calc.sin(second);
+            } else if (operator.equals("tg")) {
+                result = this.calc.tg(second);
+            } else if (operator.equals("ctg")) {
+                result = this.calc.ctg(second);
+            } else if (operator.equals("sinh")) {
+                result = this.calc.sinh(second);
+            } else if (operator.equals("cosh")) {
+                result = this.calc.cosh(second);
+            } else if (operator.equals("arctg")) {
+                result = this.calc.arctg(second);
+            } else if (operator.equals("arcctg")) {
+                result = this.calc.arcctg(second);
             } else {
                 try {
                     throw new Exception("\nSorry, i don't know this operator. ");
@@ -82,7 +98,7 @@ public class InteractCalc {
                     e.printStackTrace();
                 }
             }
-            write(String.format("%s%s", "\nYour result = ", result));
+            write(String.format("%s%.3f", "\nYour result = ", result));
             write("\nContinue? Yse/No : ");
             finish = this.scanner.next();
             if (finish.equals("No")) {

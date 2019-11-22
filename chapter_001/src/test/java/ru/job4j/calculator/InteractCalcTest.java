@@ -39,7 +39,7 @@ public class InteractCalcTest {
                 .append("\nPlease, write first value : \n")
                 .append("Please, write operator : \n")
                 .append("Please, write second value : \n")
-                .append("Your result = 2.0\n")
+                .append("Your result = 2,000\n")
                 .append("Continue? Yse/No : \n")
                 .append("Bye!").toString()));
     }
@@ -52,18 +52,18 @@ public class InteractCalcTest {
                 .append("\nPlease, write first value : \n")
                 .append("Please, write operator : \n")
                 .append("Please, write second value : \n")
-                .append("Your result = 2.0\n")
+                .append("Your result = 2,000\n")
                 .append("Continue? Yse/No : \n")
                 .append("Use last result? (Yes/No)\n")
                 .append("Please, write operator : \n")
                 .append("Please, write second value : \n")
-                .append("Your result = 4.0\n")
+                .append("Your result = 4,000\n")
                 .append("Continue? Yse/No : \n")
                 .append("Bye!").toString()));
     }
 
     private String test(InputStream is) {
-        InteractCalc c = new InteractCalc(is, this.stdout);
+        InteractCalc c = new InteractCalc(new Calculator(), is, this.stdout);
         c.calculate();
         return new String(out.toByteArray());
     }
