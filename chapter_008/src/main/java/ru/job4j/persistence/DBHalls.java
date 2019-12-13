@@ -82,8 +82,6 @@ public class DBHalls {
     public boolean reserve(int id) {
         boolean result = false;
         checkTable();
-        //При редактировании запроса на UPDATE halls SET status= 'reserve' WHERE status != 'reserve' у нас бд не ругеатся и сложно понять
-        // был зарезервировано место или нет, пришлось использовать 2 запроса
         Seat seat = getSeat(id);
         if (seat.getStatus().equals("free")) {
             try (Connection conn = SOURCE.getConnection();
@@ -234,5 +232,93 @@ public class DBHalls {
         } catch (SQLException e) {
             LOGGER.error("Failed to close BasicDataSource");
         }
+    }
+
+    public boolean test(int id, String status) {
+        boolean result = false;
+        checkTable();
+        Seat seat = getSeat(id);
+      //  if (seat.getStatus().equals("free")) {
+            try (Connection conn = SOURCE.getConnection();
+                 PreparedStatement st1 = conn.prepareStatement("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+                 PreparedStatement st2 = conn.prepareStatement("SELECT * FROM halls WHERE id = ? FOR UPDATE;");
+                 PreparedStatement st3 = conn.prepareStatement("UPDATE halls SET status= ? WHERE id = ?")) {
+//                st1.executeUpdate();
+                st1.executeBatch();
+                st2.setInt(1, id);
+                st2.executeBatch();
+//                st2.executeUpdate();
+                st3.setString(1, status);
+                st3.setInt(2, id);
+                st3.executeBatch();
+//                st3.executeUpdate();
+                result = true;
+            } catch (SQLException e) {
+                LOGGER.error("Failed to reserve seat.");
+                System.out.println("ошибка");
+            }
+        //}
+        return result;
+    }
+    public boolean test2(int id, String status) {
+        boolean result = false;
+        checkTable();
+        Seat seat = getSeat(id);
+        //  if (seat.getStatus().equals("free")) {
+        try (Connection conn = SOURCE.getConnection();
+             PreparedStatement st1 = conn.prepareStatement("BEGIN TRANSACTION; SET TRANSACTION ISOLATION LEVEL SERIALIZABLE; SELECT * FROM halls WHERE id = ? FOR UPDATE; UPDATE halls SET status= 'bbbb' WHERE id = 2; COMMIT TRANSACTION;")) {
+//            st1.addBatch("SELECT * FROM halls WHERE id = ? FOR UPDATE;");
+//            st1.setInt(1, id);
+//            st1.addBatch("UPDATE halls SET status= ? WHERE id = ?");
+//                st1.executeUpdate();
+//                st2.executeUpdate();
+//            st1.setString(1, status);
+//            st1.setInt(2, id);
+//            st1.executeBatch();
+            st1.executeUpdate();
+//                st3.executeUpdate();
+            result = true;
+        } catch (SQLException e) {
+            LOGGER.error("Failed to reserve seat.");
+            System.out.println("ошибка");
+        }
+        //}
+        return result;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        DBHalls dbHalls = DBHalls.getInstance();
+        dbHalls.test2(2, "bbbb");
+
+//        Thread th1 = new Thread(new Runnable() {
+//            DBHalls dbHalls = DBHalls.getInstance();
+//            int id = 2;
+//            String status = "1";
+//
+//            @Override
+//            public void run() {
+//                for (int x = 0; x < 10; x++) {
+//                    dbHalls.test(id, status);
+//                }
+//
+//            }
+//        });
+//
+//        Thread th2 = new Thread(new Runnable() {
+//            DBHalls dbHalls = DBHalls.getInstance();
+//            int id = 2;
+//            String status = "2";
+//
+//            @Override
+//            public void run() {
+//                for (int x = 0; x < 10; x++) {
+//                    dbHalls.test(id, status);
+//                }
+//            }
+//        });
+//        th1.start();
+//        th2.start();
+//        th1.join();
+//        th2.join();
     }
 }

@@ -21,14 +21,14 @@ public class SwitcherTest {
     public void testPlayShouldTrue() throws InterruptedException {
         System.setOut(new PrintStream(this.out));
         sw.play();
-        Thread.sleep(450);
+        Thread.sleep(500);
         String result = sw.getLine();
         String first = result.substring(0, 10);
         String second = result.substring(10);
         assertThat(sw.getLine(), is(new StringBuilder().
                 append(first).append(second).
                 toString()));
-        Thread.sleep(210);
+        Thread.sleep(250);
         assertThat(sw.getLine(), is(new StringBuilder().
                 append(first).append(second).append(first)
                 .toString()));

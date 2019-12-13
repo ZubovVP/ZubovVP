@@ -22,9 +22,8 @@ public class SearchTest {
     private String folder = "Test";
     private File file = new File(System.getProperty("java.io.tmpdir"), folder);
 
-
     @Before
-    public void setUp() throws Exception {
+    public void start() throws Exception {
         this.file.mkdir();
         for (int x = 0; x < 5; x++) {
             StringBuilder sb = new StringBuilder();
@@ -64,7 +63,7 @@ public class SearchTest {
     }
 
     @After
-    public void tearDown() {
+    public void finish() {
         deleteDirectory(this.file);
     }
 
