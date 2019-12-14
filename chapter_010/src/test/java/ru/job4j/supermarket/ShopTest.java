@@ -1,10 +1,11 @@
-package ru.job4j.storage;
+package ru.job4j.supermarket;
 
 import org.junit.Test;
-import ru.job4j.foods.Bread;
-import ru.job4j.foods.Food;
-import ru.job4j.foods.Milk;
-import ru.job4j.foods.Water;
+import ru.job4j.supermarket.foods.Bread;
+import ru.job4j.supermarket.foods.Food;
+import ru.job4j.supermarket.foods.Milk;
+import ru.job4j.supermarket.foods.Water;
+import ru.job4j.supermarket.strorage.Shop;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -29,7 +30,7 @@ public class ShopTest {
         assertThat(this.shop.getList().size(), is(0));
         assertTrue(this.shop.accept(milk));
         assertThat(this.shop.getList().size(), is(1));
-        assertThat(this.shop.getList().get(0).getDisscount(), is(35));
+        assertThat(this.shop.getList().get(0).getDiscount(), is(35));
     }
 
     @Test
@@ -38,7 +39,7 @@ public class ShopTest {
         assertThat(this.shop.getList().size(), is(0));
         assertTrue(this.shop.accept(milk));
         assertThat(this.shop.getList().size(), is(1));
-        assertThat(this.shop.getList().get(0).getDisscount(), is(0));
+        assertThat(this.shop.getList().get(0).getDiscount(), is(0));
     }
 
     @Test

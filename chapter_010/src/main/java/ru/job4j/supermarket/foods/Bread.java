@@ -1,4 +1,4 @@
-package ru.job4j.foods;
+package ru.job4j.supermarket.foods;
 
 import java.time.LocalDate;
 
@@ -9,8 +9,8 @@ import java.time.LocalDate;
  * Version: $Id$.
  * Date: 22.11.2019.
  */
-public class Water extends Food {
-    public Water(String name, LocalDate expiryDate, LocalDate createDate, double price, int disscount) {
+public class Bread extends Food {
+    public Bread(String name, LocalDate expiryDate, LocalDate createDate, double price, int disscount) {
         super(name, expiryDate, createDate, price, disscount);
     }
 }

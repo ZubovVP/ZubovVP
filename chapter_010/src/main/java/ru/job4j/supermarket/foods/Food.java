@@ -1,4 +1,4 @@
-package ru.job4j.foods;
+package ru.job4j.supermarket.foods;
 
 import java.time.LocalDate;
 
@@ -14,7 +14,7 @@ public abstract class Food {
     private LocalDate expiryDate;
     private LocalDate createDate;
     private double price;
-    private int disscount;
+    private int discount;
 
     /**
      * Food
@@ -30,7 +30,7 @@ public abstract class Food {
         this.expiryDate = expiryDate;
         this.createDate = createDate;
         this.price = price;
-        this.disscount = discount;
+        this.discount = discount;
     }
 
     public String getName() {
@@ -49,15 +49,15 @@ public abstract class Food {
         return price;
     }
 
-    public int getDisscount() {
-        return disscount;
+    public int getDiscount() {
+        return discount;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setDisscount(int disscount) {
-        this.disscount = disscount;
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 }
