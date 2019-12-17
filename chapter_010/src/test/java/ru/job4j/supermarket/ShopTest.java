@@ -26,9 +26,9 @@ public class ShopTest {
 
     @Test
     public void acceptReturnTrueAndAddDiscountForFood() {
-        Food milk = new Bread("Bread", LocalDate.now().plusDays(1), this.createDate, 100, 0);
+        Food bread = new Bread("Bread", LocalDate.now().plusDays(1), this.createDate, 100, 0);
         assertThat(this.shop.getList().size(), is(0));
-        assertTrue(this.shop.accept(milk));
+        assertTrue(this.shop.accept(bread));
         assertThat(this.shop.getList().size(), is(1));
         assertThat(this.shop.getList().get(0).getDiscount(), is(35));
     }
@@ -44,9 +44,9 @@ public class ShopTest {
 
     @Test
     public void acceptReturnFalse() {
-        Food milk = new Water("Water", this.createDate.plusYears(1), this.createDate, 100, 0);
+        Food water = new Water("Water", this.createDate.plusYears(1), this.createDate, 100, 0);
         assertThat(this.shop.getList().size(), is(0));
-        assertFalse(this.shop.accept(milk));
+        assertFalse(this.shop.accept(water));
         assertThat(this.shop.getList().size(), is(0));
     }
 }

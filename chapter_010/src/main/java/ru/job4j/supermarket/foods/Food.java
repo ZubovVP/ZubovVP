@@ -1,6 +1,7 @@
 package ru.job4j.supermarket.foods;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Created by Intellij IDEA.
@@ -10,20 +11,20 @@ import java.time.LocalDate;
  * Date: 22.11.2019.
  */
 public abstract class Food {
-    private String name;
-    private LocalDate expiryDate;
-    private LocalDate createDate;
+    private final String name;
+    private final LocalDate expiryDate;
+    private final LocalDate createDate;
     private double price;
     private int discount;
 
     /**
      * Food
      *
-     * @param name - name.
+     * @param name       - name.
      * @param expiryDate - expiryDate.
      * @param createDate - CreateDate.
-     * @param price - price.
-     * @param discount - discount.
+     * @param price      - price.
+     * @param discount   - discount.
      */
     public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, int discount) {
         this.name = name;
@@ -59,5 +60,22 @@ public abstract class Food {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Food food = (Food) o;
+        return Double.compare(food.price, price) == 0 &&
+                discount == food.discount &&
+                Objects.equals(name, food.name) &&
+                Objects.equals(expiryDate, food.expiryDate) &&
+                Objects.equals(createDate, food.createDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, expiryDate, createDate, price, discount);
     }
 }

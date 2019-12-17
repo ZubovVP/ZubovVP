@@ -3,6 +3,7 @@ package ru.job4j.supermarket.strorage;
 import ru.job4j.supermarket.foods.Food;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by Intellij IDEA.
@@ -11,7 +12,13 @@ import java.time.LocalDate;
  * Version: $Id$.
  * Date: 22.11.2019.
  */
-public class Trash extends Storage {
+public class Trash extends AbstractStorage {
+    public Trash() {
+    }
+
+    public Trash(List<Food> foods) {
+        super(foods);
+    }
 
     /**
      * Check food.
