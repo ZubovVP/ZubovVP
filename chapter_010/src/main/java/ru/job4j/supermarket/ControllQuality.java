@@ -44,10 +44,8 @@ public class ControllQuality implements Actions<Food> {
     public void resort() {
         Queue<Food> queue = new ArrayDeque<>();
         for (AbstractStorage storage : this.storages) {
-            if (!(storage instanceof Trash)) {
-                queue.addAll(storage.getList());
-                storage.getList().clear();
-            }
+            queue.addAll(storage.getList());
+            storage.getList().clear();
         }
         while (!queue.isEmpty()) {
             accept(queue.poll());

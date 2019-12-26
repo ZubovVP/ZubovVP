@@ -62,6 +62,7 @@ public abstract class Food {
         this.discount = discount;
     }
 
+    //CHECKSTYLE:OFF
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +74,7 @@ public abstract class Food {
                 Objects.equals(expiryDate, food.expiryDate) &&
                 Objects.equals(createDate, food.createDate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {
