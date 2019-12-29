@@ -40,4 +40,14 @@ public class Warehouse extends AbstractStorage {
         }
         return result;
     }
+
+    /**
+     * Check trash is it.
+     *
+     * @return - result.
+     */
+    @Override
+    public boolean isTrash() {
+        return false;
+    }
 }

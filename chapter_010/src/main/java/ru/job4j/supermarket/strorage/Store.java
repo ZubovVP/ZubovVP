@@ -9,4 +9,6 @@ package ru.job4j.supermarket.strorage;
  */
 public interface Store<E> {
     boolean accept(E food);
+
+    boolean isTrash();
 }
