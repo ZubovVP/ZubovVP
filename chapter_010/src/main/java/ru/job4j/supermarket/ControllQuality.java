@@ -13,10 +13,14 @@ import java.util.*;
  * Date: 15.12.2019.
  */
 public class ControllQuality implements Actions<Food> {
-    private List<AbstractStorage> storages;
+    private final Shop shop;
+    private final Trash trash;
+    private final Warehouse warehouse;
 
-    public ControllQuality(List<AbstractStorage> storages) {
-        this.storages = storages;
+    public ControllQuality(Shop shop, Trash trash, Warehouse warehouse) {
+        this.shop = shop;
+        this.trash = trash;
+        this.warehouse = warehouse;
     }
 
     /**
@@ -28,7 +32,7 @@ public class ControllQuality implements Actions<Food> {
     @Override
     public boolean accept(Food food) {
         boolean result = false;
-        for (AbstractStorage storage : this.storages) {
+        for (AbstractStorage storage : List.of(this.shop, this.trash, this.warehouse)) {
             if (storage.accept(food)) {
                 result = true;
                 break;
@@ -43,11 +47,9 @@ public class ControllQuality implements Actions<Food> {
     @Override
     public void resort() {
         Queue<Food> queue = new ArrayDeque<>();
-        for (AbstractStorage storage : this.storages) {
-            if (!storage.isTrash()) {
+        for (AbstractStorage storage : List.of(this.shop, this.warehouse)) {
                 queue.addAll(storage.getList());
                 storage.getList().clear();
-            }
         }
         while (!queue.isEmpty()) {
             accept(queue.poll());
