@@ -39,12 +39,13 @@ public class SimpleGenerator implements Checkable {
         String result;
         while (matcher.find()) {
             String key = matcher.group().substring(2, matcher.group().length() - 1);
-            keys.add(key);
-            if (!this.validator.checkKey(data, key)) {
+            if (this.validator.checkKey(data, key)) {
+                keys.add(key);
+            } else {
                 throw new CheckExeption(String.format("This key  '%s' ,doesn't exist in the data.", key));
             }
         }
-        if (this.validator.containsKeys(data, keys)) {
+        if (data.size() ==  keys.size()) {
             matcher = PATTERN.matcher(line);
             Iterator<String> itr = keys.iterator();
             while (matcher.find()) {

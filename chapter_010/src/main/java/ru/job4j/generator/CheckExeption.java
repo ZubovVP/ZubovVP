@@ -8,9 +8,6 @@ package ru.job4j.generator;
  * Date: 22.12.2019.
  */
 public class CheckExeption extends Exception {
-    public CheckExeption() {
-        super();
-    }
 
     public CheckExeption(String message) {
         super(message);
