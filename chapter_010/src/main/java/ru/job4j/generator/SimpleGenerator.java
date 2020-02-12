@@ -36,27 +36,23 @@ public class SimpleGenerator implements Checkable {
         StringBuilder sb = new StringBuilder();
         Matcher matcher = PATTERN.matcher(line);
         String value;
-        String result;
         while (matcher.find()) {
             String key = matcher.group().substring(2, matcher.group().length() - 1);
-            if (this.validator.checkKey(data, key)) {
-                keys.add(key);
-            } else {
+            if (!this.validator.checkKey(data, key)) {
                 throw new CheckExeption(String.format("This key  '%s' ,doesn't exist in the data.", key));
             }
+            keys.add(key);
         }
-        if (data.size() ==  keys.size()) {
-            matcher = PATTERN.matcher(line);
-            Iterator<String> itr = keys.iterator();
-            while (matcher.find()) {
-                value = data.get(itr.next());
-                matcher.appendReplacement(sb, value);
-            }
-            matcher.appendTail(sb);
-            result = sb.toString();
-        } else {
+        if (data.size() != keys.size()) {
             throw new CheckExeption("Don't use all keys in the data.");
         }
-        return result;
+        matcher = PATTERN.matcher(line);
+        Iterator<String> itr = keys.iterator();
+        while (matcher.find()) {
+            value = data.get(itr.next());
+            matcher.appendReplacement(sb, value);
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
     }
 }
