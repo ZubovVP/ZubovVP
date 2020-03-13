@@ -3,27 +3,38 @@ package ru.job4j.cache;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.ref.SoftReference;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Intellij IDEA.
  * User: Vitaly Zubov.
  * Email: Zubov.VP@yandex.ru.
  * Version: $Id$.
- * Date: 09.03.2020.
+ * Date: 12.03.2020.
  */
-public class Cache<K> {
-    private final HashMap<K, SoftReference<String>> cache = new HashMap<>();
+public class Cache<V, K> implements FindAble<K, V> {
+    private AbstractMap cache;
     private String directory;
 
     /**
      * Constructor.
      *
-     * @param directory - way of directory.
+     * @param directory - way to a directory.
      */
     public Cache(String directory) {
         this.directory = directory;
+        this.cache = new SoftHashMap();
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param directory - - way to a directory.
+     * @param map       - cache.
+     */
+    public Cache(String directory, AbstractMap map) {
+        this.directory = directory;
+        this.cache = map;
     }
 
     /**
@@ -33,9 +44,10 @@ public class Cache<K> {
      * @return - text.
      * @throws IOException
      */
-    public String getText(K key) throws IOException {
-        SoftReference result = this.cache.get(key);
-        return result == null ? readText(key) : (String) result.get();
+    @Override
+    public V find(K key) throws IOException {
+        V result = (V) this.cache.get(key);
+        return (result == null ? readText(key) : result);
     }
 
     /**
@@ -45,7 +57,7 @@ public class Cache<K> {
      * @return - text.
      * @throws IOException
      */
-    private String readText(K key) throws IOException {
+    private V readText(K key) throws IOException {
         StringBuilder result = new StringBuilder();
         try (FileReader file = new FileReader(String.format("%s\\%s", this.directory, key));
              BufferedReader reader = new BufferedReader(file)) {
@@ -56,18 +68,18 @@ public class Cache<K> {
         } catch (IOException e) {
             throw new IOException(String.format("Error find or read file, Name file = %s.", key));
         }
-        addFileInCache(key, result.toString());
-        return this.cache.get(key).get();
+        addFileInCache(key, (V) result.toString());
+        return (V) this.cache.get(key);
     }
 
     /**
      * Add key and text in the cache.
      *
-     * @param key - key.
+     * @param key  - key.
      * @param text - text.
      */
-    private void addFileInCache(K key, String text) {
-        this.cache.put(key, new SoftReference<>(text));
+    private void addFileInCache(K key, V text) {
+        this.cache.put(key, text);
     }
 
     /**
@@ -75,5 +87,10 @@ public class Cache<K> {
      */
     public int getSize() {
         return this.cache.size();
+    }
+
+    public static void main(String[] args) {
+        Map<String, String> a = new HashMap<>();
+        System.out.println(a.get("d"));
     }
 }

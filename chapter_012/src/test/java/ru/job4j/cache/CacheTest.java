@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class CacheTest {
     private File correctFile = new File(System.getProperty("user.dir") + "\\src\\test\\java\\ru\\job4j\\cache\\text.txt");
-    private Cache<String> cache = new Cache<>(System.getProperty("user.dir") + "\\src\\test\\java\\ru\\job4j\\cache");
+    private Cache<String, String> cache = new Cache<>(System.getProperty("user.dir") + "\\src\\test\\java\\ru\\job4j\\cache");
 
 
     @Before
@@ -35,13 +35,13 @@ public class CacheTest {
 
     @Test
     public void getTextOfCorrectFile() throws IOException {
-        assertThat(this.cache.getText("text.txt"), is("Test"));
+        assertThat(this.cache.find("text.txt"), is("Test"));
     }
 
     @Test
     public void getTextOfNotExistFile() {
         try {
-            this.cache.getText("aaa.txt");
+            this.cache.find("aaa.txt");
             fail("Expected IOException");
         } catch (IOException io) {
             assertThat(io.getMessage(), is("Error find or read file, Name file = aaa.txt."));
@@ -51,9 +51,9 @@ public class CacheTest {
     @Test
     public void testSizeCache() throws IOException {
         assertThat(this.cache.getSize(), is(0));
-        this.cache.getText("text.txt");
+        this.cache.find("text.txt");
         assertThat(this.cache.getSize(), is(1));
-        this.cache.getText("text.txt");
+        this.cache.find("text.txt");
         assertThat(this.cache.getSize(), is(1));
     }
 
