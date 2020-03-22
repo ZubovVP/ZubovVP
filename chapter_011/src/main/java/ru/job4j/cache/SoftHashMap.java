@@ -1,10 +1,8 @@
 package ru.job4j.cache;
 
 import java.lang.ref.SoftReference;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 
 /**
  * Created by Intellij IDEA.
@@ -24,7 +22,14 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
 
     @Override
     public V put(K key, V value) {
-        return (V) this.map.put(key, new SoftReference<>(value));
+        SoftReference ref = this.map.put(key, new SoftReference<>(value));
+        if (ref == null) {
+            return null;
+        } else {
+            V result = (V) ref.get();
+            ref.clear();
+            return result;
+        }
     }
 
     @Override
@@ -36,5 +41,4 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
     public int size() {
         return this.map.size();
     }
-
 }

@@ -88,9 +88,4 @@ public class Cache<V, K> implements FindAble<K, V> {
     public int getSize() {
         return this.cache.size();
     }
-
-    public static void main(String[] args) {
-        Map<String, String> a = new HashMap<>();
-        System.out.println(a.get("d"));
-    }
 }
