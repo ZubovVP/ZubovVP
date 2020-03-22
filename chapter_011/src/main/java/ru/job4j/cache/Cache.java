@@ -61,9 +61,13 @@ public class Cache<V, K> implements FindAble<K, V> {
         StringBuilder result = new StringBuilder();
         try (FileReader file = new FileReader(String.format("%s\\%s", this.directory, key));
              BufferedReader reader = new BufferedReader(file)) {
-            int c;
-            while ((c = reader.read()) != -1) {
-                result.append((char) c);
+            String line = reader.readLine();
+            while (line != null) {
+                result.append(line);
+                line = reader.readLine();
+                if (line != null) {
+                    result.append("\n");
+                }
             }
         } catch (IOException e) {
             throw new IOException(String.format("Error find or read file, Name file = %s.", key));
