@@ -50,12 +50,14 @@ public class StoreXMLTest {
             String result1 = new String(Files.readAllBytes(Paths.get(get("Result_XML"))));
             String expectation1 = String.format("%s\n%s\n%s\n%s\n%s\n%s\n", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>", "<entries>", "    <entry>", "        <field>1</field>", "    </entry>", "</entries>");
             assertThat(result1, is(expectation1));
+            storeSQL.deleteAllEntryes();
             storeSQL.generate(5);
             listFields = storeSQL.getAllEntries();
             storeXML.save(listFields);
             String result2 = new String(Files.readAllBytes(Paths.get(get("Result_XML"))));
             String expectation2 = String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>", "<entries>", "    <entry>", "        <field>1</field>", "    </entry>", "    <entry>", "        <field>2</field>", "    </entry>", "    <entry>", "        <field>3</field>", "    </entry>", "    <entry>", "        <field>4</field>", "    </entry>", "    <entry>", "        <field>5</field>", "    </entry>", "</entries>");
             assertThat(result2, is(expectation2));
+            storeSQL.deleteAllEntryes();
         } catch (Exception e) {
             e.printStackTrace();
         }

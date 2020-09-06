@@ -142,7 +142,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            for (Item item : tracker.getAll()) {
+            for (Item item : tracker.findAll()) {
                 System.out.print(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
                         + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
                         + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
@@ -166,7 +166,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Please, write name :");
-            Item it = tracker.findByName(name);
+            Item it = tracker.findByName(name).get(0);
             System.out.print(System.getProperty("line.separator") + " Name : " + it.getName() + ";"
                     + System.getProperty("line.separator") + "Description :" + it.getDescription() + ";"
                     + System.getProperty("line.separator") + "Id :" + it.getId() + ";"

@@ -21,14 +21,18 @@ public class StoreSQLTest {
             storeSQL.generate(1);
             List<StoreXML.Field> result = storeSQL.getAllEntries();
             assertThat(result.size(), is(1));
+            storeSQL.deleteAllEntryes();
 
             storeSQL.generate(3);
             result = storeSQL.getAllEntries();
             assertThat(result.size(), is(3));
+            storeSQL.deleteAllEntryes();
+
 
             storeSQL.generate(5);
             result = storeSQL.getAllEntries();
             assertThat(result.size(), is(5));
+            storeSQL.deleteAllEntryes();
         } catch (Exception e) {
             e.printStackTrace();
         }

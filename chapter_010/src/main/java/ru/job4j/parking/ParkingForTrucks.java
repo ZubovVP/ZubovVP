@@ -7,7 +7,7 @@ package ru.job4j.parking;
  * Version: $Id$.
  * Date: 23.11.2019.
  */
-public class ParkingForTrucks extends Parking {
+public class ParkingForTrucks extends Parking<Auto> {
     public ParkingForTrucks(int size) {
         super(size);
     }

@@ -7,8 +7,8 @@ package ru.job4j.parking;
  * Version: $Id$.
  * Date: 24.11.2019.
  */
-public abstract class Parking implements Actions {
-    private final Auto[] list;
+public abstract class Parking<E> {
+    private final E[] list;
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public abstract class Parking implements Actions {
      * @param size - size of raking.
      */
     public Parking(int size) {
-        this.list = new Auto[size];
+        this.list = (E[]) new Object[size];
     }
 
     /**
@@ -24,8 +24,12 @@ public abstract class Parking implements Actions {
      *
      * @return - array.
      */
-    @Override
-    public Auto[] getParking() {
+
+    public abstract boolean park(E car) throws ParkingException;
+
+    public abstract boolean clean(E car);
+
+    public E[] getParking() {
         return this.list;
     }
 }

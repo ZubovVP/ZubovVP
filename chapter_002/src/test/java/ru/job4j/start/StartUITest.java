@@ -27,7 +27,7 @@ public class StartUITest {
         try (Tracker tracker = new Tracker()) {
             Input input1 = new StubInput(new String[]{"0", "TestName1", "TestDescr1", "no", "0", "TestName2", "TestDescr2", "Yes"});
             new StartUI(input1, tracker).init();
-            List<Item> result = tracker.getAll();
+            List<Item> result = tracker.findAll();
             Item result1 = result.get(0);
             Item result2 = result.get(1);
             Input input2 = new StubInput(new String[]{"3", result1.getId(), "no", "3", result2.getId(), "Yes"});
@@ -48,7 +48,7 @@ public class StartUITest {
             Item item = new Item("TestName1", "TestDesc1", System.currentTimeMillis());
             Input input1 = new StubInput(new String[]{"0", item.getName(), item.getDescription(), "no", "0", "TestName2", "TestDesc2", "no", "2", item.getId(), "TestName3", "TestDesc3", "Yes"});
             new StartUI(input1, tracker).init();
-            List<Item> result = tracker.getAll();
+            List<Item> result = tracker.findAll();
             assertThat(result.get(0).getName(), is("TestName3"));
             assertThat(result.get(0).getDescription(), is("TestDesc3"));
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class StartUITest {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             Input input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", item.getId(), "Yes"});
             new StartUI(input1, tracker).init();
-            List<Item> list = tracker.getAll();
+            List<Item> list = tracker.findAll();
             result1 = list.get(0);
             result2 = list.get(1);
             assertThat(result1.getName(), is("TestName2"));

@@ -39,7 +39,7 @@ public abstract class AbstractBot extends AbstractPlayer implements Action {
      * @param field - field.
      * @return - result.
      */
-    protected boolean randomMove(Field field) {
+    public boolean randomMove(Field field) {
         boolean check = false;
         boolean result = false;
         for (int x = 0; x < field.getField().length; x++) {

@@ -174,6 +174,27 @@ public class BotFourMatches extends AbstractBot {
                         result = field.add(x, y, this.getOwnSymbol());
                         break;
                     }
+                    //добавил тупо для более актуальной логики
+                } else if (field.getSymbol(x, y) == ' ') {
+                    if (field.getField().length > x + 3 && field.getField()[x].length > y + 3 && isEnemySymbol(field.getSymbol(x + 1, y + 1)) && field.getSymbol(x + 2, y + 2) == ' ' && isEnemySymbol(field.getSymbol(x + 3, y + 3))) {
+                        result = field.add(x, y, this.getOwnSymbol());
+                        break;
+                    } else if (field.getField().length > x + 3 && isEnemySymbol(field.getSymbol(x + 1, y)) && field.getSymbol(x + 2, y) == ' ' && isEnemySymbol(field.getSymbol(x + 3, y))) {
+                        result = field.add(x, y, this.getOwnSymbol());
+                        break;
+                    } else if (field.getField()[x].length > y + 3 && isEnemySymbol(field.getSymbol(x, y + 1)) && field.getSymbol(x, y + 2) == ' ' && isEnemySymbol(field.getSymbol(x, y + 3))) {
+                        result = field.add(x, y, this.getOwnSymbol());
+                        break;
+                    } else if (x - 3 >= 0 && y - 3 >= 0 && isEnemySymbol(field.getSymbol(x - 1, y - 1)) && field.getSymbol(x - 2, y - 2) == ' ' && isEnemySymbol(field.getSymbol(x - 3, y - 3))) {
+                        result = field.add(x, y, this.getOwnSymbol());
+                        break;
+                    } else if (x - 3 >= 0 && isEnemySymbol(field.getSymbol(x - 1, y)) && field.getSymbol(x - 2, y) == ' ' && isEnemySymbol(field.getSymbol(x - 3, y))) {
+                        result = field.add(x, y, this.getOwnSymbol());
+                        break;
+                    } else if (y - 3 >= 0 && isEnemySymbol(field.getSymbol(x, y - 1)) && field.getSymbol(x, y - 2) == ' ' && isEnemySymbol(field.getSymbol(x, y - 3))) {
+                        result = field.add(x, y, this.getOwnSymbol());
+                        break;
+                    }
                 }
             }
         }

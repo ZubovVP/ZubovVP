@@ -28,7 +28,7 @@ public class TrackerTest {
         Item result;
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
-            result = tracker.findByName(item.getName());
+            result = tracker.findByName(item.getName()).get(0);
             tracker.delete(result.getId());
             assertThat(result, is(item));
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class TrackerTest {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
-            Item result = tracker.findByName(item.getName());
+            Item result = tracker.findByName(item.getName()).get(0);
             assertThat(result, is(item));
             tracker.delete(result.getId());
         } catch (Exception e) {
@@ -114,7 +114,7 @@ public class TrackerTest {
             tracker.add(item);
             item.setName("Test_Name10");
             tracker.replace(item);
-            Item result = tracker.findByName(item.getName());
+            Item result = tracker.findByName(item.getName()).get(0);
             assertThat(result, is(item));
             tracker.delete(result.getId());
         } catch (Exception e) {
@@ -130,7 +130,7 @@ public class TrackerTest {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
-            List<Item> result = tracker.getAll();
+            List<Item> result = tracker.findAll();
             tracker.delete(item.getId());
             assertThat(result.size(), is(1));
             assertThat(result.get(0), is(item));

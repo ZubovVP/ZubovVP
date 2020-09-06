@@ -63,6 +63,8 @@ public class SAXParsTest {
             xmlReader.setContentHandler(saxPars);
             xmlReader.parse(get("Result_XML_XSLT"));
             assertThat(new String(out.toByteArray()), is("1\r\n"));
+            storeSQL.deleteAllEntryes();
+
 
             out = new ByteArrayOutputStream();
             storeSQL.generate(3);
@@ -79,6 +81,7 @@ public class SAXParsTest {
             System.setOut(new PrintStream(this.out));
             xmlReader.parse(get("Result_XML_XSLT"));
             assertThat(new String(out.toByteArray()), is("6\r\n"));
+            storeSQL.deleteAllEntryes();
         } catch (Exception e) {
             e.printStackTrace();
         }

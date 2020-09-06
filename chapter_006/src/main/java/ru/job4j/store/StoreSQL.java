@@ -19,7 +19,9 @@ public class StoreSQL implements AutoCloseable {
     private static final String ADD_ELEMENT = "INSERT INTO entry(field) VALUES(?)";
     private static final String SELECT_TABLE = "SELECT * FROM entry";
     private static final String CREATE_TABLE = "CREATE TABLE entry (field INT NOT NULL);";
-    private static final String SELECT_ELEMENT = "SELECT * from entry";
+    private static final String SELECT_ELEMENT = "SELECT * FROM entry;";
+    private static final String DELETE_ALL = "DELETE FROM entry;";
+
     static final long TIME_START = System.currentTimeMillis();
 
 
@@ -80,6 +82,20 @@ public class StoreSQL implements AutoCloseable {
         return result;
     }
 
+    public boolean deleteAllEntryes() {
+        try {
+            if (rs.next()) {
+                checkRecords();
+            } else {
+                this.st = conn.prepareStatement(DELETE_ALL);
+                st.executeUpdate();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return true;
+    }
+
     /**
      * Check table existence.
      * If the table is not created, create a table.
@@ -110,7 +126,7 @@ public class StoreSQL implements AutoCloseable {
             this.st = conn.prepareStatement(SELECT_ELEMENT);
             this.rs = this.st.executeQuery();
             if (this.rs.next()) {
-                this.st = conn.prepareStatement(String.format("%s", "DELETE FROM entry;"));
+                this.st = conn.prepareStatement(String.format("%s", "DELETE FROM connections;"));
                 st.executeUpdate();
             }
         } catch (SQLException e) {

@@ -7,7 +7,7 @@ package ru.job4j.parking;
  * Version: $Id$.
  * Date: 23.11.2019.
  */
-public class ParkingForCars extends Parking {
+public class ParkingForCars extends Parking<Auto> {
 
     /**
      * Constructor.
@@ -27,7 +27,6 @@ public class ParkingForCars extends Parking {
      * @return - result.
      * @throws ParkingException - throw if parking is full.
      */
-    @Override
     public boolean park(Auto auto) throws ParkingException {
         boolean result = false;
         if (!isTrack(auto)) {
@@ -63,7 +62,6 @@ public class ParkingForCars extends Parking {
      * @param auto - auto.
      * @return - result.
      */
-    @Override
     public boolean clean(Auto auto) {
         for (int x = 0; x < this.getParking().length; x++) {
             if (this.getParking()[x].hashCode() == auto.hashCode()) {

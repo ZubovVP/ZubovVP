@@ -16,7 +16,7 @@ import java.util.Properties;
  * @version $Id$
  * @since 0.1
  */
-public class Tracker implements AutoCloseable {
+public class Tracker implements Store, AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tracker.class);
     private static final String CREATE_TABLE = "CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(25) NOT NULL, description TEXT NOT NULL, create_date TIMESTAMP, id_item VARCHAR(15));";
     private static boolean createTable = false;
@@ -41,7 +41,7 @@ public class Tracker implements AutoCloseable {
         return this.conn != null;
     }
 
-
+    @Override
     public Item add(Item item) {
         if (this.conn == null) {
             connect();
@@ -66,7 +66,8 @@ public class Tracker implements AutoCloseable {
         return item;
     }
 
-    protected Item findById(String id) {
+    @Override
+    public Item findById(String id) {
         Item resultId = null;
         if (this.conn == null) {
             connect();
@@ -91,18 +92,19 @@ public class Tracker implements AutoCloseable {
         return resultId;
     }
 
-    protected Item findByName(String name) {
-        Item resultName = null;
+    @Override
+    public List<Item> findByName(String key) {
+        List<Item> resultName = new ArrayList<>();
         if (this.conn == null) {
             connect();
         }
         checkTable();
         try {
             this.st = this.conn.prepareStatement("SELECT * FROM users WHERE name = ?");
-            this.st.setString(1, name);
+            this.st.setString(1, key);
             this.rs = this.st.executeQuery();
             while (this.rs.next()) {
-                resultName = new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getString("id_item"));
+                resultName.add(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getString("id_item")));
             }
             this.rs.close();
             this.st.close();
@@ -112,7 +114,8 @@ public class Tracker implements AutoCloseable {
         return resultName;
     }
 
-    public void replace(Item item) {
+    @Override
+    public boolean replace(Item item) {
         if (this.conn == null) {
             connect();
         }
@@ -132,9 +135,11 @@ public class Tracker implements AutoCloseable {
             }
             LOGGER.error(e.getMessage(), e);
         }
+        return true;
     }
 
-    public void delete(String id) {
+    @Override
+    public boolean delete(String id) {
         if (this.conn == null) {
             connect();
         }
@@ -153,9 +158,11 @@ public class Tracker implements AutoCloseable {
             }
             LOGGER.error(e.getMessage(), e);
         }
+        return true;
     }
 
-    public List<Item> getAll() {
+    @Override
+    public List<Item> findAll() {
         List<Item> result = new ArrayList<>();
         if (this.conn == null) {
             connect();

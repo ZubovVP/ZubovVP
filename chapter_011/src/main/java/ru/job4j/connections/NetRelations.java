@@ -83,12 +83,14 @@ public class NetRelations {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             Element that = (Element) o;
-            return (Objects.equals(first, that.first) && !first.equals("")) ||
-                    (Objects.equals(second, that.second) && !second.equals("")) ||
-                    (Objects.equals(third, that.third) && !third.equals(""));
+            return (Objects.equals(first, that.first) && !first.equals("")) || (Objects.equals(second, that.second) && !second.equals("")) || (Objects.equals(third, that.third) && !third.equals(""));
         }
 
         @Override
