@@ -1,7 +1,5 @@
 package ru.job4j.start;
 
-import ru.job4j.models.Item;
-
 import java.util.List;
 
 /**
@@ -11,16 +9,16 @@ import java.util.List;
  * Version: $Id$.
  * Date: 06.09.2020.
  */
-public interface Store {
-    Item add(Item item);
+public interface Store<E> {
+    E add(E item);
 
-    boolean replace(Item item);
+    boolean replace(E item);
 
-    boolean delete(String id);
+    boolean delete(int id);
 
-    List<Item> findAll();
+    List<E> findAll();
 
-    List<Item> findByName(String key);
+    List<E> findByName(String key);
 
-    Item findById(String id);
+    E findById(int id);
 }

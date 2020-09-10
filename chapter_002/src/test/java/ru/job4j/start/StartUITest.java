@@ -30,7 +30,7 @@ public class StartUITest {
             List<Item> result = tracker.findAll();
             Item result1 = result.get(0);
             Item result2 = result.get(1);
-            Input input2 = new StubInput(new String[]{"3", result1.getId(), "no", "3", result2.getId(), "Yes"});
+            Input input2 = new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"});
             new StartUI(input2, tracker).init();
             assertThat(result2.getName(), is("TestName2"));
             assertThat(result2.getDescription(), is("TestDescr2"));
@@ -46,7 +46,7 @@ public class StartUITest {
     public void whenUserEditItem() {
         try (Tracker tracker = new Tracker()) {
             Item item = new Item("TestName1", "TestDesc1", System.currentTimeMillis());
-            Input input1 = new StubInput(new String[]{"0", item.getName(), item.getDescription(), "no", "0", "TestName2", "TestDesc2", "no", "2", item.getId(), "TestName3", "TestDesc3", "Yes"});
+            Input input1 = new StubInput(new String[]{"0", item.getName(), item.getDescription(), "no", "0", "TestName2", "TestDesc2", "no", "2", String.valueOf(item.getId()), "TestName3", "TestDesc3", "Yes"});
             new StartUI(input1, tracker).init();
             List<Item> result = tracker.findAll();
             assertThat(result.get(0).getName(), is("TestName3"));
@@ -65,14 +65,14 @@ public class StartUITest {
         Item result2;
         try (Tracker tracker = new Tracker()) {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
-            Input input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", item.getId(), "Yes"});
+            Input input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", String.valueOf(item.getId()), "Yes"});
             new StartUI(input1, tracker).init();
             List<Item> list = tracker.findAll();
             result1 = list.get(0);
             result2 = list.get(1);
             assertThat(result1.getName(), is("TestName2"));
             assertThat(result2.getDescription(), is("TestDesc3"));
-            Input input2 = new StubInput(new String[]{"3", result1.getId(), "no", "3", result2.getId(), "Yes"});
+            Input input2 = new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"});
             new StartUI(input2, tracker).init();
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +88,7 @@ public class StartUITest {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
-            Input input = new StubInput(new String[]{"4", item.getId(), "Yes"});
+            Input input = new StubInput(new String[]{"4", String.valueOf(item.getId()), "Yes"});
             new StartUI(input, tracker).init();
             assertThat(new String(out.toByteArray()), is(new StringBuilder()
                     .append("0. Add the new Item. " + System.getProperty("line.separator")
@@ -101,7 +101,7 @@ public class StartUITest {
                     .append(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
                             + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
                             + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
-                            + System.getProperty("line.separator") + "Create :" + item.getCreate() + ";"
+                            + System.getProperty("line.separator") + "Create :" + item.getCreateOfDate() + ";"
                             + System.getProperty("line.separator")).toString()));
             tracker.delete(item.getId());
         } catch (Exception e) {
@@ -131,7 +131,7 @@ public class StartUITest {
                     .append(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
                             + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
                             + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
-                            + System.getProperty("line.separator") + "Create :" + item.getCreate() + ";"
+                            + System.getProperty("line.separator") + "Create :" + item.getCreateOfDate() + ";"
                             + System.getProperty("line.separator")).toString()));
             tracker.delete(item.getId());
         } catch (Exception e) {
@@ -162,12 +162,12 @@ public class StartUITest {
                     .append(System.getProperty("line.separator") + " Name : " + itemOne.getName() + ";"
                             + System.getProperty("line.separator") + "Description :" + itemOne.getDescription() + ";"
                             + System.getProperty("line.separator") + "Id :" + itemOne.getId() + ";"
-                            + System.getProperty("line.separator") + "Create :" + itemOne.getCreate() + ";"
+                            + System.getProperty("line.separator") + "Create :" + itemOne.getCreateOfDate() + ";"
                             + System.getProperty("line.separator"))
                     .append(System.getProperty("line.separator") + " Name : " + itemTwo.getName() + ";"
                             + System.getProperty("line.separator") + "Description :" + itemTwo.getDescription() + ";"
                             + System.getProperty("line.separator") + "Id :" + itemTwo.getId() + ";"
-                            + System.getProperty("line.separator") + "Create :" + itemTwo.getCreate() + ";"
+                            + System.getProperty("line.separator") + "Create :" + itemTwo.getCreateOfDate() + ";"
                             + System.getProperty("line.separator")).toString()));
             tracker.delete(itemOne.getId());
             tracker.delete(itemTwo.getId());

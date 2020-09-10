@@ -1,90 +1,82 @@
 package ru.job4j.models;
 
-import java.util.Random;
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
  * @version $Id$
  * @since 0.1
  */
+@Entity
 public class Item {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String description;
-    private long create;
-    private Random rd = new Random();
+    private long created;
 
-    public Item(String name, String description, long create, String id) {
-        this.name = name;
-        this.description = description;
-        this.create = create;
+    public Item() {
+
+    }
+
+    public Item(String name, String description, long createOfDate, int id) {
+        this(name, description, createOfDate);
         this.id = id;
     }
 
-    public Item(String name, String description, long create) {
+    public Item(String name, String description, long createOfDate) {
         this.name = name;
         this.description = description;
-        this.create = create;
-        this.id = String.valueOf(System.currentTimeMillis() + rd.nextInt());
+        this.created = createOfDate;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-
-        if (create != item.create) {
-            return false;
-        }
-        if (id != null ? !id.equals(item.id) : item.id != null) {
-            return false;
-        }
-        if (name != null ? !name.equals(item.name) : item.name != null) {
-            return false;
-        }
-        return description != null ? description.equals(item.description) : item.description == null;
+        return Objects.equals(id, item.id) &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(created, item.created);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (int) (create ^ (create >>> 32));
-        return result;
+        return Objects.hash(id, name, description, created);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public long getCreate() {
-        return create;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getCreateOfDate() {
+        return created;
+    }
+
+    public void setCreateOfDate(long createOfDate) {
+        this.created = createOfDate;
     }
 }

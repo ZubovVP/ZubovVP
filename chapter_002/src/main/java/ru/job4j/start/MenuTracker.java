@@ -19,7 +19,7 @@ class  DeleteItem extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String id = input.ask("Please, write the id :");
-        tracker.delete(id);
+        tracker.delete(Integer.parseInt(id));
         System.out.println("Item deleted !");
     }
 }
@@ -40,7 +40,7 @@ class  EditItem extends BaseAction {
         String id = input.ask("Please, write the id :");
         String name = input.ask("Please, write the new task's name :");
         String description = input.ask("Please, write the new task's description");
-        Item result = tracker.findById(id);
+        Item result = tracker.findById(Integer.parseInt(id));
         result.setName(name);
         result.setDescription(description);
         tracker.replace(result);
@@ -120,11 +120,11 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Please, write the id :");
-            Item it = tracker.findById(id);
+            Item it = tracker.findById(Integer.parseInt(id));
             System.out.print(System.getProperty("line.separator") + " Name : " + it.getName() + ";"
                     + System.getProperty("line.separator") + "Description :" + it.getDescription() + ";"
                     + System.getProperty("line.separator") + "Id :" + it.getId() + ";"
-                    + System.getProperty("line.separator") + "Create :" + it.getCreate() + ";"
+                    + System.getProperty("line.separator") + "Create :" + it.getCreateOfDate() + ";"
                     + System.getProperty("line.separator"));
         }
     }
@@ -146,7 +146,7 @@ public class MenuTracker {
                 System.out.print(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
                         + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
                         + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
-                        + System.getProperty("line.separator") + "Create :" + item.getCreate() + ";"
+                        + System.getProperty("line.separator") + "Create :" + item.getCreateOfDate() + ";"
                         + System.getProperty("line.separator"));
             }
         }
@@ -170,7 +170,7 @@ public class MenuTracker {
             System.out.print(System.getProperty("line.separator") + " Name : " + it.getName() + ";"
                     + System.getProperty("line.separator") + "Description :" + it.getDescription() + ";"
                     + System.getProperty("line.separator") + "Id :" + it.getId() + ";"
-                    + System.getProperty("line.separator") + "Create :" + it.getCreate() + ";"
+                    + System.getProperty("line.separator") + "Create :" + it.getCreateOfDate() + ";"
                     + System.getProperty("line.separator"));
         }
     }
