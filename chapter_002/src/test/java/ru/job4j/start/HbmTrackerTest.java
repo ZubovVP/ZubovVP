@@ -21,7 +21,7 @@ public class HbmTrackerTest {
     private HbmTracker tracker = new HbmTracker();
 
     @After
-    public void finish(){
+    public void finish() {
         this.tracker.close();
     }
 
@@ -63,9 +63,9 @@ public class HbmTrackerTest {
         item.setCreateOfDate(System.currentTimeMillis());
         this.tracker.add(item);
         this.tracker.add(item1);
-        Assert.assertThat(this.tracker.findAll().size(), is (2));
+        Assert.assertThat(this.tracker.findAll().size(), is(2));
         this.tracker.delete(item.getId());
-        Assert.assertThat(this.tracker.findAll().size(), is (1));
+        Assert.assertThat(this.tracker.findAll().size(), is(1));
         assertEquals(List.of(item1), this.tracker.findAll());
     }
 
@@ -94,8 +94,9 @@ public class HbmTrackerTest {
         item.setCreateOfDate(System.currentTimeMillis());
         this.tracker.add(item);
         this.tracker.add(item1);
-        Assert.assertThat(this.tracker.findById(item.getId()), is (item));
+        Assert.assertThat(this.tracker.findById(item.getId()), is(item));
     }
+
     @Test
     public void whenFindByNameItem() {
         Item item = new Item();
@@ -108,7 +109,7 @@ public class HbmTrackerTest {
         item.setCreateOfDate(System.currentTimeMillis());
         this.tracker.add(item);
         this.tracker.add(item1);
-        Assert.assertThat(this.tracker.findByName(item1.getName()).size(), is (1));
+        Assert.assertThat(this.tracker.findByName(item1.getName()).size(), is(1));
         assertEquals(List.of(item1), this.tracker.findByName(item1.getName()));
     }
 }

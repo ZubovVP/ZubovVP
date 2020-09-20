@@ -49,7 +49,7 @@ public class Tracker implements Store<Item>, AutoCloseable {
         checkTable();
         try {
             this.st = this.conn.prepareStatement("INSERT INTO users(id, name, description, create_date) VALUES(?, ?, ?, ?)");
-            this.st.setInt(1,item.getId());
+            this.st.setInt(1, item.getId());
             this.st.setString(2, item.getName());
             this.st.setString(3, item.getDescription());
             this.st.setLong(4, item.getCreateOfDate());
