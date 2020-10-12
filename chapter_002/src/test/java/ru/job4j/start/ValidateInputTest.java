@@ -37,7 +37,7 @@ public class ValidateInputTest {
      */
     @Test
     public void whenInvalidInput() {
-        ValidateInput input = new ValidateInput(new StubInput(new String[]{"invalid", "1"})
+        ValidateInput input = new ValidateInput(new StubInputForTest(new String[]{"invalid", "1"})
         );
         input.ask("Enter", new ArrayList<>());
         assertThat(this.mem.toString(),

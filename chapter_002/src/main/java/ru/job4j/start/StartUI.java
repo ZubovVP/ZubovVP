@@ -11,7 +11,7 @@ public class StartUI {
     private Input input;
     private Tracker tracker;
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(ValidateInput input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -43,12 +43,13 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        new StartUI(
-                new ValidateInput(
-                        new ConsoleInput()
-                ),
-                new Tracker()
-        ).init();
+        Context context = new Context();
+        context.reg(ConsoleInput.class);
+        context.reg(ValidateInput.class);
+        context.reg(Tracker.class);
+        context.reg(StartUI.class);
+        StartUI ui = context.get(StartUI.class);
+        ui.init();
     }
 }
 

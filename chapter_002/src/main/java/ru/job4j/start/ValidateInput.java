@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class ValidateInput implements Input {
 
-    private final Input input;
+    private final ConsoleInput input;
 
-    public ValidateInput(Input input) {
+    public ValidateInput(ConsoleInput input) {
         this.input = input;
     }
 
