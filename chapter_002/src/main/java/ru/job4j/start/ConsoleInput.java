@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,6 +10,7 @@ import java.util.Scanner;
  * @version $Id$
  * @since 0.1
  */
+@Component
 public class ConsoleInput implements Input {
     private Scanner scanner = new Scanner(System.in);
 

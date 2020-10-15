@@ -3,6 +3,7 @@ package ru.job4j.start;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.stereotype.Component;
 import ru.job4j.models.*;
 
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.Properties;
  * @version $Id$
  * @since 0.1
  */
+@Component
 public class Tracker implements Store<Item>, AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tracker.class);
     private static final String CREATE_TABLE = "CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(25) NOT NULL, description TEXT NOT NULL, create_date TIMESTAMP, id_item VARCHAR(15));";

@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  * @version $Id$
  * @since 0.1
  */
+@Component
 public class ValidateInput implements Input {
 
     private final ConsoleInput input;
