@@ -25,13 +25,15 @@ public class StartUITest {
     @Test
     public void whenUserAddItem() {
         try (Tracker tracker = new Tracker()) {
-            ValidateInput input1 = new StubInput(new String[]{"0", "TestName1", "TestDescr1", "no", "0", "TestName2", "TestDescr2", "Yes"});
-            new StartUI(input1, tracker).init();
+            StartUI ui1 = new StartUI();
+            ui1.setInput(new StubInput(new String[]{"0", "TestName1", "TestDescr1", "no", "0", "TestName2", "TestDescr2", "Yes"}));
+            ui1.setTracker(tracker);
+            ui1.init();
             List<Item> result = tracker.findAll();
             Item result1 = result.get(0);
             Item result2 = result.get(1);
-            ValidateInput input2 = new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"});
-            new StartUI(input2, tracker).init();
+            ui1.setInput(new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"}));
+            ui1.init();
             assertThat(result2.getName(), is("TestName2"));
             assertThat(result2.getDescription(), is("TestDescr2"));
         } catch (Exception e) {
@@ -47,7 +49,10 @@ public class StartUITest {
         try (Tracker tracker = new Tracker()) {
             Item item = new Item("TestName1", "TestDesc1", System.currentTimeMillis());
             ValidateInput input1 = new StubInput(new String[]{"0", item.getName(), item.getDescription(), "no", "0", "TestName2", "TestDesc2", "no", "2", String.valueOf(item.getId()), "TestName3", "TestDesc3", "Yes"});
-            new StartUI(input1, tracker).init();
+            StartUI ui1 = new StartUI();
+            ui1.setInput(input1);
+            ui1.setTracker(tracker);
+            ui1.init();
             List<Item> result = tracker.findAll();
             assertThat(result.get(0).getName(), is("TestName3"));
             assertThat(result.get(0).getDescription(), is("TestDesc3"));
@@ -66,14 +71,18 @@ public class StartUITest {
         try (Tracker tracker = new Tracker()) {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis(), (int) System.currentTimeMillis()));
             ValidateInput input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", String.valueOf(item.getId()), "Yes"});
-            new StartUI(input1, tracker).init();
+            StartUI ui1 = new StartUI();
+            ui1.setInput(input1);
+            ui1.setTracker(tracker);
+            ui1.init();
             List<Item> list = tracker.findAll();
             result1 = list.get(0);
             result2 = list.get(1);
             assertThat(result1.getName(), is("TestName2"));
             assertThat(result2.getDescription(), is("TestDesc3"));
             ValidateInput input2 = new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"});
-            new StartUI(input2, tracker).init();
+            ui1.setInput(input2);
+            ui1.init();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +98,10 @@ public class StartUITest {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
             ValidateInput input = new StubInput(new String[]{"4", String.valueOf(item.getId()), "Yes"});
-            new StartUI(input, tracker).init();
+            StartUI ui1 = new StartUI();
+            ui1.setInput(input);
+            ui1.setTracker(tracker);
+            ui1.init();
             assertThat(new String(out.toByteArray()), is(new StringBuilder()
                     .append("0. Add the new Item. " + System.getProperty("line.separator")
                             + "1. Show all Items. " + System.getProperty("line.separator")
@@ -119,7 +131,10 @@ public class StartUITest {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
             ValidateInput input = new StubInput(new String[]{"5", item.getName(), "Yes"});
-            new StartUI(input, tracker).init();
+            StartUI ui1 = new StartUI();
+            ui1.setInput(input);
+            ui1.setTracker(tracker);
+            ui1.init();
             assertThat(new String(out.toByteArray()), is(new StringBuilder()
                     .append("0. Add the new Item. " + System.getProperty("line.separator")
                             + "1. Show all Items. " + System.getProperty("line.separator")
@@ -150,7 +165,10 @@ public class StartUITest {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
             ValidateInput input = new StubInput(new String[]{"1", "Yes"});
-            new StartUI(input, tracker).init();
+            StartUI ui1 = new StartUI();
+            ui1.setInput(input);
+            ui1.setTracker(tracker);
+            ui1.init();
             assertThat(new String(out.toByteArray()), is(new StringBuilder()
                     .append("0. Add the new Item. " + System.getProperty("line.separator")
                             + "1. Show all Items. " + System.getProperty("line.separator")

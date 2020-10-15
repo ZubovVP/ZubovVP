@@ -1,5 +1,6 @@
 package ru.job4j.start;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,12 +12,8 @@ import java.util.List;
  */
 @Component
 public class ValidateInput implements Input {
-
-    private final ConsoleInput input;
-
-    public ValidateInput(ConsoleInput input) {
-        this.input = input;
-    }
+    @Autowired
+    private ConsoleInput input;
 
     @Override
     public String ask(String question) {
@@ -28,7 +25,7 @@ public class ValidateInput implements Input {
         int value = -1;
         do {
             try {
-                value =  this.input.ask(question, range);
+                value = this.input.ask(question, range);
                 invalid = false;
             } catch (MenuOutException moe) {
                 System.out.println("Please select key from menu.");
@@ -37,5 +34,13 @@ public class ValidateInput implements Input {
             }
         } while (invalid);
         return value;
+    }
+
+    public ConsoleInput getInput() {
+        return input;
+    }
+
+    public void setInput(ConsoleInput input) {
+        this.input = input;
     }
 }

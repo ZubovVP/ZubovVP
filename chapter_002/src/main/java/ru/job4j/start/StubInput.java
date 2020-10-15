@@ -12,14 +12,14 @@ public class StubInput extends ValidateInput {
     private int position = 0;
 
     public StubInput(String[] answers) {
-        super(null);
         this.answers = answers;
     }
 
     public String ask(String question) {
-        return  answers[position++];
+        return answers[position++];
     }
-    public  int ask(String question, List<UserAction> range) {
+
+    public int ask(String question, List<UserAction> range) {
         return Integer.valueOf(answers[position++]);
     }
 }
