@@ -1,6 +1,7 @@
 package ru.job4j.start;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @since 0.1
  */
 @Component
+@Scope("prototype")
 public class StartUI {
     @Autowired
     private ValidateInput input;

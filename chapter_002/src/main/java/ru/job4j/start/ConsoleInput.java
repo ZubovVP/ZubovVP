@@ -1,5 +1,6 @@
 package ru.job4j.start;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Scanner;
  * @since 0.1
  */
 @Component
+@Scope("singleton")
 public class ConsoleInput implements Input {
     private Scanner scanner = new Scanner(System.in);
 
