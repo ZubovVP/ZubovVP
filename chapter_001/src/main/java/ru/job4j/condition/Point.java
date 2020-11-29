@@ -28,7 +28,7 @@ public class Point {
 	 * @return is - вывод результата
      */
    public boolean is(int a, int b) {
-	   return y == a * x + b ? true : false;
+	   return y == a * x + b;
    }
    /**
      * Метод позволяет позволяет произвести инкапсуляцию данных.
