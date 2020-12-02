@@ -1,4 +1,5 @@
 package ru.job4j.loop;
+
 /**
  * Factorial.
  *
@@ -7,28 +8,17 @@ package ru.job4j.loop;
  * @since 0.1
  */
 public class Factorial {
-	 /**
+    /**
      * Программа предназначенна для вычисления факториала.
+     *
      * @param n - число из которого вычисляется факториал
-	 * @return calc - результат факториала
+     * @return calc - результат факториала
      */
-	public int calc(int n) {
-		int factorial = 1;
-		if (this.exist(n)) {
-			if (n > 0) {
-				for (int x = 1; x <= n; x++) {
-					factorial *= x;
-				}
-			}
-		}
-		return factorial;
-}
- /**
-     * Проверка вводимого числа.
-     * @param n - число из которого вычисляется факториал
-	 * @return exist - результат проверки
-     */
-private  boolean exist(int n) {
-		return n > 0;
-}
+    public int calc(int n) {
+        int factorial = 1;
+        while (n > 0) {
+            factorial *= n--;
+        }
+        return factorial;
+    }
 }
