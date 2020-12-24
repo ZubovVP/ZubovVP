@@ -25,7 +25,7 @@ public class ListCompare implements Comparator<List<Integer>> {
             return left.size() > right.size() ? 1 : -1;
         } else {
             for (int step = 0; step < left.size(); step++) {
-                 if (left.get(step) != right.get(step)) {
+                 if (!left.get(step).equals(right.get(step))) {
                     return left.get(step) > right.get(step) ? 1 : -1;
                 }
             }
