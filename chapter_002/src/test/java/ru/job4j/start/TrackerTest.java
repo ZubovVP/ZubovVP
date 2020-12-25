@@ -1,6 +1,8 @@
 package ru.job4j.start;
 
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.models.Item;
 
@@ -19,6 +21,30 @@ import static org.junit.Assert.assertNull;
  */
 public class TrackerTest {
 
+    @Before
+    public void start() {
+        try (Tracker tracker = new Tracker()) {
+            List<Item> result = tracker.findAll();
+            for (Item item : result) {
+                tracker.delete(item.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @After
+    public void finish() {
+        try (Tracker tracker = new Tracker()) {
+            List<Item> result = tracker.findAll();
+            for (Item item : result) {
+                tracker.delete(item.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Add Test.
      */
@@ -30,7 +56,7 @@ public class TrackerTest {
             tracker.add(item);
             result = tracker.findByName(item.getName()).get(0);
             tracker.delete(result.getId());
-            assertThat(result, is(item));
+            assertThat(result.getName(), is(item.getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,9 +71,10 @@ public class TrackerTest {
         Item result;
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
-            result = tracker.findById(item.getId());
+            int id = tracker.findAll().get(0).getId();
+            result = tracker.findById(id);
             tracker.delete(result.getId());
-            assertThat(result, is(item));
+            assertThat(result.getName(), is(item.getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,8 +89,7 @@ public class TrackerTest {
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             Item result = tracker.findByName(item.getName()).get(0);
-            assertThat(result, is(item));
-            tracker.delete(result.getId());
+            assertThat(result.getName(), is(item.getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,9 +103,9 @@ public class TrackerTest {
         Item item = new Item("Test_Name11", "Test_Desc11", System.currentTimeMillis());
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
-            Item result = tracker.findById(item.getId());
-            assertThat(result, is(item));
-            tracker.delete(result.getId());
+            int id = tracker.findAll().get(0).getId();
+            Item result = tracker.findById(id);
+            assertThat(result.getName(), is(item.getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,8 +120,9 @@ public class TrackerTest {
         Item result;
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
-            result = tracker.findById(item.getId());
-            assertThat(result, is(item));
+            int id = tracker.findAll().get(0).getId();
+            result = tracker.findById(id);
+            assertThat(result.getName(), is(item.getName()));
             tracker.delete(result.getId());
             result = tracker.findById(item.getId());
             assertNull(result);
@@ -113,10 +140,10 @@ public class TrackerTest {
         try (Tracker tracker = new Tracker()) {
             tracker.add(item);
             item.setName("Test_Name10");
+            item.setId(tracker.findAll().get(0).getId());
             tracker.replace(item);
             Item result = tracker.findByName(item.getName()).get(0);
-            assertThat(result, is(item));
-            tracker.delete(result.getId());
+            assertThat(result.getName(), is(item.getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,7 +160,7 @@ public class TrackerTest {
             List<Item> result = tracker.findAll();
             tracker.delete(item.getId());
             assertThat(result.size(), is(1));
-            assertThat(result.get(0), is(item));
+            assertThat(result.get(0).getName(), is(item.getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }

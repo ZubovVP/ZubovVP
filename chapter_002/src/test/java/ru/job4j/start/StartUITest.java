@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.models.Item;
@@ -19,6 +21,30 @@ import static org.hamcrest.core.Is.is;
  * @since 0.1
  */
 public class StartUITest {
+    @Before
+    public void start() {
+        try (Tracker tracker = new Tracker()) {
+            List<Item> result = tracker.findAll();
+            for (Item item : result) {
+                tracker.delete(item.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @After
+    public void finish() {
+        try (Tracker tracker = new Tracker()) {
+            List<Item> result = tracker.findAll();
+            for (Item item : result) {
+                tracker.delete(item.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Test
      */
@@ -69,8 +95,9 @@ public class StartUITest {
         Item result1;
         Item result2;
         try (Tracker tracker = new Tracker()) {
-            Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis(), (int) System.currentTimeMillis()));
-            ValidateInput input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", String.valueOf(item.getId()), "Yes"});
+            tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
+            int id = tracker.findAll().get(0).getId();
+            ValidateInput input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", String.valueOf(id), "Yes"});
             StartUI ui1 = new StartUI();
             ui1.setInput(input1);
             ui1.setTracker(tracker);
@@ -97,7 +124,8 @@ public class StartUITest {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
-            ValidateInput input = new StubInput(new String[]{"4", String.valueOf(item.getId()), "Yes"});
+            int id = tracker.findAll().get(0).getId();
+            ValidateInput input = new StubInput(new String[]{"4", String.valueOf(id), "Yes"});
             StartUI ui1 = new StartUI();
             ui1.setInput(input);
             ui1.setTracker(tracker);
@@ -112,7 +140,7 @@ public class StartUITest {
                             + "Delete" + System.getProperty("line.separator"))
                     .append(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
                             + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
-                            + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
+                            + System.getProperty("line.separator") + "Id :" + id + ";"
                             + System.getProperty("line.separator") + "Create :" + item.getCreateOfDate() + ";"
                             + System.getProperty("line.separator")).toString()));
             tracker.delete(item.getId());
@@ -135,6 +163,7 @@ public class StartUITest {
             ui1.setInput(input);
             ui1.setTracker(tracker);
             ui1.init();
+            item.setId(tracker.findAll().get(0).getId());
             assertThat(new String(out.toByteArray()), is(new StringBuilder()
                     .append("0. Add the new Item. " + System.getProperty("line.separator")
                             + "1. Show all Items. " + System.getProperty("line.separator")
@@ -160,8 +189,11 @@ public class StartUITest {
     @Test
     public void whenGetAllItems() {
         try (Tracker tracker = new Tracker()) {
-            Item itemOne = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
-            Item itemTwo = tracker.add(new Item("TestName2", "TestDesc2", System.currentTimeMillis()));
+            tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
+            tracker.add(new Item("TestName2", "TestDesc2", System.currentTimeMillis()));
+            List<Item> list = tracker.findAll();
+            Item itemOne = list.get(0);
+            Item itemTwo = list.get(1);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
             ValidateInput input = new StubInput(new String[]{"1", "Yes"});

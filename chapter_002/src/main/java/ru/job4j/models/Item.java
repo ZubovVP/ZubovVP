@@ -1,6 +1,7 @@
 package ru.job4j.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**

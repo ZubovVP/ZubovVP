@@ -52,11 +52,11 @@ public class Tracker implements Store<Item>, AutoCloseable {
         }
         checkTable();
         try {
-            this.st = this.conn.prepareStatement("INSERT INTO users(id, name, description, create_date) VALUES(?, ?, ?, ?)");
-            this.st.setInt(1, item.getId());
-            this.st.setString(2, item.getName());
-            this.st.setString(3, item.getDescription());
-            this.st.setLong(4, item.getCreateOfDate());
+            this.st = this.conn.prepareStatement("INSERT INTO users( name, description, create_date) VALUES(?, ?, ?)");
+//            this.st.setInt(1, item.getId());
+            this.st.setString(1, item.getName());
+            this.st.setString(2, item.getDescription());
+            this.st.setTimestamp(3, new Timestamp(item.getCreateOfDate()));
             this.st.executeUpdate();
             this.st.close();
         } catch (SQLException e) {
@@ -82,7 +82,7 @@ public class Tracker implements Store<Item>, AutoCloseable {
             this.st.setInt(1, id);
             this.rs = this.st.executeQuery();
             while (this.rs.next()) {
-                resultId = new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getLong("create_date"), this.rs.getInt("id"));
+                resultId = new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getInt("id"));
                 if (resultId.getName() == null || resultId.getDescription() == null) {
                     resultId = null;
                     break;
@@ -108,7 +108,7 @@ public class Tracker implements Store<Item>, AutoCloseable {
             this.st.setString(1, key);
             this.rs = this.st.executeQuery();
             while (this.rs.next()) {
-                resultName.add(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getLong("create_date"), this.rs.getInt("id")));
+                resultName.add(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getInt("id")));
             }
             this.rs.close();
             this.st.close();
@@ -176,7 +176,7 @@ public class Tracker implements Store<Item>, AutoCloseable {
             this.st = this.conn.prepareStatement("SELECT * FROM users");
             this.rs = this.st.executeQuery();
             while (this.rs.next()) {
-                result.add(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getLong("create_date"), this.rs.getInt("id")));
+                result.add(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getInt("id")));
             }
             this.rs.close();
             this.st.close();
