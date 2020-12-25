@@ -33,7 +33,3 @@ notifications:
       - zubovvp@yandex.ru
     on_success: never # default: change
     on_failure: always # default: always
-
-env:
-  global:
-    - CODECOV_TOKEN="ec576115-84b5-4c5c-bf84-f107a3212638"

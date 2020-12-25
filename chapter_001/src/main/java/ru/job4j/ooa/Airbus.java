@@ -8,8 +8,8 @@ package ru.job4j.ooa;
  * Version: $Id$.
  * Date: 20.12.2020.
  */
-public final class Airbus extends Aircraft{
-    private static int COUNT_ENGINE = 2;
+public final class Airbus extends Aircraft {
+    private static int countEngine = 2;
 
     private String name;
 
@@ -31,8 +31,8 @@ public final class Airbus extends Aircraft{
     }
 
     public void printCountEngine() {
-        COUNT_ENGINE = 4;
-        System.out.println("Количество двигателей равно: " + COUNT_ENGINE);
+        countEngine = 4;
+        System.out.println("Количество двигателей равно: " + countEngine);
     }
 
     @Override

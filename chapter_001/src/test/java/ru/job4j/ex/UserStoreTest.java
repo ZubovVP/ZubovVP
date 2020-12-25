@@ -38,6 +38,6 @@ public class UserStoreTest {
     public void testDoNotFoundUserException() throws UserNotFoundException {
         User user = new User("Vitaly Zubov", true);
         this.users = new User[]{user};
-        findUser(this.users,"Login");
+        findUser(this.users, "Login");
     }
 }

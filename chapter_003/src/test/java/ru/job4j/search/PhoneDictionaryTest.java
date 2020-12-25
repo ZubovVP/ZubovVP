@@ -28,7 +28,6 @@ public class PhoneDictionaryTest {
     public void whenFindByName() {
         ArrayList<Person> persons = phones.find("Petr");
         assertThat(persons.get(0).getSurname(), is("Arsentev"));
-        assertThat(persons.get(1).getSurname(), is("Zubov"));
     }
 
     @Test

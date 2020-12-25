@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Date: 23.12.2020.
  */
 public class PhoneDictionary {
-    private ArrayList<Person> persons = new ArrayList<Person>();
+    private ArrayList<Person> persons = new ArrayList<>();
 
     public void add(Person person) {
         this.persons.add(person);
