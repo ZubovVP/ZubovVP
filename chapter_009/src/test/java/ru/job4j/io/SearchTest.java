@@ -28,11 +28,11 @@ public class SearchTest {
         for (int x = 0; x < 5; x++) {
             StringBuilder sb = new StringBuilder();
             sb.append("Test");
-            sb.append("\\");
+            sb.append("/");
             sb.append(x);
             File dir = new File(new File("").getAbsolutePath(), sb.toString());
             dir.mkdir();
-            sb.append("\\Text");
+            sb.append("/Text");
             sb.append(x);
             sb.append(".txt");
             dir = new File(new File("").getAbsolutePath(), sb.toString());
@@ -40,9 +40,9 @@ public class SearchTest {
             if (x % 2 == 1) {
                 sb = new StringBuilder();
                 sb.append("Test");
-                sb.append("\\");
+                sb.append("/");
                 sb.append(x);
-                sb.append("\\Text");
+                sb.append("/Text");
                 sb.append(x);
                 sb.append(".xml");
                 dir = new File(new File("").getAbsolutePath(), sb.toString());
@@ -51,9 +51,9 @@ public class SearchTest {
             if (x % 3 == 0) {
                 sb = new StringBuilder();
                 sb.append("Test");
-                sb.append("\\");
+                sb.append("/");
                 sb.append(x);
-                sb.append("\\Text");
+                sb.append("/Text");
                 sb.append(x);
                 sb.append(".word");
                 dir = new File(new File("").getAbsolutePath(), sb.toString());

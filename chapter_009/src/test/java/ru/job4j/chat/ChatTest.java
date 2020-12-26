@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  * Date: 28.08.2019.
  */
 public class ChatTest {
-    private File file = new File(String.format("%s%s", new File("").getAbsolutePath(), "\\src\\main\\java\\ru\\job4j\\chat\\answers.txt"));
+    private File file = new File(String.format("%s%s", new File("").getAbsolutePath(), "/src/main/java/ru/job4j/chat/answers.txt"));
     private StringBuilder questions = new StringBuilder();
 
     @Before
