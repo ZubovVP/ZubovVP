@@ -20,7 +20,7 @@ public class ZipTest {
 
     @Test
     public void testArchive() {
-        String source = System.getProperty("user.dir");
+        String source = new File("").getAbsolutePath();
         String[] arguments = new String[]{"java", "-jar", "pack.jar", "-d", source, "-e", "*.java", "-o", "project.zip"};
         try {
             Zip.main(arguments);

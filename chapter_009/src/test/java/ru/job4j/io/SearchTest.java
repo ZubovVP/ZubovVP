@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class SearchTest {
     private String folder = "Test";
-    private File file = new File(System.getProperty("java.io.tmpdir"), folder);
+    private File file = new File(new File("").getAbsolutePath(), folder);
 
     @Before
     public void start() throws Exception {
@@ -30,12 +30,12 @@ public class SearchTest {
             sb.append("Test");
             sb.append("\\");
             sb.append(x);
-            File dir = new File(System.getProperty("java.io.tmpdir"), sb.toString());
+            File dir = new File(new File("").getAbsolutePath(), sb.toString());
             dir.mkdir();
             sb.append("\\Text");
             sb.append(x);
             sb.append(".txt");
-            dir = new File(System.getProperty("java.io.tmpdir"), sb.toString());
+            dir = new File(new File("").getAbsolutePath(), sb.toString());
             dir.createNewFile();
             if (x % 2 == 1) {
                 sb = new StringBuilder();
@@ -45,7 +45,7 @@ public class SearchTest {
                 sb.append("\\Text");
                 sb.append(x);
                 sb.append(".xml");
-                dir = new File(System.getProperty("java.io.tmpdir"), sb.toString());
+                dir = new File(new File("").getAbsolutePath(), sb.toString());
                 dir.createNewFile();
             }
             if (x % 3 == 0) {
@@ -56,7 +56,7 @@ public class SearchTest {
                 sb.append("\\Text");
                 sb.append(x);
                 sb.append(".word");
-                dir = new File(System.getProperty("java.io.tmpdir"), sb.toString());
+                dir = new File(new File("").getAbsolutePath(), sb.toString());
                 dir.createNewFile();
             }
         }

@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
  * Date: 01.10.2019.
  */
 public class SearcherTest {
-    private final File directory = new File(String.format("%s%s", System.getProperty("user.dir"), "\\test"));
-    private final File file = new File(String.format("%s%s", System.getProperty("user.dir"), "\\TestSearcher.txt"));
+    private final File directory = new File(String.format("%s%s", new File("").getAbsolutePath(), "\\test"));
+    private final File file = new File(String.format("%s%s", new File("").getAbsolutePath(), "\\TestSearcher.txt"));
     private final String source = System.getProperty("user.dir");
     private final String target = this.directory.getPath();
 
