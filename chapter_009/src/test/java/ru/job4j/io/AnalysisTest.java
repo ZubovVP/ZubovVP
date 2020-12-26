@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
  * Date: 13.08.2019.
  */
 public class AnalysisTest {
-    private File source = new File(new File("").getAbsolutePath() + "/src/test/java/ru/job4j/io/file.txt");
-    private File target = new File(new File("").getAbsolutePath() + "/src/test/java/ru/job4j/io/result.txt");
+    private File source = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "file.txt"));
+    private File target = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "result.txt"));
 
     @Before
     public void start() {

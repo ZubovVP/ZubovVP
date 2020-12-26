@@ -26,9 +26,9 @@ public class ConfigTest {
 
     @Before
     public void start() {
-        this.folder = new File(new File("").getAbsolutePath() + "/src/main/java/ru/job4j/io/TestConfig");
+        this.folder = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "TestConfig"));
         folder.mkdir();
-        this.file = new File(new File("").getAbsolutePath() + "/src/main/java/ru/job4j/io/TestConfig/app.properties");
+        this.file = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "TestConfig", File.separator, "app.properties"));
         StringBuilder sb = new StringBuilder();
         sb.append("## PostgreSQL").append("\n");
         sb.append("\n");

@@ -27,7 +27,7 @@ public class ZipTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String way = String.format("%s%s%s", source, "/", "project.zip");
+        String way = String.format("%s%s%s", source, File.separator, "project.zip");
         try (ZipInputStream zin = new ZipInputStream(new FileInputStream(way))) {
             ZipEntry entry;
             while ((entry = zin.getNextEntry()) != null) {

@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
  * Date: 01.10.2019.
  */
 public class SearcherTest {
-    private final File directory = new File(String.format("%s%s", new File("").getAbsolutePath(), "/test"));
-    private final File file = new File(String.format("%s%s", new File("").getAbsolutePath(), "/TestSearcher.txt"));
+    private final File directory = new File(String.format("%s%s%s", new File("").getAbsolutePath(), File.separator, "test"));
+    private final File file = new File(String.format("%s%s%s", new File("").getAbsolutePath(), File.separator, "TestSearcher.txt"));
     private final String source = new File("").getAbsolutePath();
     private final String target = this.directory.getPath();
 
@@ -41,7 +41,7 @@ public class SearcherTest {
     public void testFullName() throws Exception {
         String nameFile = "TestSearcher.txt";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + "/" + nameFile);
+        File file = new File(target + File.separator + nameFile);
         this.check(file);
         file.delete();
     }
@@ -50,7 +50,7 @@ public class SearcherTest {
     public void testWithMask() throws Exception {
         String nameFile = "TestSea*.txt";
         this.start(this.source, nameFile, this.target);
-        File file = new File(this.target + "/" + "TestSearcher.txt");
+        File file = new File(this.target + File.separator + "TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -59,7 +59,7 @@ public class SearcherTest {
     public void testWithMask2() throws Exception {
         String nameFile = "T?s?S?a*.txt";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + "/" + "TestSearcher.txt");
+        File file = new File(target + File.separator + "TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -68,7 +68,7 @@ public class SearcherTest {
     public void testWithMaskExt() throws Exception {
         String nameFile = "TestSearcher.???";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + "/" + "TestSearcher.txt");
+        File file = new File(target + File.separator + "TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -77,7 +77,7 @@ public class SearcherTest {
     public void testWithMaskExt2() throws Exception {
         String nameFile = "TestSearcher.*";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + "/" + "TestSearcher.txt");
+        File file = new File(target + File.separator + "TestSearcher.txt");
         this.check(file);
         file.delete();
     }
