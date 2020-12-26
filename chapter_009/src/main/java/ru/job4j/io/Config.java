@@ -61,7 +61,6 @@ public class Config {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (FileReader fr = new FileReader(this.path);
              BufferedReader read = new BufferedReader(fr)) {
-            fr.close();
             read.lines().forEach(out::add);
         } catch (Exception e) {
             e.printStackTrace();

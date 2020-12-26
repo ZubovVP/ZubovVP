@@ -32,7 +32,7 @@ public class Chat {
         readPhrases();
         try (InputStreamReader is = new InputStreamReader(System.in);
              BufferedReader reader = new BufferedReader(is);
-             PrintWriter writer = new PrintWriter(this.log)) {
+             PrintWriter writer = new PrintWriter(this.log.getAbsolutePath())) {
             String line = reader.readLine();
             while (!line.equals(FINISH)) {
                 writer.write("You : " + line + "\n");
