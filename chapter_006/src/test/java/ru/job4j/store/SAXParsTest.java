@@ -43,8 +43,7 @@ public class SAXParsTest {
     }
 
     private String get(String key) {
-        return new File("").getAbsolutePath() +
-                this.values.getProperty(key);
+        return new File("").getAbsolutePath() + this.values.getProperty(key);
     }
 
     @Test

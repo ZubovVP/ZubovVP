@@ -31,5 +31,4 @@ public class ConvertXSQT {
         StreamResult sr = new StreamResult(dest);
         transformer.transform(ss, sr);
     }
-
 }
