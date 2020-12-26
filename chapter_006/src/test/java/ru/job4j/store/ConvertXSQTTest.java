@@ -31,7 +31,8 @@ public class ConvertXSQTTest {
     }
 
     private String get(String key) {
-        return this.values.getProperty(key);
+        return new File("").getAbsolutePath() +
+                this.values.getProperty(key);
     }
 
     @Test

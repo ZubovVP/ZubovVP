@@ -126,7 +126,7 @@ public class StoreSQL implements AutoCloseable {
             this.st = conn.prepareStatement(SELECT_ELEMENT);
             this.rs = this.st.executeQuery();
             if (this.rs.next()) {
-                this.st = conn.prepareStatement(String.format("%s", "DELETE FROM connections;"));
+                this.st = conn.prepareStatement("DELETE FROM entry;");
                 st.executeUpdate();
             }
         } catch (SQLException e) {
