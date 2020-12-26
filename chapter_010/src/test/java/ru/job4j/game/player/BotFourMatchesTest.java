@@ -65,6 +65,7 @@ public class BotFourMatchesTest {
         bot.move(field);
         bot.move(field);
         bot.move(field);
+        bot.move(field);
         CheckWin check = new CheckWinThreeMatches(field);
         assertTrue(check.checkWin(bot.getOwnSymbol()));
     }
