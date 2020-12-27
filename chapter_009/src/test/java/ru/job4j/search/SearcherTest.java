@@ -26,7 +26,7 @@ public class SearcherTest {
     public void createFile() throws IOException {
         this.directory.mkdir();
         this.file.createNewFile();
-        try (FileWriter writer = new FileWriter(file.getPath())) {
+        try (FileWriter writer = new FileWriter(file.getAbsolutePath())) {
             writer.write("Test!");
         }
     }

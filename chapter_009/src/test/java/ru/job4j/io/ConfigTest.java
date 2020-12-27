@@ -37,13 +37,16 @@ public class ConfigTest {
         sb.append("hibernate.connection.driver_class=org.postgresql.Driver").append("\n");
         sb.append("hibernate.connection.username=postgres").append("\n");
         sb.append("hibernate.connection.password=password").append("\n");
-        try (FileWriter writer = new FileWriter(this.file.getPath(), false)) {
+        try (FileWriter writer = new FileWriter(this.file.getAbsolutePath(), false)) {
+            if (this.file.exists()) {
+                this.file.delete();
+            }
             this.file.createNewFile();
             writer.write(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.config = new Config(this.file.getPath());
+        this.config = new Config(this.file.getAbsolutePath());
     }
 
     @After

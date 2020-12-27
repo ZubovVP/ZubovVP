@@ -30,6 +30,9 @@ public class AnalysisTest {
         sb.append("500 11:01:02\n").append("\n");
         sb.append("200 11:02:02\n").append("\n");
         try (FileWriter writer = new FileWriter(source, false)) {
+            if (this.source.exists()) {
+                this.source.delete();
+            }
             this.source.createNewFile();
             writer.write(sb.toString());
         } catch (IOException e) {
@@ -46,7 +49,7 @@ public class AnalysisTest {
     @Test
     public void unavailable() {
         Analysis analizy = new Analysis();
-        analizy.unavailable(this.source.getPath(), this.target.getPath());
+        analizy.unavailable(this.source.getAbsolutePath(), this.target.getAbsolutePath());
         try (
                 FileReader fr = new FileReader(this.target);
                 BufferedReader reader = new BufferedReader(fr)) {
