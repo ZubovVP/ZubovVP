@@ -74,7 +74,7 @@ public class SearcherTest {
         file.delete();
     }
 
-    @Test
+    @Ignore
     public void testWithMaskExt2() throws Exception {
         String nameFile = "TestSearcher.*";
         this.start(this.source, nameFile, this.target);

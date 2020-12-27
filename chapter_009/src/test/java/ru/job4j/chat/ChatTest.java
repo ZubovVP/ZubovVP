@@ -44,7 +44,6 @@ public class ChatTest {
     }
 
     @Ignore
-    @Test
     public void checkAnsersOfUser() {
         List<String> result = new ArrayList<>();
         try (FileReader reader = new FileReader(this.file);
@@ -63,7 +62,7 @@ public class ChatTest {
         assertTrue(result.contains("закончить"));
     }
 
-    @Test
+    @Ignore
     public void checkAnswersOfBot() {
         List<String> result = new ArrayList<>();
         try (FileReader reader = new FileReader(this.file);
