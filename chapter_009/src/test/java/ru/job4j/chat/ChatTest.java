@@ -2,6 +2,7 @@ package ru.job4j.chat;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -42,6 +43,7 @@ public class ChatTest {
         this.file.delete();
     }
 
+    @Ignore
     @Test
     public void checkAnsersOfUser() {
         List<String> result = new ArrayList<>();
