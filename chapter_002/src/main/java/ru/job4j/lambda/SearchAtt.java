@@ -15,12 +15,12 @@ import java.util.function.BiFunction;
 public class SearchAtt {
 
     public static List<Attachment> filterSize(List<Attachment> list) {
-        BiFunction<List<Attachment>, Attachment,  List<Attachment>> func = new BiFunction<List<Attachment>, Attachment, List<Attachment>>() {
+        BiFunction<List<Attachment>, Attachment, List<Attachment>> func = new BiFunction<List<Attachment>, Attachment, List<Attachment>>() {
             @Override
             public List<Attachment> apply(List<Attachment> attachments, Attachment att) {
-                    if (att.getSize() > 100) {
-                        attachments.add(att);
-                    }
+                if (att.getSize() > 100) {
+                    attachments.add(att);
+                }
                 return attachments;
             }
         };
@@ -28,7 +28,7 @@ public class SearchAtt {
     }
 
     public static List<Attachment> filterName(List<Attachment> list) {
-        BiFunction<List<Attachment>, Attachment,  List<Attachment>> func = new BiFunction<List<Attachment>, Attachment, List<Attachment>>() {
+        BiFunction<List<Attachment>, Attachment, List<Attachment>> func = new BiFunction<List<Attachment>, Attachment, List<Attachment>>() {
             @Override
             public List<Attachment> apply(List<Attachment> attachments, Attachment att) {
                 if (att.getName().contains("bug")) {
@@ -40,9 +40,9 @@ public class SearchAtt {
         return filter(func, list);
     }
 
-    private static List<Attachment> filter(BiFunction<List<Attachment>, Attachment,  List<Attachment>> func, List<Attachment> list) {
+    private static List<Attachment> filter(BiFunction<List<Attachment>, Attachment, List<Attachment>> func, List<Attachment> list) {
         List<Attachment> rsl = new ArrayList<>();
-        for(Attachment attachment : list){
+        for (Attachment attachment : list) {
             rsl = func.apply(rsl, attachment);
         }
         return rsl;
