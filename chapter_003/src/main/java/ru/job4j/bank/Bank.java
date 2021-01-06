@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
@@ -42,9 +39,9 @@ public class Bank {
      * @param account  - User's account.
      */
     public void addAccountToUser(String passport, Account account) {
-        User user = findUserOnPasport(passport);
-        if (user != null) {
-            mapUser.get(user).add(account);
+        Optional<User> findUser = findUserOnPasport(passport);
+        if (findUser.isPresent()) {
+            mapUser.get(findUser.get()).add(account);
         }
     }
 
@@ -55,8 +52,11 @@ public class Bank {
      * @param account  - User's account.
      */
     public void deleteAccountFromUser(String passport, Account account) {
-        User user = findUserOnPasport(passport);
-        mapUser.get(user).remove(account);
+        Optional<User> findUser = findUserOnPasport(passport);
+        if (findUser.isPresent()) {
+            User user = findUser.get();
+            mapUser.get(user).remove(account);
+        }
     }
 
     /**
@@ -65,10 +65,13 @@ public class Bank {
      * @param passport - Users's passport.
      * @return - Account's collection
      */
-    public List<Account> getAccounts(String passport)  {
-        List<Account> result;
-        User user = findUserOnPasport(passport);
-        result = mapUser.get(user);
+    public List<Account> getAccounts(String passport) {
+        List<Account> result = null;
+        Optional<User> findUser = findUserOnPasport(passport);
+        if (findUser.isPresent()) {
+            User user = findUser.get();
+            result = mapUser.get(user);
+        }
         return result;
     }
 
@@ -88,13 +91,13 @@ public class Bank {
         boolean result = false;
         src = findAccountOnRequisite(srcRequisite, srcPassport);
         dest = findAccountOnRequisite(dstRequisite, destPassport);
-            if (src != null && dest != null && src.getValue() > amount) {
-                int number = (int) (src.getValue() - amount);
-                src.setValue(number);
-                int number1 = (int) (dest.getValue() + amount);
-                dest.setValue(number1);
-                result = true;
-            }
+        if (src != null && dest != null && src.getValue() > amount) {
+            int number = (int) (src.getValue() - amount);
+            src.setValue(number);
+            int number1 = (int) (dest.getValue() + amount);
+            dest.setValue(number1);
+            result = true;
+        }
         return result;
     }
 
@@ -102,11 +105,11 @@ public class Bank {
      * @param passport - user passport.
      * @return - user.
      */
-    private User findUserOnPasport(String passport) {
-        User result = null;
+    private Optional<User> findUserOnPasport(String passport) {
+        Optional<User> result = Optional.empty();
         for (Map.Entry<User, List<Account>> entry : mapUser.entrySet()) {
             if (entry.getKey().getPasport().equals(passport)) {
-                result = entry.getKey();
+                result = Optional.of(entry.getKey());
                 break;
             }
         }
@@ -115,18 +118,21 @@ public class Bank {
 
     /**
      * @param requisite - requisite account.
-     * @param passport - user passport.
+     * @param passport  - user passport.
      * @return - account.
      */
     private Account findAccountOnRequisite(String requisite, String passport) {
         Account result = null;
-        User user = findUserOnPasport(passport);
-        for (Map.Entry<User, List<Account>> entry : mapUser.entrySet()) {
-            if (entry.getKey().equals(user)) {
-                for (Account account : entry.getValue()) {
-                    if (account.getRequisites().equals(requisite)) {
-                        result = account;
-                        break;
+        Optional<User> findUser = findUserOnPasport(passport);
+        if (findUser.isPresent()) {
+            User user = findUser.get();
+            for (Map.Entry<User, List<Account>> entry : mapUser.entrySet()) {
+                if (entry.getKey().equals(user)) {
+                    for (Account account : entry.getValue()) {
+                        if (account.getRequisites().equals(requisite)) {
+                            result = account;
+                            break;
+                        }
                     }
                 }
             }

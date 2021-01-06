@@ -2,7 +2,6 @@ package ru.job4j.search;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 /**
@@ -13,7 +12,7 @@ import java.util.function.Predicate;
  * Date: 01.01.2021.
  */
 public class PhoneDictionary {
-    private ArrayList<Person> persons = new ArrayList<Person>();
+    private ArrayList<Person> persons = new ArrayList<>();
 
     public void add(Person person) {
         this.persons.add(person);
