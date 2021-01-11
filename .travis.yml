@@ -1,9 +1,10 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
-# используем режим обычного пользователя для сборки проекта.
+
 jdk:
-  - openjdk12
+  - openjdk14
+
 sudo: false
+
 install: true
 script:
   - mvn install
@@ -19,14 +20,15 @@ before_install:
   - psql -c "CREATE DATABASE cinema;" -U postgres
   - psql -c "CREATE DATABASE service;" -U postgres
 
-
+env:
+  global:
+    - CODECOV_TOKEN="dca401a0-aa7c-4758-8259-9c2e5dbea0e0"
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
 notifications:
   email:
     recipients:
