@@ -1,12 +1,13 @@
 package ru.job4j.generic;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
+ * @param <T> - SimpleArray - list.
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
  * @version $Id$.
  * @since 0.1.
- * @param <T> - SimpleArray - list.
  */
 public class SimpleArray<T> implements Iterator<T> {
 
@@ -34,6 +35,7 @@ public class SimpleArray<T> implements Iterator<T> {
      * @param model - model.
      */
     public void set(int index, T model) {
+        Objects.checkIndex(index, this.index);
         this.list[index] = model;
     }
 
@@ -43,13 +45,10 @@ public class SimpleArray<T> implements Iterator<T> {
      * @param index - index in the list.
      */
     public void delete(int index) {
-        this.list[index] = null;
+        Objects.checkIndex(index, this.index);
+        System.arraycopy(this.list, index + 1, this.list, index, this.index);
+        this.list[this.list.length - 1] = null;
         this.index--;
-        int position = index;
-        while (position < this.list.length - 1) {
-            this.list[position++] = this.list[position];
-            this.list[position] = null;
-        }
     }
 
     /**
@@ -59,6 +58,7 @@ public class SimpleArray<T> implements Iterator<T> {
      * @return - model.
      */
     public T get(int index) {
+        Objects.checkIndex(index, this.index);
         return (T) this.list[index];
     }
 
