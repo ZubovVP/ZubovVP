@@ -46,9 +46,7 @@ public class SimpleArray<T> implements Iterator<T> {
      */
     public void delete(int index) {
         Objects.checkIndex(index, this.index);
-        System.arraycopy(this.list, index + 1, this.list, index, this.index);
-        this.list[this.list.length - 1] = null;
-        this.index--;
+        System.arraycopy(this.list, index + 1, this.list, index, this.list.length - this.index--);
     }
 
     /**

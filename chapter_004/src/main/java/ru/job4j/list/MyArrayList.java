@@ -11,19 +11,17 @@ import java.util.*;
  * @since 0.1
  */
 @ThreadSafe
-public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
-
+public class MyArrayList<E> implements Iterable<E>, Cloneable {
+    @GuardedBy("this")
+    private E[] container;
+    private int size = 0;
+    private int modCount = 0;
     private static final int DEFAULT_CAPACITY = 10;
 
     @Override
     public MyArrayList clone() throws CloneNotSupportedException {
         return (MyArrayList) super.clone();
     }
-
-    @GuardedBy("this")
-    private E[] container;
-    private int size = 0;
-    private int modCount = 0;
 
     public MyArrayList() {
         this.container = (E[]) new Object[DEFAULT_CAPACITY];
@@ -38,9 +36,8 @@ public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
      *
      * @return size of MyArrayList.
      */
-    @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
     /**
@@ -49,11 +46,25 @@ public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
      * @param e - element.
      * @return - result action.
      */
-    @Override
     public synchronized boolean add(E e) {
         ensureCapacity(size + 1);
         this.container[size++] = e;
-        modCount++;
+        this.modCount++;
+        return true;
+    }
+
+    /**
+     * This method add element in the MyArrayList.
+     *
+     * @param e - element.
+     * @return - result action.
+     */
+    public synchronized boolean add(int index, E e) {
+        Objects.checkIndex(index, this.size - 1);
+        ensureCapacity(this.size + 1);
+        System.arraycopy(this.container, index, this.container, index + 1, ++this.size - index);
+        this.container[index] = e;
+        this.modCount++;
         return true;
     }
 
@@ -63,8 +74,8 @@ public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
      * @param count - size of MyArrayList.
      */
     private void ensureCapacity(int count) {
-        if (count > container.length) {
-            container = Arrays.copyOf(container, container.length * 2);
+        if (count > this.container.length) {
+            this.container = Arrays.copyOf(container, container.length * 2);
         }
     }
 
@@ -74,8 +85,8 @@ public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
      * @param index - index.
      * @return - element.
      */
-    @Override
     public E get(int index) {
+        Objects.checkIndex(index, this.size);
         return this.container[index];
     }
 
@@ -88,12 +99,41 @@ public class MyArrayList<E> implements Iterable<E>, List<E>, Cloneable {
     public boolean contains(E e) {
         boolean result = false;
         for (E element : container) {
-            if (element == e) {
+            if (element.equals(e)) {
                 result = true;
                 break;
             }
         }
         return result;
+    }
+
+
+    /**
+     * Replace element.
+     *
+     * @param index   - index.
+     * @param element - element.
+     * @return - element.
+     */
+    public E set(int index, E element) {
+        Objects.checkIndex(index, this.size);
+        this.container[index] = element;
+        return element;
+    }
+
+    /**
+     * Delete element from list.
+     *
+     * @param index - index.
+     * @return - removed of element.
+     */
+    public E remove(int index) {
+        Objects.checkIndex(index, this.size);
+        E removed = this.container[index];
+        System.arraycopy(this.container, index + 1, this.container, index, --this.size - index);
+        this.container[size] = null;
+        this.modCount++;
+        return removed;
     }
 
     /**
