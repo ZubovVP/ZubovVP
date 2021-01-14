@@ -99,7 +99,7 @@ public class MyArrayList<E> implements Iterable<E>, Cloneable {
     public boolean contains(E e) {
         boolean result = false;
         for (E element : container) {
-            if (element.equals(e)) {
+            if (element != null && element.equals(e)) {
                 result = true;
                 break;
             }

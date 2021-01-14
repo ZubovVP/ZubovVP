@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -79,5 +80,4 @@ public class MyLinkedListTest {
         assertThat(linkedListTest.get(0), is(stringTest1));
         linkedListTest.get(10);
     }
-
 }

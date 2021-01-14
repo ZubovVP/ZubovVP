@@ -29,11 +29,36 @@ public class MyStackTest {
         assertThat(myStackTest.peek(), is(3));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void whenWePoolElement() {
         assertThat(myStackTest.poll(), is(3));
         assertThat(myStackTest.poll(), is(2));
         assertThat(myStackTest.poll(), is(1));
         myStackTest.poll();
+    }
+
+    @Test
+    public void whenPushThenPoll() {
+        MyStack<Integer> stack = new MyStack<>();
+        stack.push(1);
+        assertThat(stack.peek(), is(1));
+    }
+
+    @Test
+    public void whenPushPollThenPushPoll() {
+        MyStack<Integer> stack = new MyStack<>();
+        stack.push(1);
+        stack.poll();
+        stack.push(2);
+        assertThat(stack.peek(), is(2));
+    }
+
+    @Test
+    public void whenPushPushThenPollPoll() {
+        MyStack<Integer> stack = new MyStack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.poll();
+        assertThat(stack.peek(), is(1));
     }
 }
