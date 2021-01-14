@@ -5,6 +5,7 @@ import net.jcip.annotations.ThreadSafe;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * @author Vitaly Zubov (mailto:Zubov.VP@yandex.ru).
@@ -12,7 +13,7 @@ import java.util.Iterator;
  * @since 0.1
  */
 @ThreadSafe
-public class MyLinkedList<E> implements List<E>, Iterable<E> {
+public class MyLinkedList<E> implements Iterable<E> {
     @GuardedBy("this")
     private Node<E> head;
     @GuardedBy("this")
@@ -24,7 +25,6 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
      *
      * @return size of MyLinkedList.
      */
-    @Override
     public int size() {
         return this.size;
     }
@@ -35,10 +35,9 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
      * @param e - element.
      * @return - return result action.
      */
-    @Override
     public synchronized boolean add(E e) {
         if (this.head == null) {
-            Node<E> newNode = new Node<E>(null, e, null);
+            Node<E> newNode = new Node<>(null, e, null);
             this.head = newNode;
             this.tail = newNode;
         } else {
@@ -51,13 +50,41 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
     }
 
     /**
+     * This method add object in MyLinkedList.
+     *
+     * @param e - element.
+     * @return - return result action.
+     */
+    public synchronized boolean add(int index, E e) {
+        Node<E> newElement;
+        Objects.checkIndex(index, this.size);
+        if (this.head == null) {
+            Node<E> newNode = new Node<>(null, e, null);
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            Node<E> element = findNode(index);
+            if (element.equals(this.head)) {
+                newElement = new Node<>(null, e, element);
+                this.head = newElement;
+            } else {
+                newElement = new Node<>(element.getPerv(), e, element);
+                element.getPerv().setNext(newElement);
+            }
+            element.setPerv(newElement);
+        }
+        this.size++;
+        return true;
+    }
+
+    /**
      * This method return element on the index in the MyLinkedList.
      *
      * @param index - index.
      * @return - element from MyLinkedList.
      */
-    @Override
     public E get(int index) {
+        Objects.checkIndex(index, this.size);
         return findNode(index).getItem();
     }
 
@@ -67,11 +94,12 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
      * @param index - index.
      * @return - Node.
      */
-    public Node<E> findNode(int index) {
+    private Node<E> findNode(int index) {
+        Objects.checkIndex(index, this.size);
         int count;
         Node result;
 
-        if (size / 2 >= index) {
+        if (size / 2 >= index - 1) {
             result = head;
             count = 0;
             while (index > count++) {
@@ -86,6 +114,7 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
         }
         return result;
     }
+
 
     /**
      * This method remove object from MyLinkedList.
@@ -107,6 +136,21 @@ public class MyLinkedList<E> implements List<E>, Iterable<E> {
             result.getPerv().setNext(result.getNext());
         }
         size--;
+    }
+
+    /**
+     * Set element from list
+     *
+     * @param index   - index.
+     * @param element - element.
+     * @return - element.
+     */
+    public E set(int index, E element) {
+        Node<E> replaceElement = findNode(index);
+        Node<E> result = new Node<>(replaceElement.getPerv(), element, replaceElement.getNext());
+        replaceElement.getPerv().setNext(result);
+        replaceElement.getNext().setPerv(result);
+        return element;
     }
 
     /**
