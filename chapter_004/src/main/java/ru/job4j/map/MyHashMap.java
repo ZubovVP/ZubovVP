@@ -1,6 +1,5 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -95,7 +94,11 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
      */
     private void checkcapacity() {
         if ((double) count / this.table.length >= 0.75) {
-            this.table = Arrays.copyOf(this.table, this.table.length * 2);
+            Entry[] oldTable = this.table;
+            this.table = new Entry[this.table.length * 2];
+            for (Entry entry : oldTable) {
+                insert((K) entry.key, (V) entry.value);
+            }
         }
     }
 
@@ -109,7 +112,7 @@ public class MyHashMap<K, V> implements Map<K, V>, Iterable<V> {
         if (key == null) {
             throw new NoSuchElementException();
         }
-        return Math.abs(key.hashCode() % this.table.length - 1);
+        return Math.abs(key.hashCode() % this.table.length);
     }
 
     /**
