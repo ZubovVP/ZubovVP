@@ -1,9 +1,7 @@
 package ru.job4j.io;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 
@@ -18,11 +16,15 @@ import static org.junit.Assert.*;
  * Date: 13.08.2019.
  */
 public class AnalysisTest {
-    private File source = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "file.txt"));
-    private File target = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "result.txt"));
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+    private File source;
+    private File target;
 
-    @Ignore
-    public void start() {
+    @Before
+    public void start() throws IOException {
+        this.source = this.folder.newFile("file.txt");
+        this.target = this.folder.newFile("result.txt");
         StringBuilder sb = new StringBuilder();
         sb.append("200 10:56:01\n").append("\n");
         sb.append("500 10:57:01\n").append("\n");
@@ -31,9 +33,6 @@ public class AnalysisTest {
         sb.append("500 11:01:02\n").append("\n");
         sb.append("200 11:02:02\n").append("\n");
         try (FileWriter writer = new FileWriter(source, false)) {
-            if (this.source.exists()) {
-                this.source.delete();
-            }
             this.source.createNewFile();
             writer.write(sb.toString());
         } catch (IOException e) {
@@ -41,13 +40,7 @@ public class AnalysisTest {
         }
     }
 
-    @After
-    public void finish() {
-        this.target.delete();
-        this.source.delete();
-    }
-
-    @Ignore
+    @Test
     public void unavailable() {
         Analysis analizy = new Analysis();
         analizy.unavailable(this.source.getAbsolutePath(), this.target.getAbsolutePath());
