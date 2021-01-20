@@ -2,7 +2,6 @@ package ru.job4j.io;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -27,9 +26,9 @@ public class ConfigTest {
 
     @Before
     public void start() {
-        this.folder = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "TestConfig"));
+        this.folder = new File("./src/main/java/ru/job4j/io/TestConfig");
         folder.mkdir();
-        this.file = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "io", File.separator, "TestConfig", File.separator, "app.properties"));
+        this.file = new File("./src/main/java/ru/job4j/io/TestConfig/app.properties");
         StringBuilder sb = new StringBuilder();
         sb.append("## PostgreSQL").append("\n");
         sb.append("\n");
@@ -40,26 +39,26 @@ public class ConfigTest {
         sb.append("hibernate.connection.password=password").append("\n");
         try (FileWriter writer = new FileWriter(this.file.getAbsolutePath(), false)) {
             if (this.file.exists()) {
-                this.file.delete();
+                this.file.deleteOnExit();
             }
             this.file.createNewFile();
             writer.write(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.config = new Config(this.file.getAbsolutePath());
+        this.config = new Config("./src/main/java/ru/job4j/io/TestConfig/app.properties");
     }
 
     @After
     public void finish() {
-        this.file.delete();
-        this.folder.delete();
+        this.file.deleteOnExit();
+        this.folder.deleteOnExit();
     }
 
     /**
      * Check value after load file.
      */
-    @Ignore
+    @Test
     public void loadFileInTheConfig() {
         String result = this.config.value("hibernate.dialect");
         assertNull(result);
@@ -71,7 +70,7 @@ public class ConfigTest {
     /**
      * Check all values in the file.
      */
-    @Ignore
+    @Test
     public void checkValuesInTheConfig() {
         this.config.load();
         assertThat(this.config.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
@@ -81,5 +80,16 @@ public class ConfigTest {
         assertThat(this.config.value("hibernate.connection.password"), is("password"));
         assertNull(this.config.value("## PostgreSQL"));
         assertNull(this.config.value("##"));
+    }
+
+    @Test
+    public void whenPairWithoutComment() {
+        String path = "./src/main/java/ru/job4j/io/TestConfig/app.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(
+                config.value("hibernate.connection.password"),
+                is("password")
+        );
     }
 }
