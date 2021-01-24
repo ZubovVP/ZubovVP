@@ -20,44 +20,43 @@ import static org.junit.Assert.*;
  * Date: 14.08.2019.
  */
 public class SearchTest {
-    private String folder = "Test";
-    private File file = new File(new File("").getAbsolutePath(), folder);
+    private File file = new File("./Test");
 
     @Before
     public void start() throws Exception {
         this.file.mkdir();
         for (int x = 0; x < 5; x++) {
             StringBuilder sb = new StringBuilder();
-            sb.append("Test");
+            sb.append("./Test");
             sb.append(File.separator);
             sb.append(x);
-            File dir = new File(new File("").getAbsolutePath(), sb.toString());
+            File dir = new File(sb.toString());
             dir.mkdir();
             sb.append(File.separator).append("Text");
             sb.append(x);
             sb.append(".txt");
-            dir = new File(new File("").getAbsolutePath(), sb.toString());
+            dir = new File(sb.toString());
             dir.createNewFile();
             if (x % 2 == 1) {
                 sb = new StringBuilder();
-                sb.append("Test");
+                sb.append("./Test");
                 sb.append(File.separator);
                 sb.append(x);
                 sb.append(File.separator).append("Text");
                 sb.append(x);
                 sb.append(".xml");
-                dir = new File(new File("").getAbsolutePath(), sb.toString());
+                dir = new File(sb.toString());
                 dir.createNewFile();
             }
             if (x % 3 == 0) {
                 sb = new StringBuilder();
-                sb.append("Test");
+                sb.append("./Test");
                 sb.append(File.separator);
                 sb.append(x);
                 sb.append(File.separator).append("Text");
                 sb.append(x);
                 sb.append(".word");
-                dir = new File(new File("").getAbsolutePath(), sb.toString());
+                dir = new File(sb.toString());
                 dir.createNewFile();
             }
         }
@@ -68,10 +67,10 @@ public class SearchTest {
         deleteDirectory(this.file);
     }
 
-    @Ignore
+    @Test
     public void findTest() {
         Search search = new Search();
-        List<File> files = search.find(this.file.getAbsolutePath());
+        List<File> files = search.find("./Test");
         assertThat(files.size(), is(9));
     }
 
@@ -95,7 +94,7 @@ public class SearchTest {
 
     }
 
-    @Ignore
+    @Test
     public void expTest() {
         Search search = new Search();
         List<String> exts = new ArrayList<>();
