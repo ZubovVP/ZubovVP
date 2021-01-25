@@ -1,9 +1,6 @@
 package ru.job4j.search;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.*;
 
@@ -18,9 +15,9 @@ import static org.junit.Assert.*;
  * Date: 01.10.2019.
  */
 public class SearcherTest {
-    private final File directory = new File(String.format("%s%s%s", new File("").getAbsolutePath(), File.separator, "test"));
-    private final File file = new File(String.format("%s%s%s", new File("").getAbsolutePath(), File.separator, "TestSearcher.txt"));
-    private final String source = new File("").getAbsolutePath();
+    private final File directory = new File("./test");
+    private final File file = new File("./TestSearcher.txt");
+    private final String source = new File("./").getAbsolutePath();
     private final String target = this.directory.getPath();
 
     @Before
@@ -38,8 +35,8 @@ public class SearcherTest {
         this.directory.delete();
     }
 
-    @Ignore
-    public void testFullName() throws Exception {
+    @Test
+    public void testFillName() throws Exception {
         String nameFile = "TestSearcher.txt";
         this.start(this.source, nameFile, this.target);
         File file = new File(target + File.separator + nameFile);
@@ -47,7 +44,7 @@ public class SearcherTest {
         file.delete();
     }
 
-    @Ignore
+    @Test
     public void testWithMask() throws Exception {
         String nameFile = "TestSea*.txt";
         this.start(this.source, nameFile, this.target);
@@ -56,7 +53,7 @@ public class SearcherTest {
         file.delete();
     }
 
-    @Ignore
+    @Test
     public void testWithMask2() throws Exception {
         String nameFile = "T?s?S?a*.txt";
         this.start(this.source, nameFile, this.target);
@@ -65,7 +62,7 @@ public class SearcherTest {
         file.delete();
     }
 
-    @Ignore
+    @Test
     public void testWithMaskExt() throws Exception {
         String nameFile = "TestSearcher.???";
         this.start(this.source, nameFile, this.target);
@@ -74,7 +71,7 @@ public class SearcherTest {
         file.delete();
     }
 
-    @Ignore
+    @Test
     public void testWithMaskExt2() throws Exception {
         String nameFile = "TestSearcher.*";
         this.start(this.source, nameFile, this.target);
@@ -83,15 +80,13 @@ public class SearcherTest {
         file.delete();
     }
 
-    @Ignore
-    //@Test(expected = Exception.class)
-    public void nullDerectory() throws Exception {
+    @Test(expected = Exception.class)
+    public void nullDirectory() throws Exception {
         String nameFile = "T?s?S?a*.txt";
         this.start(null, nameFile, this.target);
     }
 
-    @Ignore
-    //@Test(expected = Exception.class)
+    @Test(expected = Exception.class)
     public void nullSource() throws Exception {
         String nameFile = "T?s?S?a*.txt";
         this.start(this.source, nameFile, null);
