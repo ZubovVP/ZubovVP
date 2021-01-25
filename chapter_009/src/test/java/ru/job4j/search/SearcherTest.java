@@ -39,7 +39,7 @@ public class SearcherTest {
     public void testFillName() throws Exception {
         String nameFile = "TestSearcher.txt";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + File.separator + nameFile);
+        File file = new File("./test/TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -48,7 +48,7 @@ public class SearcherTest {
     public void testWithMask() throws Exception {
         String nameFile = "TestSea*.txt";
         this.start(this.source, nameFile, this.target);
-        File file = new File(this.target + File.separator + "TestSearcher.txt");
+        File file = new File("./test/TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -57,7 +57,7 @@ public class SearcherTest {
     public void testWithMask2() throws Exception {
         String nameFile = "T?s?S?a*.txt";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + File.separator + "TestSearcher.txt");
+        File file = new File("./test/TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -66,7 +66,7 @@ public class SearcherTest {
     public void testWithMaskExt() throws Exception {
         String nameFile = "TestSearcher.???";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + File.separator + "TestSearcher.txt");
+        File file = new File("./test/TestSearcher.txt");
         this.check(file);
         file.delete();
     }
@@ -75,7 +75,7 @@ public class SearcherTest {
     public void testWithMaskExt2() throws Exception {
         String nameFile = "TestSearcher.*";
         this.start(this.source, nameFile, this.target);
-        File file = new File(target + File.separator + "TestSearcher.txt");
+        File file = new File("./test/TestSearcher.txt");
         this.check(file);
         file.delete();
     }
