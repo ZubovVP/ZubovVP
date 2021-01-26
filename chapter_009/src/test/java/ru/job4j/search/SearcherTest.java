@@ -17,14 +17,14 @@ import static org.junit.Assert.*;
 public class SearcherTest {
     private final File directory = new File("./test");
     private final File file = new File("./TestSearcher.txt");
-    private final String source = new File("./").getAbsolutePath();
+    private final String source = "./";
     private final String target = this.directory.getPath();
 
     @Before
     public void createFile() throws IOException {
         this.directory.mkdir();
         this.file.createNewFile();
-        try (FileWriter writer = new FileWriter(file.getAbsolutePath())) {
+        try (FileWriter writer = new FileWriter(file.getPath())) {
             writer.write("Test!");
         }
     }
