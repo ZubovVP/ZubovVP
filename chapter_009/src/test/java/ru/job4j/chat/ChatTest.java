@@ -2,7 +2,6 @@ package ru.job4j.chat;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -21,7 +20,8 @@ import static org.junit.Assert.assertTrue;
  * Date: 28.08.2019.
  */
 public class ChatTest {
-    private File file = new File(String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", new File("").getAbsolutePath(), File.separator, "src", File.separator, "main", File.separator, "java", File.separator, "ru", File.separator, "job4j", File.separator, "chat", File.separator, "answers.txt"));
+    private File file = new File("./src/main/java/ru/job4j/chat/phrases.txt");
+    private File log = new File("./src/main/java/ru/job4j/chat/answers.txt");
     private StringBuilder questions = new StringBuilder();
 
     @Before
@@ -35,18 +35,23 @@ public class ChatTest {
         String data = questions.toString();
         InputStream is = new ByteArrayInputStream(data.getBytes());
         System.setIn(is);
-        new Chat(this.file).start();
+        new Chat(this.log.getPath(), this.file.getPath()).start();
+    }
+
+    @Before
+    public void start() throws IOException {
+        this.log.createNewFile();
     }
 
     @After
     public void backOutput() {
-        this.file.delete();
+        this.log.delete();
     }
 
-    @Ignore
+    @Test
     public void checkAnsersOfUser() {
         List<String> result = new ArrayList<>();
-        try (FileReader reader = new FileReader(this.file);
+        try (FileReader reader = new FileReader(this.log);
              BufferedReader bfr = new BufferedReader(reader)) {
             String line = bfr.readLine();
             while (line != null) {
@@ -62,10 +67,10 @@ public class ChatTest {
         assertTrue(result.contains("закончить"));
     }
 
-    @Ignore
+    @Test
     public void checkAnswersOfBot() {
         List<String> result = new ArrayList<>();
-        try (FileReader reader = new FileReader(this.file);
+        try (FileReader reader = new FileReader(this.log);
              BufferedReader bfr = new BufferedReader(reader)) {
             String line = bfr.readLine();
             while (line != null) {

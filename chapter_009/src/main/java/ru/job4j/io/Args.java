@@ -17,11 +17,11 @@ public class Args {
     private List<File> finalList = new ArrayList<>();
 
     public List<File> start(String directory, String excule) {
-        this.directory(directory);
+        directory(directory);
         if (excule != null) {
             excule(excule);
         } else {
-            finalList = files;
+            this.finalList = this.files;
         }
         return this.output();
     }
@@ -42,9 +42,9 @@ public class Args {
      * @param excule - excule.
      */
     private void excule(String excule) {
-        for (File file : files) {
+        for (File file : this.files) {
             if (file != null && !file.getName().endsWith(excule)) {
-                finalList.add(file);
+                this.finalList.add(file);
             }
         }
     }

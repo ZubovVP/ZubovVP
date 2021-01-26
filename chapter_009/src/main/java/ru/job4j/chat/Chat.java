@@ -2,6 +2,7 @@ package ru.job4j.chat;
 
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -17,10 +18,13 @@ public class Chat {
     private static final String STOP = "стоп";
     private static final String FINISH = "закончить";
     private static final String START = "старт";
-    private File log;
+    private String botAnswers;
+    private String log;
 
-    public Chat(File log) {
-        this.log = log;
+    public Chat(String path, String botAnswers) {
+        this.log = path;
+        this.botAnswers = botAnswers;
+
     }
 
     /**
@@ -28,11 +32,11 @@ public class Chat {
      */
     public void start() {
         boolean flag = true;
-        checkLog(this.log);
+        checkLog(new File(this.log));
         readPhrases();
         try (InputStreamReader is = new InputStreamReader(System.in);
              BufferedReader reader = new BufferedReader(is);
-             PrintWriter writer = new PrintWriter(this.log.getAbsolutePath())) {
+             PrintWriter writer = new PrintWriter(this.log, Charset.forName("UTF-8"))) {
             String line = reader.readLine();
             while (!line.equals(FINISH)) {
                 writer.write("You : " + line + "\n");
@@ -58,9 +62,8 @@ public class Chat {
      * Load phrases from document.
      */
     private void readPhrases() {
-        String way = String.format("%s%s", System.getProperty("user.dir"), "\\src\\main\\java\\ru\\job4j\\chat\\phrases.txt");
         try (
-                FileReader fr = new FileReader(new File(way));
+                FileReader fr = new FileReader(this.botAnswers, Charset.forName("UTF-8"));
                 BufferedReader reader = new BufferedReader(fr)) {
             String line = reader.readLine();
             while (line != null) {
