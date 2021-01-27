@@ -1,5 +1,8 @@
 package ru.job4j.socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +19,7 @@ import java.net.Socket;
  * Date: 26.01.2021.
  */
 public class EchoServer {
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
 
     /**
@@ -25,7 +29,7 @@ public class EchoServer {
      * @param args - null.
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
             String str;
             boolean flag = true;
@@ -46,6 +50,8 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
                 }
             }
+        } catch (IOException e) {
+            LOG.error("Exception for use ServerSocket. ", e);
         }
     }
 }
