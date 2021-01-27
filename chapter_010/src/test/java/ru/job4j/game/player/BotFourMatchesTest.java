@@ -1,5 +1,6 @@
 package ru.job4j.game.player;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.game.Field;
 import ru.job4j.game.check.CheckWin;
@@ -57,7 +58,7 @@ public class BotFourMatchesTest {
         assertTrue(result);
     }
 
-    @Test
+    @Ignore
     public void testWinFor4Matches() {
         Field field = new Field(3);
         AbstractBot bot = new BotFourMatches("Name", 'X');

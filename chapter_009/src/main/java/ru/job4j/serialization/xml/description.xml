@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<company foundationYear="1999" work="true">
+    <name>Tech</name>
+    <owner name="Rick"/>
+    <employees>
+        <employee>
+            <name>Mike</name>
+        </employee>
+        <employee>
+            <name>Sam</name>
+        </employee>
+        <employee>
+            <name>Ted</name>
+        </employee>
+        <employee>
+            <name>Ann</name>
+        </employee>
+    </employees>
+</company>
