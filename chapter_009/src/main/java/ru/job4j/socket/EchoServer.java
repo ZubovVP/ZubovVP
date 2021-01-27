@@ -34,12 +34,14 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    while (!(str = in.readLine()).isEmpty()) {
+                    str = in.readLine();
+                    while (!str.isEmpty()) {
                         if (str.split(" ")[1].endsWith("Bye")) {
                             flag = false;
                             break;
                         }
                         System.out.println(str);
+                        str = in.readLine();
                     }
                     out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
                 }
