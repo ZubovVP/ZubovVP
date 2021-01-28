@@ -1,8 +1,10 @@
-package ru.job4j.serialization;
+package ru.job4j.serialization.json;
 
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -44,10 +46,6 @@ public class Car {
         return engine;
     }
 
-    public boolean isExists() {
-        return exists;
-    }
-
     public String[] getOwners() {
         return owners;
     }
@@ -83,7 +81,8 @@ public class Car {
     public static void main(String[] args) {
         Car car = new Car("Volvo", 3, Boolean.TRUE, new Engine("V6", 2), "Owner_1", "Owner_2", "Owner_3");
 
-        /* Преобразуем объект person в json-строку. */
+        /* Используем Gson*/
+        /* Преобразуем объект person в json-строку. Используем Gson*/
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(car));
 
@@ -92,5 +91,31 @@ public class Car {
                 "{" + "\"name\":Volvo," + "\"version\":3," + "\"exists\":true," + "\"engine\":" + "{" + "\"name\":V6," + "\"version\":2" + "}," + "\"owners\":" + "[\"Owner_1\",\"Owner_2\", \"Owner_3\"]" + "}";
         final Car personMod = gson.fromJson(personJson, Car.class);
         System.out.println(personMod);
+
+
+        /* Используем Json*/
+        /* Для удаления зацыкливания используется аннотонация @JSONPropertyIgnore */
+        /* JSONObject из json-строки строки */
+        JSONObject jsonEngine = new JSONObject("{\"name\":\"V6\", \"version\":\"2\"}");
+
+        /* JSONArray из  массива(коллекции)*/
+        String[] owners = new String[]{"Owner_1", "Owner_2", "Owner_3"};
+        JSONArray jsonOwners = new JSONArray(owners);
+
+        /* JSONObject напрямую методом put */
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", car.getName());
+        jsonObject.put("version", car.getVersion());
+        jsonObject.put("exist", car.isExsist());
+        jsonObject.put("engine", jsonEngine);
+        /* Можно добавлять сразу массив*/
+        //jsonObject.put("owners", owners);
+        jsonObject.put("owners", jsonOwners);
+
+        /* Выведем результат в консоль */
+        System.out.println(jsonObject.toString());
+
+        /* Преобразуем объект person в json-строку */
+        System.out.println(new JSONObject(car).toString());
     }
 }
