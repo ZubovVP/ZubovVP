@@ -1,6 +1,5 @@
 package ru.job4j.concurrent;
 
-
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
