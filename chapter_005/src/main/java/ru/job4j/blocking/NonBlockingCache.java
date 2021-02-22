@@ -28,7 +28,7 @@ public class NonBlockingCache {
      * @param model - element.
      */
     public void add(Base model) {
-        this.store.put(model.getId(), model);
+        this.store.putIfAbsent(model.getId(), model);
     }
 
     /**
