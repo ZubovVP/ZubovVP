@@ -11,7 +11,8 @@ import net.jcip.annotations.ThreadSafe;
  * Date: 11.02.2021.
  */
 @ThreadSafe
-public class CountBarrier {@GuardedBy("this")
+public class CountBarrier {
+    @GuardedBy("this")
     private final Object monitor = this;
 
     private int total;
