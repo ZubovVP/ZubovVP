@@ -24,10 +24,7 @@ public class TrackerTest {
     @Before
     public void start() {
         try (Tracker tracker = new Tracker()) {
-            List<Item> result = tracker.findAll();
-            for (Item item : result) {
-                tracker.delete(item.getId());
-            }
+            tracker.findAllByReact(e -> tracker.delete(e.getId()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,10 +33,7 @@ public class TrackerTest {
     @After
     public void finish() {
         try (Tracker tracker = new Tracker()) {
-            List<Item> result = tracker.findAll();
-            for (Item item : result) {
-                tracker.delete(item.getId());
-            }
+            tracker.findAllByReact(e -> tracker.delete(e.getId()));
         } catch (Exception e) {
             e.printStackTrace();
         }

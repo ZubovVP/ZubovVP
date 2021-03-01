@@ -142,13 +142,11 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            for (Item item : tracker.findAll()) {
-                System.out.print(System.getProperty("line.separator") + " Name : " + item.getName() + ";"
-                        + System.getProperty("line.separator") + "Description :" + item.getDescription() + ";"
-                        + System.getProperty("line.separator") + "Id :" + item.getId() + ";"
-                        + System.getProperty("line.separator") + "Create :" + item.getCreateOfDate() + ";"
-                        + System.getProperty("line.separator"));
-            }
+            tracker.findAllByReact(e -> System.out.print(System.getProperty("line.separator") + " Name : " + e.getName() + ";"
+                    + System.getProperty("line.separator") + "Description :" + e.getDescription() + ";"
+                    + System.getProperty("line.separator") + "Id :" + e.getId() + ";"
+                    + System.getProperty("line.separator") + "Create :" + e.getCreateOfDate() + ";"
+                    + System.getProperty("line.separator")));
         }
     }
 

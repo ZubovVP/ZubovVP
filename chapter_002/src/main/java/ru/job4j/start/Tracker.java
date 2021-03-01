@@ -165,6 +165,24 @@ public class Tracker implements Store<Item>, AutoCloseable {
         return true;
     }
 
+    public void findAllByReact(Observe<Item> observe) {
+        if (this.conn == null) {
+            connect();
+        }
+        checkTable();
+        try {
+            this.st = this.conn.prepareStatement("SELECT * FROM users");
+            this.rs = this.st.executeQuery();
+            while (this.rs.next()) {
+                observe.receive(new Item(this.rs.getString("name"), this.rs.getString("description"), this.rs.getTimestamp("create_date").getTime(), this.rs.getInt("id")));
+            }
+            this.rs.close();
+            this.st.close();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
+
     @Override
     public List<Item> findAll() {
         List<Item> result = new ArrayList<>();
