@@ -31,28 +31,10 @@ public class RolColSumTest {
 
     @Test
     public void testAsyncSum() {
-        RolColSum.Sums[] result = sum(this.text1);
+        RolColSum.Sums[] result = asyncSum(this.text1);
         Assert.assertThat(result[0].getColSum(), is(12));
         Assert.assertThat(result[0].getRowSum(), is(6));
         Assert.assertThat(result[1].getColSum(), is(15));
         Assert.assertThat(result[1].getRowSum(), is(15));
-    }
-
-    @Test
-    public void testDeferenceSumAndAsyncSum() {
-        int[][] textFinal = new int[10000][10000];
-        int count = 0;
-        for (int x = 0; x < 10000; x++) {
-            for (int y = 0; y < 10000; y++) {
-                textFinal[x][y] = count++;
-            }
-        }
-        long timeStart = System.currentTimeMillis();
-        sum(textFinal);
-        long delta1 = System.currentTimeMillis() - timeStart;
-        timeStart = System.currentTimeMillis();
-        asyncSum(textFinal);
-        long delta2 = System.currentTimeMillis() - timeStart;
-        Assert.assertTrue(delta1 > delta2);
     }
 }
