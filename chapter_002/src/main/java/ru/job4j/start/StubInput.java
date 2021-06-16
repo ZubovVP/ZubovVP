@@ -7,7 +7,7 @@ import java.util.List;
  * @version $Id$
  * @since 0.1
  */
-public class StubInput extends ValidateInput {
+public class StubInput implements Input {
     private String[] answers;
     private int position = 0;
 

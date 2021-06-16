@@ -26,6 +26,12 @@ public class Context {
         List<Object> args = new ArrayList<Object>();
         for (Class arg : con.getParameterTypes()) {
             if (!els.containsKey(arg.getCanonicalName())) {
+                if (arg.getCanonicalName().endsWith("Input")) {
+                    if (els.containsKey("ru.job4j.start.ValidateInput")) {
+                        args.add(els.get("ru.job4j.start.ValidateInput"));
+                        continue;
+                    }
+                }
                 throw new IllegalStateException("Object doesn't found in context : " + arg.getCanonicalName());
             }
             args.add(els.get(arg.getCanonicalName()));

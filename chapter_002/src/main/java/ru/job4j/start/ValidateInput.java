@@ -14,8 +14,13 @@ import java.util.List;
 @Component
 @Scope("singleton")
 public class ValidateInput implements Input {
-    @Autowired
+
     private ConsoleInput input;
+
+    @Autowired
+    public ValidateInput(ConsoleInput input) {
+        this.input = input;
+    }
 
     @Override
     public String ask(String question) {

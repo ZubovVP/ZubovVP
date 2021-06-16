@@ -1,6 +1,7 @@
 package ru.job4j.start;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +13,15 @@ import java.util.List;
  * @since 0.1
  */
 @Component
-@Scope("prototype")
 public class StartUI {
-    @Autowired
-    private ValidateInput input;
-    @Autowired
+    private Input input;
     private Tracker tracker;
+
+    @Autowired
+    public StartUI(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+    }
 
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
@@ -49,7 +53,7 @@ public class StartUI {
         return input;
     }
 
-    public void setInput(ValidateInput input) {
+    public void setInput(Input input) {
         this.input = input;
     }
 

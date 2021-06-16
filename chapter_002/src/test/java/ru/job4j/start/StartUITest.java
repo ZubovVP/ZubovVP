@@ -45,9 +45,8 @@ public class StartUITest {
     @Test
     public void whenUserAddItem() {
         try (Tracker tracker = new Tracker()) {
-            StartUI ui1 = new StartUI();
-            ui1.setInput(new StubInput(new String[]{"0", "TestName1", "TestDescr1", "no", "0", "TestName2", "TestDescr2", "Yes"}));
-            ui1.setTracker(tracker);
+            Input input = new StubInput(new String[]{"0", "TestName1", "TestDescr1", "no", "0", "TestName2", "TestDescr2", "Yes"});
+            StartUI ui1 = new StartUI(input, tracker);
             ui1.init();
             List<Item> result = tracker.findAll();
             Item result1 = result.get(0);
@@ -68,8 +67,8 @@ public class StartUITest {
     public void whenUserEditItem() {
         try (Tracker tracker = new Tracker()) {
             Item item = new Item("TestName1", "TestDesc1", System.currentTimeMillis());
-            ValidateInput input1 = new StubInput(new String[]{"0", item.getName(), item.getDescription(), "no", "0", "TestName2", "TestDesc2", "no", "2", String.valueOf(item.getId()), "TestName3", "TestDesc3", "Yes"});
-            StartUI ui1 = new StartUI();
+            Input input1 = new StubInput(new String[]{"0", item.getName(), item.getDescription(), "no", "0", "TestName2", "TestDesc2", "no", "2", String.valueOf(item.getId()), "TestName3", "TestDesc3", "Yes"});
+            StartUI ui1 = new StartUI(input1, tracker);
             ui1.setInput(input1);
             ui1.setTracker(tracker);
             ui1.init();
@@ -91,8 +90,8 @@ public class StartUITest {
         try (Tracker tracker = new Tracker()) {
             tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             int id = tracker.findAll().get(0).getId();
-            ValidateInput input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", String.valueOf(id), "Yes"});
-            StartUI ui1 = new StartUI();
+            Input input1 = new StubInput(new String[]{"0", "TestName2", "TestDesc2", "no", "0", "TestName3", "TestDesc3", "no", "3", String.valueOf(id), "Yes"});
+            StartUI ui1 = new StartUI(input1, tracker);
             ui1.setInput(input1);
             ui1.setTracker(tracker);
             ui1.init();
@@ -101,7 +100,7 @@ public class StartUITest {
             result2 = list.get(1);
             assertThat(result1.getName(), is("TestName2"));
             assertThat(result2.getDescription(), is("TestDesc3"));
-            ValidateInput input2 = new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"});
+            Input input2 = new StubInput(new String[]{"3", String.valueOf(result1.getId()), "no", "3", String.valueOf(result2.getId()), "Yes"});
             ui1.setInput(input2);
             ui1.init();
         } catch (Exception e) {
@@ -119,8 +118,8 @@ public class StartUITest {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
             int id = tracker.findAll().get(0).getId();
-            ValidateInput input = new StubInput(new String[]{"4", String.valueOf(id), "Yes"});
-            StartUI ui1 = new StartUI();
+            Input input = new StubInput(new String[]{"4", String.valueOf(id), "Yes"});
+            StartUI ui1 = new StartUI(input, tracker);
             ui1.setInput(input);
             ui1.setTracker(tracker);
             ui1.init();
@@ -152,8 +151,8 @@ public class StartUITest {
             Item item = tracker.add(new Item("TestName1", "TestDesc1", System.currentTimeMillis()));
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
-            ValidateInput input = new StubInput(new String[]{"5", item.getName(), "Yes"});
-            StartUI ui1 = new StartUI();
+            Input input = new StubInput(new String[]{"5", item.getName(), "Yes"});
+            StartUI ui1 = new StartUI(input, tracker);
             ui1.setInput(input);
             ui1.setTracker(tracker);
             ui1.init();
@@ -190,8 +189,8 @@ public class StartUITest {
             Item itemTwo = list.get(1);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             System.setOut(new PrintStream(out));
-            ValidateInput input = new StubInput(new String[]{"1", "Yes"});
-            StartUI ui1 = new StartUI();
+            Input input = new StubInput(new String[]{"1", "Yes"});
+            StartUI ui1 = new StartUI(input, tracker);
             ui1.setInput(input);
             ui1.setTracker(tracker);
             ui1.init();
